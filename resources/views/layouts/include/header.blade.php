@@ -89,8 +89,23 @@
                     </a>
                     <!-- hide dropdown-nav collapse -->
                     <ul id="productMenu" class="collapse dropdown-nav {{ (request()->routeIs('productList') || request()->routeIs('addProduct')) ? 'show' : 'hide' }}">
-                      <li><a href="{{route('addProduct')}}" class="{{ request()->routeIs('addCategory') ? 'active' : '' }}"> Add Product </a></li>
+                        <li><a href="{{route('addProduct')}}" class="{{ request()->routeIs('addProduct') ? 'active' : '' }}"> Add Product </a></li>
                         <li><a href="{{route('productList')}}" class="{{ request()->routeIs('productList') ? 'active' : '' }}"> Products List </a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item nav-item-has-children">
+                    <a href="#0" data-bs-toggle="collapse" data-bs-target="#orderMenu" aria-controls="orderMenu"
+                        aria-expanded="{{ (request()->routeIs('orderList') || request()->routeIs('addOrder')) ? true : false }}" aria-label="Toggle navigation" class="{{ (request()->routeIs('orderList') || request()->routeIs('addOrder')) ? '' : 'collapsed' }}">
+                        <span class="icon">
+                            <i class="lni lni-cart-full"></i>
+                        </span>
+                        <span class="text">Order</span>
+                    </a>
+                    <!-- hide dropdown-nav collapse -->
+                    <ul id="orderMenu" class="collapse dropdown-nav {{ (request()->routeIs('orderList') || request()->routeIs('addOrder')) ? 'show' : 'hide' }}">
+                        <li><a href="{{route('addOrder')}}" class="{{ request()->routeIs('addOrder') ? 'active' : '' }}"> Add Orders </a></li>
+                        <li><a href="{{route('orderList')}}" class="{{ request()->routeIs('orderList') ? 'active' : '' }}"> Orders List </a></li>
                     </ul>
                 </li>
             </ul>

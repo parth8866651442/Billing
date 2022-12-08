@@ -90,7 +90,7 @@ class OrdersController extends Controller
         
         $items = Order::findOrFail($itemID);
         $items->client_id = $request->client_id;
-        $items->type = $request->type;
+        $items->type = 'orignal';
         $items->update_by = $authUser->id;
 
         if(!empty($request->fullname)){

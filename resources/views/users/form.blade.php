@@ -45,88 +45,96 @@
         <div class="form-layout-wrapper">
             <div class="card-style mb-30">
                 <h6 class="mb-25">User</h6>
-                @if(isset($item))
-                <form method="POST" action="{{route('updateUser',['id'=>$item->id])}}" id="userForm" enctype="multipart/form-data">
-                    @else
-                    <form method="POST" action="{{route('storeUser')}}" id="userForm" enctype="multipart/form-data">
-                        @endif
-                        <div class="row">
-                            @csrf
-                            <input type="hidden" name="id" value="@isset($item->id){{$item->id}}@endisset">
-                            <!-- sub -->
-                            <div class="col-md-6 col-sm-12 col-12">
-                                <div class="select-style-1">
-                                    <label>User Type<span class="asterisk">*</span></label>
-                                    <div class="select-position">
+                <form method="POST"
+                    action="{{(isset($item)) ? route('updateUser',['id'=>$item->id]) : route('storeUser')}}"
+                    id="userForm" enctype="multipart/form-data">
+                    <div class="row">
+                        @csrf
+                        <input type="hidden" name="id" value="@isset($item->id){{$item->id}}@endisset">
+                        <!-- sub -->
+                        <div class="col-md-6 col-sm-12 col-12">
+                            <div class="select-style-1">
+                                <label>User Type<span class="asterisk">*</span></label>
+                                <div class="select-position">
                                     <select name="role" id="role">
                                         <option value="">Select User Type</option>
-                                        <option value="admin" {{isset($item->role) && $item->role === 'admin' ? 'selected' :''  }}>Admin</option>
-                                        <option value="employee" {{isset($item->role) && $item->role === 'employee' ? 'selected' :''  }}>Employee</option>
+                                        <option value="admin"
+                                            {{isset($item->role) && $item->role === 'admin' ? 'selected' :''  }}>Admin
+                                        </option>
+                                        <option value="employee"
+                                            {{isset($item->role) && $item->role === 'employee' ? 'selected' :''  }}>
+                                            Employee</option>
                                     </select>
-                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6 col-sm-12 col-12">
-                                <div class="input-style-1">
-                                    <label for="name">Name<span class="asterisk">*</span></label>
-                                    <input type="text" name="name" id="name" class="bg-transparent" placeholder="Name" value="@isset($item->name){{$item->name}}@endisset">
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-12 col-12">
-                                <div class="input-style-1">
-                                    <label for="phone_no">Phone No<span class="asterisk">*</span></label>
-                                    <input type="text" name="phone_no" id="phone_no" class="bg-transparent" placeholder="Phone No" value="@isset($item->phone_no){{$item->phone_no}}@endisset">
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-12 col-12">
-                                <div class="input-style-1">
-                                    <label for="email">Email<span class="asterisk">*</span></label>
-                                    @if(isset($item))
-                                    <input type="text" name="email" id="email" class="bg-transparent" placeholder="Email"
-                                        value="@isset($item->email){{$item->email}}@endisset" readonly>
-                                    @else
-                                    <input type="text" name="email" id="email" class="bg-transparent" placeholder="Email"
-                                        value="">
-                                    @endif
-
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-12 col-12">
-                                <div class="input-style-1">
-                                    <label for="password">Password @if(!isset($item))<span class="asterisk">*</span>
-                                        @endif</label>
-                                    <input type="password" name="password" id="password" class="bg-transparent"
-                                        placeholder="Password" value="">
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-12 col-12">
-                                <div class="input-style-1">
-                                    <label for="confirmpassword">Confirm Password @if(!isset($item))<span class="asterisk">*</span>
-                                        @endif</label>
-                                    <input type="password" name="confirmpassword" id="confirmpassword" class="bg-transparent"
-                                        placeholder="Confirm Password" value="">
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-sm-12 col-12">
-                                <div class="input-style-1">
-                                    <label for="image_preview">Image</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="image" id="image_preview">
-                                        </div>
-                                    </div>
-                                    <div class="holder mt-2">
-                                        <img id="imgPreview" src="{{ imageUrl(isset($item->image) ? $item->image : '', 'user','no_image.jpg','thumbnail') }}" alt="pic" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <button class="main-btn primary-btn btn-hover" type="submit">Save</button>
-                                <a href="{{route('userList')}}"><button type="button" class="main-btn secondary-btn btn-hover">Cancel</button></a>
                             </div>
                         </div>
-                        <!-- end row -->
-                    </form>
+                        <div class="col-md-6 col-sm-12 col-12">
+                            <div class="input-style-1">
+                                <label for="name">Name<span class="asterisk">*</span></label>
+                                <input type="text" name="name" id="name" class="bg-transparent" placeholder="Name"
+                                    value="@isset($item->name){{$item->name}}@endisset">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-12">
+                            <div class="input-style-1">
+                                <label for="phone_no">Phone No<span class="asterisk">*</span></label>
+                                <input type="text" name="phone_no" id="phone_no" class="bg-transparent"
+                                    placeholder="Phone No" value="@isset($item->phone_no){{$item->phone_no}}@endisset">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-12">
+                            <div class="input-style-1">
+                                <label for="email">Email<span class="asterisk">*</span></label>
+                                @if(isset($item))
+                                <input type="text" name="email" id="email" class="bg-transparent" placeholder="Email"
+                                    value="@isset($item->email){{$item->email}}@endisset" readonly>
+                                @else
+                                <input type="text" name="email" id="email" class="bg-transparent" placeholder="Email"
+                                    value="">
+                                @endif
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-12">
+                            <div class="input-style-1">
+                                <label for="password">Password @if(!isset($item))<span class="asterisk">*</span>
+                                    @endif</label>
+                                <input type="password" name="password" id="password" class="bg-transparent"
+                                    placeholder="Password" value="">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-12">
+                            <div class="input-style-1">
+                                <label for="confirmpassword">Confirm Password @if(!isset($item))<span
+                                        class="asterisk">*</span>
+                                    @endif</label>
+                                <input type="password" name="confirmpassword" id="confirmpassword"
+                                    class="bg-transparent" placeholder="Confirm Password" value="">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <div class="input-style-1">
+                                <label for="image_preview">Image</label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="image" id="image_preview">
+                                    </div>
+                                </div>
+                                <div class="holder mt-2">
+                                    <img id="imgPreview"
+                                        src="{{ imageUrl(isset($item->image) ? $item->image : '', 'user','no_image.jpg','thumbnail') }}"
+                                        alt="pic" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="main-btn primary-btn btn-hover" type="submit">Save</button>
+                            <a href="{{route('userList')}}"><button type="button"
+                                    class="main-btn secondary-btn btn-hover">Cancel</button></a>
+                        </div>
+                    </div>
+                    <!-- end row -->
+                </form>
             </div>
             <!-- end card -->
         </div>
@@ -168,7 +176,7 @@ $(document).ready(function() {
                     data: {
                         "_token": "{{ csrf_token() }}",
                         action: '{{isset($item->id) ? "edit" :"add"}}',
-                        id:'{{isset($item->id) ? $item->id :""}}'
+                        id: '{{isset($item->id) ? $item->id :""}}'
                     }
                 }
             },
@@ -204,11 +212,14 @@ $(document).ready(function() {
                 minlength: "Please enter min 6 digit Password",
                 pwcheck: "Invalid Password,Min 1 uppercase and lowercase letter. Min 1 special character. Min 1 number."
             },
-            confirmpassword:{ required : "This field is required",equalTo:"Confirm password doesn't match New password"},
+            confirmpassword: {
+                required: "This field is required",
+                equalTo: "Confirm password doesn't match New password"
+            },
         }
     });
     $.validator.addMethod("pwcheck", function(value) {
-       return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{6,30}$/.test(value)
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{6,30}$/.test(value)
     });
 });
 

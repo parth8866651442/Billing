@@ -38,27 +38,28 @@
             <div class="card-style mb-30">
                 <h6 class="mb-25">Category</h6>
                 @if(isset($item))
-                <form method="POST" action="{{route('updateCategory',['id'=>$item->id])}}" id="categoryForm" enctype="multipart/form-data">
-                    @else
-                    <form method="POST" action="{{route('storeCategory')}}" id="categoryForm" enctype="multipart/form-data">
-                        @endif
-                        <div class="row">
-                            @csrf
-                            <input type="hidden" name="id" value="@isset($item->id){{$item->id}}@endisset">
-                            <!-- sub -->
-                            <div class="col-md-6 col-sm-12 col-12">
-                                <div class="input-style-1">
-                                    <label for="name">Name<span class="asterisk">*</span></label>
-                                    <input type="text" name="name" id="name" class="bg-transparent" placeholder="Name" value="@isset($item->name){{$item->name}}@endisset">
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <button class="main-btn primary-btn btn-hover" type="submit">Save</button>
-                                <a href="{{route('categoryList')}}"><button type="button" class="main-btn secondary-btn btn-hover">Cancel</button></a>
+                <form method="POST"
+                    action="{{(isset($item)) ? route('updateCategory',['id'=>$item->id]) : route('storeCategory')}}"
+                    id="categoryForm" enctype="multipart/form-data">
+                    <div class="row">
+                        @csrf
+                        <input type="hidden" name="id" value="@isset($item->id){{$item->id}}@endisset">
+                        <!-- sub -->
+                        <div class="col-md-6 col-sm-12 col-12">
+                            <div class="input-style-1">
+                                <label for="name">Name<span class="asterisk">*</span></label>
+                                <input type="text" name="name" id="name" class="bg-transparent" placeholder="Name"
+                                    value="@isset($item->name){{$item->name}}@endisset">
                             </div>
                         </div>
-                        <!-- end row -->
-                    </form>
+                        <div class="col-12">
+                            <button class="main-btn primary-btn btn-hover" type="submit">Save</button>
+                            <a href="{{route('categoryList')}}"><button type="button"
+                                    class="main-btn secondary-btn btn-hover">Cancel</button></a>
+                        </div>
+                    </div>
+                    <!-- end row -->
+                </form>
             </div>
             <!-- end card -->
         </div>
@@ -86,7 +87,7 @@ $(document).ready(function() {
                     data: {
                         "_token": "{{ csrf_token() }}",
                         action: '{{isset($item->id) ? "edit" :"add"}}',
-                        id:'{{isset($item->id) ? $item->id :""}}'
+                        id: '{{isset($item->id) ? $item->id :""}}'
                     }
                 }
             }

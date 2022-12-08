@@ -43,54 +43,57 @@
         <div class="form-layout-wrapper">
             <div class="card-style mb-30">
                 <h6 class="mb-25">Product</h6>
-                @if(isset($item))
-                <form method="POST" action="{{route('updateProduct',['id'=>$item->id])}}" id="productForm" enctype="multipart/form-data">
-                    @else
-                    <form method="POST" action="{{route('storeProduct')}}" id="productForm" enctype="multipart/form-data">
-                        @endif
-                        <div class="row">
-                            @csrf
-                            <input type="hidden" name="id" value="@isset($item->id){{$item->id}}@endisset">
-                            <!-- sub -->
-                            <div class="col-md-6 col-sm-12 col-12">
-                                <div class="select-style-1">
-                                    <label>Category<span class="asterisk">*</span></label>
-                                    <div class="select-position">
+                <form method="POST"
+                    action="{{(isset($item)) ? route('updateProduct',['id'=>$item->id]) : route('storeProduct')}}"
+                    id="productForm" enctype="multipart/form-data">
+                    <div class="row">
+                        @csrf
+                        <input type="hidden" name="id" value="@isset($item->id){{$item->id}}@endisset">
+                        <!-- sub -->
+                        <div class="col-md-6 col-sm-12 col-12">
+                            <div class="select-style-1">
+                                <label>Category<span class="asterisk">*</span></label>
+                                <div class="select-position">
                                     <select name="category_id" id="category_id">
                                         <option value="">Select Category</option>
                                         @foreach($categories as $category)
-                                            <option {{isset($item->category_id) &&  $item->category_id === $category->id? 'selected' :''  }} value='{{$category->id}}'> {{ $category->name }}</option>
+                                        <option
+                                            {{isset($item->category_id) &&  $item->category_id === $category->id? 'selected' :''  }}
+                                            value='{{$category->id}}'> {{ $category->name }}</option>
                                         @endforeach
                                     </select>
-                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6 col-sm-12 col-12">
-                                <div class="input-style-1">
-                                    <label for="name">Name<span class="asterisk">*</span></label>
-                                    <input type="text" name="name" id="name" class="bg-transparent" placeholder="Name" value="@isset($item->name){{$item->name}}@endisset">
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-12 col-12">
-                                <div class="input-style-1">
-                                    <label for="price">Price<span class="asterisk">*</span></label>
-                                    <input type="text" name="price" id="price" class="bg-transparent" placeholder="Price" value="@isset($item->price){{$item->price}}@endisset">
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-12 col-12">
-                                <div class="input-style-1">
-                                    <label for="qty">Quantity<span class="asterisk">*</span></label>
-                                    <input type="text" name="qty" id="qty" class="bg-transparent" placeholder="Quantity"
-                                        value="@isset($item->qty){{$item->qty}}@endisset">
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <button class="main-btn primary-btn btn-hover" type="submit">Save</button>
-                                <a href="{{route('productList')}}"><button type="button" class="main-btn secondary-btn btn-hover">Cancel</button></a>
                             </div>
                         </div>
-                        <!-- end row -->
-                    </form>
+                        <div class="col-md-6 col-sm-12 col-12">
+                            <div class="input-style-1">
+                                <label for="name">Name<span class="asterisk">*</span></label>
+                                <input type="text" name="name" id="name" class="bg-transparent" placeholder="Name"
+                                    value="@isset($item->name){{$item->name}}@endisset">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-12">
+                            <div class="input-style-1">
+                                <label for="price">Price<span class="asterisk">*</span></label>
+                                <input type="text" name="price" id="price" class="bg-transparent" placeholder="Price"
+                                    value="@isset($item->price){{$item->price}}@endisset">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-12">
+                            <div class="input-style-1">
+                                <label for="qty">Quantity<span class="asterisk">*</span></label>
+                                <input type="text" name="qty" id="qty" class="bg-transparent" placeholder="Quantity"
+                                    value="@isset($item->qty){{$item->qty}}@endisset">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="main-btn primary-btn btn-hover" type="submit">Save</button>
+                            <a href="{{route('productList')}}"><button type="button"
+                                    class="main-btn secondary-btn btn-hover">Cancel</button></a>
+                        </div>
+                    </div>
+                    <!-- end row -->
+                </form>
             </div>
             <!-- end card -->
         </div>
@@ -122,7 +125,7 @@ $(document).ready(function() {
                     data: {
                         "_token": "{{ csrf_token() }}",
                         action: '{{isset($item->id) ? "edit" :"add"}}',
-                        id:'{{isset($item->id) ? $item->id :""}}'
+                        id: '{{isset($item->id) ? $item->id :""}}'
                     }
                 }
             },
@@ -134,7 +137,7 @@ $(document).ready(function() {
                 required: true,
                 digits: true
             },
-            
+
         },
         messages: {
             category_id: {
@@ -146,11 +149,11 @@ $(document).ready(function() {
             },
             price: {
                 required: "This field is required",
-                number:"Invalid price"
+                number: "Invalid price"
             },
             qty: {
                 required: "This field is required",
-                digits:"Invalid quantity"
+                digits: "Invalid quantity"
             },
         }
     });
