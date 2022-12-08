@@ -1,6 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    .select-style-1 .select-position select{
+        padding: 5px;
+    }
+    .input-style-1 input, .input-style-1 textarea{
+        padding: 5px;
+    }
+</style>
 <!-- ========== section start ========== -->
 <section class="section">
     <div class="container-fluid">
@@ -15,7 +23,7 @@
                                     <a href="{{route('home')}}">Dashboard</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
-                                    Categories Form
+                                    Order Form
                                 </li>
                             </ol>
                         </nav>
@@ -34,6 +42,15 @@
         <!-- ========== title-wrapper end ========== -->
 
         <!-- Invoice Wrapper Start -->
+        @if(isset($item))
+            <form method="POST" action="{{route('updateOrder',['id'=>$item->id])}}" id="productForm" enctype="multipart/form-data">
+        @else
+            <form method="POST" action="{{route('storeOrder')}}" id="productForm" enctype="multipart/form-data">
+        @endif
+        
+        @csrf
+        <input type="hidden" name="id" value="@isset($item->id){{$item->id}}@endisset">
+        
         <div class="invoice-wrapper">
             <div class="row">
                 <div class="col-12">
@@ -42,40 +59,45 @@
                             <div class="invoice-for">
                                 <h2 class="mb-10">Invoice</h2>
                                 <p class="text-sm">
-                                    Admin Dashboard Design & Development
+                                    3891 Ranchview Dr. Richardson,
+                                    <br>California 62639
+                                </p>
+                                <p class="text-sm">
+                                    <span class="text-medium">Email:</span>
+                                    admin@example.com
                                 </p>
                             </div>
                             <div class="invoice-logo">
                                 <img src="{{asset('uploads/user/1668584911_Untitled-2.png')}}" alt="" />
                             </div>
                             <div class="invoice-date">
-                                <p><span>Date Issued:</span> 20/02/2024</p>
-                                <p><span>Date Due:</span> 20/02/2028</p>
                                 <p><span>Order ID:</span> #5467</p>
+                                <p><span>Date:</span> 20/02/2024</p>
                             </div>
                         </div>
                         <div class="invoice-address">
                             <div class="address-item">
-                                <h5 class="text-bold">From</h5>
-                                <h1>John Doe</h1>
-                                <p class="text-sm">
-                                    3891 Ranchview Dr. Richardson, California 62639
-                                </p>
-                                <p class="text-sm">
-                                    <span class="text-medium">Email:</span>
-                                    admin@example.com
-                                </p>
+                                <div class="select-style-1 mb-2">
+                                    <div class="select-position">
+                                        <select name="client_id" id="client_id">
+                                            <option value="">Select Client</option>
+                                            @foreach($clients as $client)
+                                                <option {{isset($item->client_id) &&  $item->client_id === $client->id? 'selected' :''  }} value='{{$client->id}}'> {{ $client->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="input-style-1 mb-2">
+                                    <input type="text" name="fullname" id="fullname" class="bg-transparent" placeholder="Full Name" value="{{isset($item->fullname) ? $item->fullname :''  }}">
+                                </div>
                             </div>
                             <div class="address-item">
-                                <h5 class="text-bold">To</h5>
-                                <h1>Santa Gosh</h1>
-                                <p class="text-sm">
-                                    2972 Westheimer Rd. Santa Ana, Illinois 85486
-                                </p>
-                                <p class="text-sm">
-                                    <span class="text-medium">Email:</span>
-                                    admin@example.com
-                                </p>
+                                <div class="input-style-1 mb-2">
+                                    <input type="text" name="moblie_no" id="moblie_no" class="bg-transparent" placeholder="Moblie No" value="{{isset($item->moblie_no) ? $item->moblie_no :''  }}">
+                                </div>
+                                <div class="input-style-1 mb-2">
+                                    <input type="text" name="sip_vehicle_no" id="sip_vehicle_no" class="bg-transparent" placeholder="Sip Vehicle No" value="{{isset($item->sip_vehicle_no) ? $item->sip_vehicle_no :''  }}">
+                                </div>
                             </div>
                         </div>
                         <div class="table-responsive">
@@ -83,13 +105,13 @@
                                 <thead>
                                     <tr>
                                         <th class="service">
-                                            <h6 class="text-sm text-medium">Service</h6>
-                                        </th>
-                                        <th class="desc">
-                                            <h6 class="text-sm text-medium">Descriptions</h6>
+                                            <h6 class="text-sm text-medium">Name</h6>
                                         </th>
                                         <th class="qty">
                                             <h6 class="text-sm text-medium">Qty</h6>
+                                        </th>
+                                        <th class="rate">
+                                            <h6 class="text-sm text-medium">Rate</h6>
                                         </th>
                                         <th class="amount">
                                             <h6 class="text-sm text-medium">Amounts</h6>
@@ -102,47 +124,13 @@
                                             <p class="text-sm">Admin Dashboard</p>
                                         </td>
                                         <td>
-                                            <p class="text-sm">
-                                                Design and Development Service
-                                            </p>
-                                        </td>
-                                        <td>
                                             <p class="text-sm">3</p>
                                         </td>
                                         <td>
+                                            <p class="text-sm">$233.34</p>
+                                        </td>
+                                        <td>
                                             <p class="text-sm">$700</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="text-sm">Landing Page</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-sm">
-                                                Landing Page Ui kit design and Development
-                                            </p>
-                                        </td>
-                                        <td>
-                                            <p class="text-sm">1</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-sm">$1000</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="text-sm">Web design</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-sm">
-                                                Web Design and Development and Seo
-                                            </p>
-                                        </td>
-                                        <td>
-                                            <p class="text-sm">2</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-sm">$4000</p>
                                         </td>
                                     </tr>
                                     <tr>
@@ -188,30 +176,20 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="note-wrapper warning-alert py-4 px-sm-3 px-lg-5">
-                            <div class="alert">
-                                <h5 class="text-bold mb-15">Notes:</h5>
-                                <p class="text-sm text-gray">
-                                    All accounts are to be paid within 7 days from receipt
-                                    of invoice. To be paid by cheque or credit card or
-                                    direct payment online. If account is not paid within 7
-                                    days the credits details supplied as confirmation of
-                                    work undertaken will be charged the agreed quoted fee
-                                    noted above.
-                                </p>
-                            </div>
-                        </div>
                         <div class="invoice-action">
                             <ul class="d-flex flex-wrap align-items-center justify-content-center">
                                 <li class="m-2">
-                                    <a href="#0" class="main-btn primary-btn-outline btn-hover">
+                                    <button class="main-btn primary-btn btn-hover" type="submit">Save</button>
+                                    
+                                    <a href="{{route('orderList')}}"><button type="button" class="main-btn secondary-btn btn-hover">Cancel</button></a>
+                                    <!-- <a href="#0" class="main-btn primary-btn-outline btn-hover">
                                         Download Invoice
-                                    </a>
+                                    </a> -->
                                 </li>
                                 <li class="m-2">
-                                    <a href="#0" class="main-btn primary-btn btn-hover">
+                                    <!-- <a href="#0" class="main-btn primary-btn btn-hover">
                                         Send Invoice
-                                    </a>
+                                    </a> -->
                                 </li>
                             </ul>
                         </div>
@@ -223,6 +201,7 @@
             <!-- End Row -->
         </div>
         <!-- Invoice Wrapper End -->
+        </form>
     </div>
     <!-- end container -->
 </section>

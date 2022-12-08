@@ -57,8 +57,8 @@ class OrdersController extends Controller
 
         $data = array(
             "client_id" => $request->client_id,
-            "invoice_no" => $request->invoice_no,
-            "type" => $request->type,
+            "invoice_no" => '1',
+            "type" => 'orignal',
             "create_by" => $authUser->id,
         );
 
@@ -73,7 +73,8 @@ class OrdersController extends Controller
         if(!empty($request->moblie_no)){
             $data['moblie_no'] = $request->moblie_no;
         }
-
+        // print_r($data);
+        // exit;
         $item_add = Order::create($data);
         
         if (!is_null($item_add)) {
