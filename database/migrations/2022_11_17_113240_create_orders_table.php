@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Carbon\Carbon;
 
 return new class extends Migration
 {
@@ -20,6 +21,8 @@ return new class extends Migration
             $table->string('fullname');
             $table->string('sip_vehicle_no');
             $table->string('moblie_no');
+            $table->date('date')->default(Carbon::now());
+            $table->double('total', 8, 2)->default(00.00);
             $table->enum('type', ['duplicate', 'orignal'])->default('duplicate');
             $table->integer('create_by');
             $table->integer('update_by')->nullable();

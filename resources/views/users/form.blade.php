@@ -1,62 +1,43 @@
 @extends('layouts.app')
 
 @section('content')
-<style>
-.holder img {
-    max-width: 100px;
-    max-height: 100px;
-    min-width: 100px;
-    min-height: 100px;
-}
-</style>
-<!-- ========== section start ========== -->
-<section class="section">
-    <div class="container-fluid">
-        <!-- ========== title-wrapper start ========== -->
-        <div class="title-wrapper pt-30">
-            <div class="row align-items-center">
-                <div class="col-md-6 col-sm-6 col-6">
-                    <div class="breadcrumb-wrapper mb-30">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                    <a href="{{route('home')}}">Dashboard</a>
-                                </li>
-                                <li class="breadcrumb-item active" aria-current="page">
-                                    Users Form
-                                </li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-                <!-- end col -->
-                <div class="col-md-6 col-sm-6 col-6">
-                    <div class="title mb-30">
-                        <a href="{{route('userList')}}"><button class="btn primary-btn">Back</button></a>
-                    </div>
-                </div>
-                <!-- end col -->
-            </div>
-            <!-- end row -->
-        </div>
-        <!-- ========== title-wrapper end ========== -->
+<div class="content container-fluid">
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <!-- <h3 class="page-title">Users</h3> -->
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#">Users</a>
+                    </li>
+                    <li class="breadcrumb-item active">Add Users</li>
+                </ul>
 
-        <!-- ========== form-layout-wrapper start ========== -->
-        <div class="form-layout-wrapper">
-            <div class="card-style mb-30">
-                <h6 class="mb-25">User</h6>
-                <form method="POST"
-                    action="{{(isset($item)) ? route('updateUser',['id'=>$item->id]) : route('storeUser')}}"
-                    id="userForm" enctype="multipart/form-data">
-                    <div class="row">
+                <div class="btn-back">
+                    <a href="{{route('userList')}}"><button class="btn btn-primary btn-sm" type="button"><i
+                                class="fas fa-chevron-left"></i> Back</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Users</h4>
+                    <form method="POST"
+                        action="{{(isset($item)) ? route('updateUser',['id'=>$item->id]) : route('storeUser')}}"
+                        id="userForm" enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" name="id" value="@isset($item->id){{$item->id}}@endisset">
-                        <!-- sub -->
-                        <div class="col-md-6 col-sm-12 col-12">
-                            <div class="select-style-1">
-                                <label>User Type<span class="asterisk">*</span></label>
-                                <div class="select-position">
-                                    <select name="role" id="role">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>User Type<span class="asterisk">*</span></label>
+                                    <select class="select select2" name="role" id="role">
                                         <option value="">Select User Type</option>
                                         <option value="admin"
                                             {{isset($item->role) && $item->role === 'admin' ? 'selected' :''  }}>Admin
@@ -66,82 +47,58 @@
                                             Employee</option>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label>Name<span class="asterisk">*</span></label>
+                                    <input type="text" class="form-control" name="name" id="name" placeholder="Name"
+                                        value="@isset($item->name){{$item->name}}@endisset" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone No<span class="asterisk">*</span></label>
+                                    <input type="text" class="form-control" name="phone_no" id="phone_no" placeholder="Phone No" value="@isset($item->phone_no){{$item->phone_no}}@endisset" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Email<span class="asterisk">*</span></label>
+                                    <input type="email" name="email" id="email" class="form-control" placeholder="Email" value="@isset($item->email){{$item->email}}@endisset" @if(isset($item)) readonly @endif>
+                                </div>
+                                <div class="form-group">
+                                    <label>Password @if(!isset($item))<span class="asterisk">*</span>@endif</label>
+                                    <input type="password" name="password" id="password" class="form-control" placeholder="Password" value="" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Confirm Password @if(!isset($item))<span class="asterisk">*</span>@endif</label>
+                                    <input type="password" class="form-control" name="confirmpassword" id="confirmpassword"
+                                        placeholder="Confirm Password" value="" />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-12 col-12">
-                            <div class="input-style-1">
-                                <label for="name">Name<span class="asterisk">*</span></label>
-                                <input type="text" name="name" id="name" class="bg-transparent" placeholder="Name"
-                                    value="@isset($item->name){{$item->name}}@endisset">
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-12 col-12">
-                            <div class="input-style-1">
-                                <label for="phone_no">Phone No<span class="asterisk">*</span></label>
-                                <input type="text" name="phone_no" id="phone_no" class="bg-transparent"
-                                    placeholder="Phone No" value="@isset($item->phone_no){{$item->phone_no}}@endisset">
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-12 col-12">
-                            <div class="input-style-1">
-                                <label for="email">Email<span class="asterisk">*</span></label>
-                                @if(isset($item))
-                                <input type="text" name="email" id="email" class="bg-transparent" placeholder="Email"
-                                    value="@isset($item->email){{$item->email}}@endisset" readonly>
-                                @else
-                                <input type="text" name="email" id="email" class="bg-transparent" placeholder="Email"
-                                    value="">
-                                @endif
-
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-12 col-12">
-                            <div class="input-style-1">
-                                <label for="password">Password @if(!isset($item))<span class="asterisk">*</span>
-                                    @endif</label>
-                                <input type="password" name="password" id="password" class="bg-transparent"
-                                    placeholder="Password" value="">
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-12 col-12">
-                            <div class="input-style-1">
-                                <label for="confirmpassword">Confirm Password @if(!isset($item))<span
-                                        class="asterisk">*</span>
-                                    @endif</label>
-                                <input type="password" name="confirmpassword" id="confirmpassword"
-                                    class="bg-transparent" placeholder="Confirm Password" value="">
-                            </div>
-                        </div>
-                        <div class="col-md-12 col-sm-12 col-12">
-                            <div class="input-style-1">
-                                <label for="image_preview">Image</label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="image" id="image_preview">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="custom-file-container" data-upload-id="myFirstImage">
+                                        <label>Upload (Single File) <a href="javascript:void(0)" class="custom-file-container__image-clear" id="imgRemove" title="Clear Image">x</a> </label>
+                                        <label class="custom-file-container__custom-file">
+                                            <input type="file" class="custom-file-container__custom-file__custom-file-input" accept="image/*" name="image" id="image_preview">
+                                            <span class="custom-file-container__custom-file__custom-file-control" id="imgName">Choose file...<span class="custom-file-container__custom-file__custom-file-control__button"> Browse </span></span>
+                                        </label>
+                                        <div class="custom-file-container__image-preview" id="imgPreview" style="background-image:url('{{ imageUrl(isset($item->image) ? $item->image : '', 'user','no_image.jpg','thumbnail') }}')">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="holder mt-2">
-                                    <img id="imgPreview"
-                                        src="{{ imageUrl(isset($item->image) ? $item->image : '', 'user','no_image.jpg','thumbnail') }}"
-                                        alt="pic" />
-                                </div>
                             </div>
                         </div>
-                        <div class="col-12">
-                            <button class="main-btn primary-btn btn-hover" type="submit">Save</button>
-                            <a href="{{route('userList')}}"><button type="button"
-                                    class="main-btn secondary-btn btn-hover">Cancel</button></a>
+                        <div class="text-end mt-4">
+                            <button type="submit" class="btn btn-primary">
+                                Add Customer
+                            </button>
                         </div>
-                    </div>
-                    <!-- end row -->
-                </form>
+                    </form>
+                </div>
             </div>
-            <!-- end card -->
         </div>
-        <!-- ========== form-layout-wrapper end ========== -->
     </div>
-    <!-- end container -->
-</section>
+</div>
 @endsection
 
 @push('scripts')
@@ -153,7 +110,22 @@ $(document).ready(function() {
     var addUserForm = $("#userForm");
     //alert('hi');
     var validator = addUserForm.validate({
-
+        highlight: function (element, errorClass, validClass) {
+            $(element).parents('.form-control').removeClass('has-success').addClass('has-error');     
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).parents('.form-control').removeClass('has-error').addClass('has-success');
+        },
+        errorPlacement: function (error, element) {
+            if(element.hasClass('select2') && element.next('.select2-container').length) {
+                error.insertAfter(element.next('.select2-container'));
+            } else if (element.parent('.input-group').length) {
+                error.insertAfter(element.parent());
+            }
+            else {
+                error.insertAfter(element);
+            }
+        },
         rules: {
             role: {
                 required: true
@@ -232,7 +204,7 @@ $(document).ready(() => {
         if (file) {
             let reader = new FileReader();
             reader.onload = function(event) {
-                $('#imgPreview').attr('src', event.target.result);
+                $('#imgPreview').css('background-image', "url(" +event.target.result + ")");
             }
             let fileExtension = file.name.split('.').pop() || '';
 
@@ -250,8 +222,16 @@ $(document).ready(() => {
                 return;
             } else {
                 reader.readAsDataURL(file);
+                $('#imgName').html(file.name+'<span class="custom-file-container__custom-file__custom-file-control__button"> Browse </span>');
             }
         }
+    });
+    
+    $('#imgRemove').click(function() {
+        $('#image_preview').val('');
+
+        $('#imgName').html('Choose file... <span class="custom-file-container__custom-file__custom-file-control__button"> Browse </span>');
+        $('#imgPreview').css('background-image', "url('{{ imageUrl('', '','no_image.jpg') }}')");
     });
 });
 </script>

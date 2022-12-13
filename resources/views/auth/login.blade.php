@@ -1,121 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.svg'); }}" type="image/x-icon" />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0"/>
     <title>Sign In</title>
 
-    <!-- ========== All CSS files linkup ========= -->
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css'); }}" />
-    <!-- <link rel="stylesheet" href="{{ asset('assets/css/lineicons.css'); }}" /> -->
-    <!-- <link rel="stylesheet" href="{{ asset('assets/css/materialdesignicons.min.css'); }}" /> -->
-    <!-- <link rel="stylesheet" href="{{ asset('assets/css/fullcalendar.css'); }}" /> -->
-    <link rel="stylesheet" href="{{ asset('assets/css/main.css'); }}" />
-</head>
-
-<body>
-
-    <!-- ========== signin-section start ========== -->
-    <section class="signin-section m-5">
-        <div class="container-fluid">
-            <div class="row g-0 auth-row">
-                <div class="col-lg-6">
-                    <div class="auth-cover-wrapper bg-primary-100">
-                        <div class="auth-cover">
-                            <div class="title text-center">
-                                <h1 class="text-primary mb-10">Welcome Back</h1>
-                                <p class="text-medium">
-                                    Sign in to your Existing account to continue
-                                </p>
-                            </div>
-                            <div class="cover-image">
-                                <img src="{{ asset('assets/images/auth/signin-image.svg'); }}" alt="" />
-                            </div>
-                            <div class="shape-image">
-                                <img src="{{ asset('assets/images/auth/shape.svg'); }}" alt="" />
-                            </div>
-                        </div>
+    <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome/css/fontawesome.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome/css/all.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toatr.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
+  </head>
+  <body>
+    <div class="main-wrapper login-body">
+      <div class="login-wrapper">
+        <div class="container">
+          <img class="img-fluid logo-dark mb-2" src="{{ asset('assets/img/logo.png'); }}" alt="Logo"/>
+          <div class="loginbox">
+            <div class="login-right">
+              <div class="login-right-wrap">
+                <h1>Login</h1>
+                <!-- <p class="account-subtitle">Access to our dashboard</p> -->
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+                  <div class="form-group">
+                    <label class="form-control-label">Email Address</label>
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus />
+                    @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                  </div>
+                  <div class="form-group">
+                    <label class="form-control-label">Password</label>
+                    <div class="pass-group">
+                      <input type="password" class="form-control pass-input @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" />
+                      <span class="fas fa-eye toggle-password"></span>
                     </div>
-                </div>
-                <!-- end col -->
-                <div class="col-lg-6">
-                    <div class="signin-wrapper">
-                        <div class="form-wrapper">
-                            <h6 class="mb-15">{{ __('Login') }}</h6>
-                            <p class="text-sm mb-25">
-                                Start creating the best possible user experience for you
-                                customers.
-                            </p>
-                            <form method="POST" action="{{ route('login') }}">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="input-style-1">
-                                            <label>Email Address</label>
-                                            <input id="email" type="email" class="@error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                        </div>
-                                        @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <!-- end col -->
-                                    <div class="col-12">
-                                        <div class="input-style-1">
-                                            <label>Password</label>
-                                            <input id="password" type="password" class="@error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-                                        </div>
-                                        @error('password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <!-- end col -->
-                                    <div class="col-xxl-6 col-lg-12 col-md-6">
-                                        <!-- <div class="form-check checkbox-style mb-30">
-                                            <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="remember">
-                                                Remember me next time</label>
-                                        </div> -->
-                                    </div>
-                                    <!-- end col -->
-                                    <div class="col-xxl-6 col-lg-12 col-md-6">
-                                        <div class=" text-start text-md-end text-lg-start text-xxl-end mb-30">
-                                            @if (Route::has('password.request'))
-                                                <a class="hover-underline" href="{{ route('password.request') }}">Forgot Your Password?</a>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <!-- end col -->
-                                    <div class="col-12">
-                                        <div class="button-group d-flex justify-content-center flex-wrap">
-                                            <button type="submit" class="main-btn primary-btn btn-hover w-100 text-center">
-                                                Sign In
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- end row -->
-                            </form>
+                    @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="custom-control custom-checkbox">
+                          <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            id="cb1"
+                          />
+                          <label class="custom-control-label" for="cb1"
+                            >Remember me</label
+                          >
                         </div>
+                      </div>
+                      <div class="col-6 text-end">
+                        @if (Route::has('password.request'))
+                        <a class="forgot-link" href="{{ route('password.request') }}">Forgot Password ?</a>
+                        @endif
+                      </div>
                     </div>
-                </div>
-                <!-- end col -->
+                  </div>
+                  <button class="btn btn-lg btn-block btn-primary w-100" type="submit">Login</button>
+                </form>
+              </div>
             </div>
-            <!-- end row -->
+          </div>
         </div>
-    </section>
-    <!-- ========== signin-section end ========== -->
-
-
-    <!-- ========= All Javascript files linkup ======== -->
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js'); }}"></script>
-</body>
-
+      </div>
+    </div>
+    <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/feather.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/toastr/toastr.js') }}"></script>
+    <!-- <script src="{{ asset('assets/js/script.js') }}"></script> -->
+    <script>
+        // Password Show
+        if($('.toggle-password').length > 0) {
+            $(document).on('click', '.toggle-password', function() {
+                $(this).toggleClass("fa-eye fa-eye-slash");
+                var input = $(".pass-input");
+                if (input.attr("type") == "password") {
+                    input.attr("type", "text");
+                } else {
+                    input.attr("type", "password");
+                }
+            });
+        }
+    </script>
+    
+    @if(Session::has('success'))
+    <script>
+        toastr.success("{{ Session::get('success') }}")
+    </script>
+    @elseif(Session::has('status'))
+    <script>
+        toastr.success("{{ Session::get('status') }}")
+    </script>
+    @elseif(Session::has('error'))
+    <script>
+        toastr.error("{{ Session::get('error') }}")
+    </script>
+    @endif
+  </body>
 </html>

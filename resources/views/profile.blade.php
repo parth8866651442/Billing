@@ -1,102 +1,107 @@
 @extends('layouts.app')
 
 @section('content')
-<!-- ========== section start ========== -->
-<section class="section">
-    <div class="container-fluid">
-        <!-- ========== title-wrapper start ========== -->
-        <div class="title-wrapper pt-30">
-            <div class="row align-items-center">
-                <div class="col-md-6 col-sm-6 col-6">
-                    <div class="breadcrumb-wrapper mb-30">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                    <a href="{{route('home')}}">Dashboard</a>
-                                </li>
-                                <li class="breadcrumb-item active" aria-current="page">Profile</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-                <!-- end col -->
-                <div class="col-md-6 col-sm-6 col-6">
-                    <div class="title mb-30">
-                        <a href="{{route('home')}}"><button class="btn primary-btn">Back</button></a>
-                    </div>
-                </div>
-                <!-- end col -->
-            </div>
-            <!-- end row -->
-        </div>
-        <!-- ========== title-wrapper end ========== -->
+<style>
+.page-header .breadcrumb {
+    float: left;
+}
 
-        <!-- ========== form-layout-wrapper start ========== -->
-        <div class="form-layout-wrapper">
-            <div class="row">
-                <div class="col-xxl-9 col-lg-8">
-                    <div class="card-style mb-30">
-                        <h6 class="mb-25">Profile</h6>
-                        <form method="POST" action="{{route('updateProfile')}}" id="userProfileForm"
-                            enctype="multipart/form-data">
-                            @csrf
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="profile-wrapper input-style-1">
-                                        <div class="profile-photo">
-                                            <div class="image">
-                                                <img id="imgPreview" src="{{ imageUrl(auth()->user()->image, 'user','no_image.jpg','thumbnail') }}" alt="profile" />
-                                                <div class="update-image">
-                                                    <input type="file" accept="image/*" name="image" id="image_preview"/>
-                                                    <label for=""><i class="lni lni-camera"></i></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- end col -->
-                                <div class="col-12">
-                                    <div class="input-style-1">
-                                        <label>Name</label>
-                                        <input type="text" name="name" id="name" placeholder="Name" value="{{auth()->user()->name}}">
-                                    </div>
-                                </div>
-                                <!-- end col -->
-                                <div class="col-12">
-                                    <div class="input-style-1">
-                                        <label>Email</label>
-                                        <input type="text" name="email" id="email" readonly placeholder="Email" value="{{auth()->user()->email}}">
-                                    </div>
-                                </div>
-                                <!-- end col -->
-                                <div class="col-12">
-                                    <div class="input-style-1">
-                                        <label>Phone No</label>
-                                        <input type="text" name="phone_no" id="phone_no" placeholder="Phone No" value="{{auth()->user()->phone_no}}">
-                                    </div>
-                                </div>
-                                <!-- end col -->
-                                <div class="col-12">
-                                    <div class="button-group d-flex justify-content-center flex-wrap">
-                                        <button type="submit" class="main-btn primary-btn btn-hover m-2">Save</button>
-                                        <a href="{{route('home')}}" class="main-btn danger-btn-outline m-2">Cancel</a>
-                                    </div>
+.page-header .btn-back {
+    float: right;
+}
+</style>
+<div class="content container-fluid">
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <!-- <h3 class="page-title">Users</h3> -->
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">Profile</li>
+                </ul>
+
+                <div class="btn-back">
+                    <a href="{{route('home')}}"><button class="btn btn-primary btn-sm" type="button"><i class="fas fa-chevron-left"></i> Back</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-3 col-md-4">
+            <div class="widget settings-menu">
+                <ul>
+                    <li class="nav-item">
+                        <a href="{{route('profile')}}" class="nav-link {{ request()->routeIs('profile') ? 'active' : '' }}">
+                            <i class="far fa-user"></i> <span>Profile Settings</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('passwordChange')}}" class="nav-link {{ request()->routeIs('passwordChange') ? 'active' : '' }}">
+                            <i class="fas fa-unlock-alt"></i>
+                            <span>Change Password</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-xl-9 col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Profile</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{route('updateProfile')}}" id="userProfileForm"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="row form-group">
+                            <label for="name" class="col-sm-3 col-form-label input-label"></label>
+                            <div class="col-sm-9">
+                                <div class="d-flex align-items-center">
+                                    <label class="avatar avatar-xxl profile-cover-avatar m-0" for="image_preview">
+                                        <img id="imgPreview" class="avatar-img"
+                                            src="{{ imageUrl(auth()->user()->image, 'user','no_image.jpg','thumbnail') }}"
+                                            alt="Profile Image" />
+                                        <input type="file" accept="image/*" name="image" id="image_preview" />
+                                        <span class="avatar-edit">
+                                            <i data-feather="edit-2" class="avatar-uploader-icon shadow-soft"></i>
+                                        </span>
+                                    </label>
                                 </div>
                             </div>
-                            <!-- end row -->
-                        </form>
-                    </div>
-                    <!-- end card -->
+                        </div>
+                        <div class="row form-group">
+                            <label for="name" class="col-sm-3 col-form-label input-label">Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="name" id="name" placeholder="Your Name"
+                                    value="{{auth()->user()->name}}" />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label for="email" class="col-sm-3 col-form-label input-label">Email</label>
+                            <div class="col-sm-9">
+                                <input type="email" class="form-control" name="email" id="email" placeholder="Email"
+                                    value="{{auth()->user()->email}}" readonly />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label for="phone" class="col-sm-3 col-form-label input-label">Phone</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="phone_no" id="phone_no"
+                                    placeholder="xxxxxxxxxx" value="{{auth()->user()->phone_no}}" />
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
                 </div>
-                <!-- end col -->
             </div>
-            <!-- end row -->
         </div>
-        <!-- ========== form-layout-wrapper end ========== -->
     </div>
-    <!-- end container -->
-</section>
-<!-- ========== section end ========== -->
+</div>
 @endsection
 
 @push('scripts')

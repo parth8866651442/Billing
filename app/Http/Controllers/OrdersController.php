@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Order;
 use App\Models\Client;
 use App\Models\Products;
+use App\Models\OrderItems;
+use Carbon\Carbon;
 use Auth;
 
 class OrdersController extends Controller
@@ -43,18 +45,18 @@ class OrdersController extends Controller
     public function form(Request $request, $itemID='')
     {  
         $clients = Client::get();
+        $products = Products::get();
 
         if($itemID){
-            $item = Order::with('clientDetail')->findOrFail($itemID);
-            return view('orders.form', compact('item','clients'));
+            $item = Order::with('orderItemsDetail','clientDetail')->findOrFail($itemID);
+            return view('orders.form', compact('item','clients','products'));
         }
-        return view('orders.form',compact('clients'));
+        return view('orders.form',compact('clients','products'));
     }
 
     public function store(Request $request)
     {
         $authUser = auth()->user();
-
         $data = array(
             "client_id" => $request->client_id,
             "invoice_no" => '1',
@@ -65,6 +67,10 @@ class OrdersController extends Controller
         if(!empty($request->fullname)){
             $data['fullname'] = $request->fullname;
         }
+
+        if(!empty($request->date)){
+            $data['date'] = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
+        }
         
         if(!empty($request->sip_vehicle_no)){
             $data['sip_vehicle_no'] = $request->sip_vehicle_no;
@@ -73,11 +79,30 @@ class OrdersController extends Controller
         if(!empty($request->moblie_no)){
             $data['moblie_no'] = $request->moblie_no;
         }
-        // print_r($data);
-        // exit;
+
+        if(!empty($request->total)){
+            $data['total'] = $request->total;
+        }
+        
         $item_add = Order::create($data);
         
         if (!is_null($item_add)) {
+            $itemData = $item_add->fresh();
+
+                // items
+                if(!empty($request->items)){
+                    foreach($request->items as $key => $value)
+                    {   
+                        $data = array(
+                            "order_id" => $itemData->id,
+                            "product_id" => $value['product_id'],
+                            "price" => $value['price'],
+                            "qty" => $value['qty'],
+                            "amount" => $value['amount']
+                        );
+                        OrderItems::create($data); 
+                    }
+                }
             return redirect()->route('orderList')->with('success', 'Order created successfully');
         } else {
             return redirect()->route('orderList')->with('error', 'Order created unsuccessfully');
@@ -96,6 +121,10 @@ class OrdersController extends Controller
         if(!empty($request->fullname)){
             $items->fullname = $request->fullname;
         }
+
+        if(!empty($request->date)){
+            $items->date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
+        }
         
         if(!empty($request->sip_vehicle_no)){
             $items->sip_vehicle_no = $request->sip_vehicle_no;
@@ -105,7 +134,30 @@ class OrdersController extends Controller
             $items->moblie_no = $request->moblie_no;
         }
 
+        if(!empty($request->total)){
+            $items->total = $request->total;
+        }
+
         if ($items->save()) {
+             // items
+             if(!empty($request->items)){
+                foreach($request->items as $key => $value)
+                {   
+                    $data = array(
+                        "order_id" => $itemID,
+                        "product_id" => $value['product_id'],
+                        "price" => $value['price'],
+                        "qty" => $value['qty'],
+                        "amount" => $value['amount']
+                    );
+
+                    if (!empty($value['item_id'])) {
+                        OrderItems::where('id', $value['item_id'])->update($data);
+                    }else{
+                        OrderItems::create($data); 
+                    }
+                }
+            }
             return redirect()->route('orderList')->with('success', 'Order updated successfully');
         } else {
             return redirect()->route('orderList')->with('error', 'Order updated unsuccessfully');
@@ -122,6 +174,31 @@ class OrdersController extends Controller
             return response()->json(['status' => true, 'message' => 'Order removed successfully'], 200);
         } else {
             return response()->json(['status' => false, 'message' => 'Order removed unsuccessfully'], 200);
+        }
+    }
+
+    public function removeItem($itemID)
+    {
+        $data = OrderItems::where('id', $itemID)->first();
+        if(!is_null($data)){
+            $items = OrderItems::where('id', $itemID)->delete();
+            if (!is_null($items)) {
+                return response()->json(['status' => true, 'message' => 'Order item removed successfully'], 200);
+            } else {
+                return response()->json(['status' => false, 'message' => 'Order item removed unsuccessfully'], 200);
+            }
+        }else{
+            return response()->json(['status' => false, 'message' => 'Order item not available'], 200);
+        }
+    }
+
+    public function productPrice($itemID)
+    {
+        $data = Products::where('id', $itemID)->first();
+        if(!is_null($data)){
+            return response()->json(['status' => true, 'price' => $data->price ], 200);
+        }else{
+            return response()->json(['status' => false, 'price' => 0], 200);
         }
     }
 }

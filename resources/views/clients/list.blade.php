@@ -1,64 +1,51 @@
 @extends('layouts.app')
 
 @section('content')
-<!-- ========== section start ========== -->
-<section class="section">
-    <div class="container-fluid">
-        <!-- ========== title-wrapper start ========== -->
-        <div class="title-wrapper pt-30">
-            <div class="row align-items-center">
-                <div class="col-md-6 col-sm-6 col-6">
-                    <div class="breadcrumb-wrapper mb-30">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                <a href="{{route('home')}}">Dashboard</a>
-                                </li>
-                                <li class="breadcrumb-item active" aria-current="page">Clients List</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-                <!-- end col -->
-                <div class="col-md-6 col-sm-6 col-6">
-                    <div class="title mb-30">
-                        <a href="{{route('home')}}"><button class="btn primary-btn">Back</button></a> 
-                    </div>
-                </div>
-                <!-- end col -->
+<div class="content container-fluid">
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">Clients</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{{route('home')}}">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">Clients List</li>
+                </ul>
             </div>
-            <!-- end row -->
-        </div>
-        <!-- ========== title-wrapper end ========== -->
-        <!-- ========== tables-wrapper start ========== -->
-        <div class="tables-wrapper">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="card-style mb-30">
-                  <h6 class="mb-10">Clients List</h6>
-                  <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
-                    <div class="left">
-                      <div class="table-search d-flex">
-                        <div class="form-group">
-                            <input type="text" placeholder="Search..." id="searchInput" />
-                            <button onclick="getClients()"><i class="lni lni-search-alt"></i></button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="table-wrapper table-responsive"  id="userList">
-                  </div>
-                </div>
-                <!-- end card -->
-              </div>
-              <!-- end col -->
+            <div class="col-auto">
+                <a href="{{route('addClient')}}" class="btn btn-primary me-1"><i class="fas fa-plus"></i></a>
+                <a class="btn btn-primary filter-btn" href="javascript:void(0);" id="filter_search">
+                    <i class="fas fa-filter"></i>
+                </a>
             </div>
-            <!-- end row -->
         </div>
-        <!-- ========== tables-wrapper end ========== -->
     </div>
-    <!-- end container -->
-</section>
+    <div id="filter_inputs" class="card filter-card">
+        <div class="card-body pb-0">
+            <div class="row">
+                <div class="col-sm-6 col-md-3">
+                    <div class="form-group">
+                        <input type="text" placeholder="Search..." class="form-control" id="searchInput" />
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <button onclick="getClients()" class="btn btn-primary btn-sm"><i class="lni lni-search-alt"></i> Filter</button>    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive" id="clientList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
@@ -99,7 +86,7 @@ function getClients(page = false) {
         url: "{{route('clientList')}}" + `?${params}`,
         success: function(response) {
             // set data
-            $('#userList').html(response);
+            $('#clientList').html(response);
         }
     }).done(function() {
         setTimeout(function() {

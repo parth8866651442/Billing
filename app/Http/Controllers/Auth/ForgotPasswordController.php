@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class ForgotPasswordController extends Controller
 {
@@ -22,12 +23,19 @@ class ForgotPasswordController extends Controller
     use SendsPasswordResetEmails;
     
     public function credentials(Request $request)
-    {
-        return [
-            'email' => $request->input('email'),
-            'is_deleted' => 0,
-            'role' => 'admin',
-        ];
+    {   
+        $user = User::where(['email' => $request->email, 'is_active' => 1, 'is_deleted' => 0])->where(function($query) {
+            $query->where('role','superadmin')
+            ->orwhere(['role'=>'admin','role'=>'employee']);
+        })->first();
+        if(!empty($user)){
+            return [
+                'email' => $request->input('email'),
+                'is_deleted' => 0
+            ];
+        }else{
+            return redirect()->route('login')->with('error', 'Email not available');
+        }
     }
 
     public function showLinkRequestForm()

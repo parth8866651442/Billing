@@ -1,72 +1,53 @@
 @extends('layouts.app')
 
 @section('content')
-<!-- ========== section start ========== -->
-<section class="section">
-    <div class="container-fluid">
-        <!-- ========== title-wrapper start ========== -->
-        <div class="title-wrapper pt-30">
-            <div class="row align-items-center">
-                <div class="col-md-6 col-sm-6 col-6">
-                    <div class="breadcrumb-wrapper mb-30">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                    <a href="{{route('home')}}">Dashboard</a>
-                                </li>
-                                <li class="breadcrumb-item active" aria-current="page">
-                                    Categories Form
-                                </li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-                <!-- end col -->
-                <div class="col-md-6 col-sm-6 col-6">
-                    <div class="title mb-30">
-                        <a href="{{route('userList')}}"><button class="btn primary-btn">Back</button></a>
-                    </div>
-                </div>
-                <!-- end col -->
-            </div>
-            <!-- end row -->
-        </div>
-        <!-- ========== title-wrapper end ========== -->
+<div class="content container-fluid">
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <!-- <h3 class="page-title">Users</h3> -->
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#">Category</a>
+                    </li>
+                    <li class="breadcrumb-item active">Add Category</li>
+                </ul>
 
-        <!-- ========== form-layout-wrapper start ========== -->
-        <div class="form-layout-wrapper">
-            <div class="card-style mb-30">
-                <h6 class="mb-25">Category</h6>
-                @if(isset($item))
-                <form method="POST"
-                    action="{{(isset($item)) ? route('updateCategory',['id'=>$item->id]) : route('storeCategory')}}"
-                    id="categoryForm" enctype="multipart/form-data">
-                    <div class="row">
+                <div class="btn-back">
+                    <a href="{{route('categoryList')}}"><button class="btn btn-primary btn-sm" type="button"><i class="fas fa-chevron-left"></i> Back</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Category</h4>
+                    <form method="POST"
+                        action="{{(isset($item)) ? route('updateCategory',['id'=>$item->id]) : route('storeCategory')}}" id="categoryForm" enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" name="id" value="@isset($item->id){{$item->id}}@endisset">
-                        <!-- sub -->
-                        <div class="col-md-6 col-sm-12 col-12">
-                            <div class="input-style-1">
-                                <label for="name">Name<span class="asterisk">*</span></label>
-                                <input type="text" name="name" id="name" class="bg-transparent" placeholder="Name"
-                                    value="@isset($item->name){{$item->name}}@endisset">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Name<span class="asterisk">*</span></label>
+                                    <input type="text" class="form-control" name="name" id="name" placeholder="Name" value="@isset($item->name){{$item->name}}@endisset" />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-12">
-                            <button class="main-btn primary-btn btn-hover" type="submit">Save</button>
-                            <a href="{{route('categoryList')}}"><button type="button"
-                                    class="main-btn secondary-btn btn-hover">Cancel</button></a>
+                        <div class="text-end mt-4">
+                            <button type="submit" class="btn btn-primary"> Add Category </button>
                         </div>
-                    </div>
-                    <!-- end row -->
-                </form>
+                    </form>
+                </div>
             </div>
-            <!-- end card -->
         </div>
-        <!-- ========== form-layout-wrapper end ========== -->
     </div>
-    <!-- end container -->
-</section>
+</div>
 @endsection
 
 @push('scripts')
@@ -76,7 +57,6 @@
 <script>
 $(document).ready(function() {
     var addCategoryForm = $("#categoryForm");
-    //alert('hi');
     var validator = addCategoryForm.validate({
         rules: {
             name: {

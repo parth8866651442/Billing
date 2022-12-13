@@ -13,9 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+/* Route::get('/', function () {
     return view('welcome');
-});
+}); */
+
+Route::get('/', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
 
 Auth::routes([
     'register' => false,
@@ -90,5 +92,7 @@ Route::group(['middleware' => ['auth:web']], function () {
         Route::get('/edit/{id}', [App\Http\Controllers\OrdersController::class,'form'])->name('editOrder');
         Route::post('/update/{id}', [App\Http\Controllers\OrdersController::class,'update'])->name('updateOrder');
         Route::get('/delete/{id}', [App\Http\Controllers\OrdersController::class,'destroy'])->name('deleteOrder');
+        Route::get('/remove_item/{id}', [App\Http\Controllers\OrdersController::class,'removeItem'])->name('orderItemRemove');
+        Route::get('/item_price/{id}', [App\Http\Controllers\OrdersController::class,'productPrice'])->name('findItemPrice');
     });
 });

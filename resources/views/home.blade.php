@@ -1,104 +1,108 @@
 @extends('layouts.app')
 
 @section('content')
-<!-- ========== section start ========== -->
-<section class="section">
-    <div class="container-fluid">
-        <!-- ========== title-wrapper start ========== -->
-        <div class="title-wrapper pt-30">
-            <div class="row align-items-center">
-                <div class="col-md-6 col-sm-6 col-6">
-                    <div class="breadcrumb-wrapper mb-30">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                    <a href="{{route('home')}}">Dashboard</a>
-                                </li>
-                                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-                            </ol>
-                        </nav>
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-xl-3 col-sm-6 col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="dash-widget-header">
+                        <span class="dash-widget-icon bg-1">
+                            <i class="fas fa-dollar-sign"></i>
+                        </span>
+                        <div class="dash-count">
+                            <div class="dash-title">Amount Due</div>
+                            <div class="dash-counts">
+                                <p>1,642</p>
+                            </div>
+                        </div>
                     </div>
+                    <div class="progress progress-sm mt-3">
+                        <div class="progress-bar bg-5" role="progressbar" style="width: 75%" aria-valuenow="75"
+                            aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="text-muted mt-3 mb-0">
+                        <span class="text-danger me-1"><i class="fas fa-arrow-down me-1"></i>1.15%</span>
+                        since last week
+                    </p>
                 </div>
-                <!-- end col -->
             </div>
-            <!-- end row -->
         </div>
-        <!-- ========== title-wrapper end ========== -->
-        <div class="row">
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="icon-card mb-30">
-                    <div class="icon purple">
-                        <i class="lni lni-cart-full"></i>
+        <div class="col-xl-3 col-sm-6 col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="dash-widget-header">
+                        <span class="dash-widget-icon bg-2">
+                            <i class="fas fa-users"></i>
+                        </span>
+                        <div class="dash-count">
+                            <div class="dash-title">Customers</div>
+                            <div class="dash-counts">
+                                <p>3,642</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="content">
-                        <h6 class="mb-10">New Orders</h6>
-                        <h3 class="text-bold mb-10">34567</h3>
-                        <p class="text-sm text-success">
-                            <i class="lni lni-arrow-up"></i> +2.00%
-                            <span class="text-gray">(30 days)</span>
-                        </p>
+                    <div class="progress progress-sm mt-3">
+                        <div class="progress-bar bg-6" role="progressbar" style="width: 65%" aria-valuenow="75"
+                            aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
+                    <p class="text-muted mt-3 mb-0">
+                        <span class="text-success me-1"><i class="fas fa-arrow-up me-1"></i>2.37%</span>
+                        since last week
+                    </p>
                 </div>
-                <!-- End Icon Cart -->
             </div>
-            <!-- End Col -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="icon-card mb-30">
-                    <div class="icon success">
-                        <i class="lni lni-dollar"></i>
-                    </div>
-                    <div class="content">
-                        <h6 class="mb-10">Total Income</h6>
-                        <h3 class="text-bold mb-10">$74,567</h3>
-                        <p class="text-sm text-success">
-                            <i class="lni lni-arrow-up"></i> +5.45%
-                            <span class="text-gray">Increased</span>
-                        </p>
-                    </div>
-                </div>
-                <!-- End Icon Cart -->
-            </div>
-            <!-- End Col -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="icon-card mb-30">
-                    <div class="icon primary">
-                        <i class="lni lni-credit-cards"></i>
-                    </div>
-                    <div class="content">
-                        <h6 class="mb-10">Total Expense</h6>
-                        <h3 class="text-bold mb-10">$24,567</h3>
-                        <p class="text-sm text-danger">
-                            <i class="lni lni-arrow-down"></i> -2.00%
-                            <span class="text-gray">Expense</span>
-                        </p>
-                    </div>
-                </div>
-                <!-- End Icon Cart -->
-            </div>
-            <!-- End Col -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="icon-card mb-30">
-                    <div class="icon orange">
-                        <i class="lni lni-user"></i>
-                    </div>
-                    <div class="content">
-                        <h6 class="mb-10">New User</h6>
-                        <h3 class="text-bold mb-10">34567</h3>
-                        <p class="text-sm text-danger">
-                            <i class="lni lni-arrow-down"></i> -25.00%
-                            <span class="text-gray"> Earning</span>
-                        </p>
-                    </div>
-                </div>
-                <!-- End Icon Cart -->
-            </div>
-            <!-- End Col -->
         </div>
-        <!-- End Row -->
-
+        <div class="col-xl-3 col-sm-6 col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="dash-widget-header">
+                        <span class="dash-widget-icon bg-3">
+                            <i class="fas fa-file-alt"></i>
+                        </span>
+                        <div class="dash-count">
+                            <div class="dash-title">Invoices</div>
+                            <div class="dash-counts">
+                                <p>1,041</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="progress progress-sm mt-3">
+                        <div class="progress-bar bg-7" role="progressbar" style="width: 85%" aria-valuenow="75"
+                            aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="text-muted mt-3 mb-0">
+                        <span class="text-success me-1"><i class="fas fa-arrow-up me-1"></i>3.77%</span>
+                        since last week
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="dash-widget-header">
+                        <span class="dash-widget-icon bg-4">
+                            <i class="far fa-file"></i>
+                        </span>
+                        <div class="dash-count">
+                            <div class="dash-title">Estimates</div>
+                            <div class="dash-counts">
+                                <p>2,150</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="progress progress-sm mt-3">
+                        <div class="progress-bar bg-8" role="progressbar" style="width: 45%" aria-valuenow="75"
+                            aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="text-muted mt-3 mb-0">
+                        <span class="text-danger me-1"><i class="fas fa-arrow-down me-1"></i>8.68%</span>
+                        since last week
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- end container -->
-</section>
-<!-- ========== section end ========== -->
-
+</div>
 @endsection

@@ -2,179 +2,188 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.svg'); }}" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- ========== All CSS files linkup ========= -->
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css'); }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/lineicons.css'); }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/main.css'); }}" />
-    <!-- Toastr -->
-    <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css'); }}">
+    <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
+    <!-- <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome/css/fontawesome.min.css') }}" /> -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome/css/all.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toatr.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
+    @stack('style')
+
+    <style>
+    .page-header .breadcrumb {
+        float: left;
+    }
+
+    .page-header .btn-back {
+        float: right;
+    }
+    </style>
 </head>
 
 <body>
-    <!-- ======== sidebar-nav start =========== -->
-    <aside class="sidebar-nav-wrapper">
-        <div class="navbar-logo">
-            <a href="{{ url('/home') }}">
-                <img src="{{ asset('assets/images/logo/logo.svg'); }}" alt="logo" />
-            </a>
-        </div>
-        <nav class="sidebar-nav">
-            <ul>
-                <li class="nav-item {{ (request()->routeIs('home')) ? 'active' : '' }}">
-                    <a href="{{route('home')}}">
-                        <span class="icon">
-                            <i class="lni lni-dashboard"></i>
-                        </span>
-                        <span class="text">Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-item nav-item-has-children">
-                    <a href="#0" data-bs-toggle="collapse" data-bs-target="#userMenu" aria-controls="userMenu"
-                        aria-expanded="{{ (request()->routeIs('userList') || request()->routeIs('addUser')) ? true : false }}" aria-label="Toggle navigation" class="{{ (request()->routeIs('userList') || request()->routeIs('addUser')) ? '' : 'collapsed' }}">
-                        <span class="icon">
-                            <i class="lni lni-users"></i>
-                        </span>
-                        <span class="text">Users</span>
-                    </a>
-                    <!-- hide dropdown-nav collapse -->
-                    <ul id="userMenu" class="collapse dropdown-nav {{ (request()->routeIs('userList') || request()->routeIs('addUser')) ? 'show' : 'hide' }}">
-                      <li><a href="{{route('addUser')}}" class="{{ request()->routeIs('addUser') ? 'active' : '' }}"> Add user </a></li>
-                        <li><a href="{{route('userList')}}" class="{{ request()->routeIs('userList') ? 'active' : '' }}"> users List </a></li>
-                    </ul>
-                </li>
-                <li class="nav-item nav-item-has-children">
-                    <a href="#0" data-bs-toggle="collapse" data-bs-target="#clientMenu" aria-controls="clientMenu"
-                        aria-expanded="{{ (request()->routeIs('clientList') || request()->routeIs('addClient')) ? true : false }}" aria-label="Toggle navigation" class="{{ (request()->routeIs('clientList') || request()->routeIs('addClient')) ? '' : 'collapsed' }}">
-                        <span class="icon">
-                            <i class="lni lni-network"></i>
-                        </span>
-                        <span class="text">Clients</span>
-                    </a>
-                    <!-- hide dropdown-nav collapse -->
-                    <ul id="clientMenu" class="collapse dropdown-nav {{ (request()->routeIs('clientList') || request()->routeIs('addClient')) ? 'show' : 'hide' }}">
-                      <li><a href="{{route('addClient')}}" class="{{ request()->routeIs('addClient') ? 'active' : '' }}"> Add Client </a></li>
-                        <li><a href="{{route('clientList')}}" class="{{ request()->routeIs('clientList') ? 'active' : '' }}"> Clients List </a></li>
-                    </ul>
-                </li>
-                <li class="nav-item nav-item-has-children">
-                    <a href="#0" data-bs-toggle="collapse" data-bs-target="#categoryMenu" aria-controls="categoryMenu"
-                        aria-expanded="{{ (request()->routeIs('categoryList') || request()->routeIs('addCategory')) ? true : false }}" aria-label="Toggle navigation" class="{{ (request()->routeIs('categoryList') || request()->routeIs('addCategory')) ? '' : 'collapsed' }}">
-                        <span class="icon">
-                            <i class="lni lni-page-break"></i>
-                        </span>
-                        <span class="text">Category</span>
-                    </a>
-                    <!-- hide dropdown-nav collapse -->
-                    <ul id="categoryMenu" class="collapse dropdown-nav {{ (request()->routeIs('categoryList') || request()->routeIs('addCategory')) ? 'show' : 'hide' }}">
-                      <li><a href="{{route('addCategory')}}" class="{{ request()->routeIs('addCategory') ? 'active' : '' }}"> Add Category </a></li>
-                        <li><a href="{{route('categoryList')}}" class="{{ request()->routeIs('categoryList') ? 'active' : '' }}"> Categories List </a></li>
-                    </ul>
-                </li>
-                <li class="nav-item nav-item-has-children">
-                    <a href="#0" data-bs-toggle="collapse" data-bs-target="#productMenu" aria-controls="productMenu"
-                        aria-expanded="{{ (request()->routeIs('productList') || request()->routeIs('addProduct')) ? true : false }}" aria-label="Toggle navigation" class="{{ (request()->routeIs('productList') || request()->routeIs('addProduct')) ? '' : 'collapsed' }}">
-                        <span class="icon">
-                            <i class="lni lni-cart-full"></i>
-                        </span>
-                        <span class="text">Product</span>
-                    </a>
-                    <!-- hide dropdown-nav collapse -->
-                    <ul id="productMenu" class="collapse dropdown-nav {{ (request()->routeIs('productList') || request()->routeIs('addProduct')) ? 'show' : 'hide' }}">
-                        <li><a href="{{route('addProduct')}}" class="{{ request()->routeIs('addProduct') ? 'active' : '' }}"> Add Product </a></li>
-                        <li><a href="{{route('productList')}}" class="{{ request()->routeIs('productList') ? 'active' : '' }}"> Products List </a></li>
-                    </ul>
-                </li>
+    <div class="main-wrapper">
+        <div class="header header-one">
+            <div class="header-left header-left-one">
+                <a href="{{ url('/home') }}" class="logo"><img src="{{ asset('assets/img/logo.png') }}" alt="Logo"></a>
+                <a href="{{ url('/home') }}" class="white-logo"><img src="{{ asset('assets/img/logo-white.png') }}"
+                        alt="Logo"></a>
+                <a href="{{ url('/home') }}" class="logo logo-small"><img src="{{ asset('assets/img/logo-small.png') }}"
+                        alt="Logo" width="30" height="30"></a>
+            </div>
 
-                <li class="nav-item nav-item-has-children">
-                    <a href="#0" data-bs-toggle="collapse" data-bs-target="#orderMenu" aria-controls="orderMenu"
-                        aria-expanded="{{ (request()->routeIs('orderList') || request()->routeIs('addOrder')) ? true : false }}" aria-label="Toggle navigation" class="{{ (request()->routeIs('orderList') || request()->routeIs('addOrder')) ? '' : 'collapsed' }}">
-                        <span class="icon">
-                            <i class="lni lni-cart-full"></i>
+            <a href="javascript:void(0);" id="toggle_btn">
+                <i class="fas fa-bars"></i>
+            </a>
+
+            <div class="top-nav-search">
+                <form>
+                    <input type="text" class="form-control" placeholder="Search here" />
+                    <button class="btn" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+
+            <a class="mobile_btn" id="mobile_btn">
+                <i class="fas fa-bars"></i>
+            </a>
+
+            <ul class="nav nav-tabs user-menu">
+
+                <li class="nav-item dropdown has-arrow main-drop">
+                    <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+                        <span class="user-img">
+                            <img src="{{ imageUrl(auth()->user()->image, 'user','no_image.jpg','thumbnail') }}"
+                                alt="" />
+                            <span class="status online"></span>
                         </span>
-                        <span class="text">Order</span>
+                        <span>{{ Auth::user()->name }}</span>
                     </a>
-                    <!-- hide dropdown-nav collapse -->
-                    <ul id="orderMenu" class="collapse dropdown-nav {{ (request()->routeIs('orderList') || request()->routeIs('addOrder')) ? 'show' : 'hide' }}">
-                        <li><a href="{{route('addOrder')}}" class="{{ request()->routeIs('addOrder') ? 'active' : '' }}"> Add Orders </a></li>
-                        <li><a href="{{route('orderList')}}" class="{{ request()->routeIs('orderList') ? 'active' : '' }}"> Orders List </a></li>
-                    </ul>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{route('profile')}}"><i data-feather="user" class="me-1"></i>
+                            Profile</a>
+                        <!-- <a class="dropdown-item" href="#"><i data-feather="settings" class="me-1"></i> Settings</a> -->
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
+                                data-feather="log-out" class="me-1"></i> Logout</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none"> @csrf
+                        </form>
+                    </div>
                 </li>
             </ul>
-        </nav>
-    </aside>
-    <div class="overlay"></div>
-    <!-- ======== sidebar-nav end =========== -->
+        </div>
 
-    <!-- ======== main-wrapper start =========== -->
-    <main class="main-wrapper">
-        <!-- ========== header start ========== -->
-        <header class="header">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-5 col-md-5 col-6">
-                        <div class="header-left d-flex align-items-center">
-                            <div class="menu-toggle-btn mr-20">
-                                <button id="menu-toggle" class="main-btn primary-btn btn-hover">
-                                    <i class="lni lni-chevron-left me-2"></i> Menu
-                                </button>
-                            </div>
-                            <div class="header-search d-none">
-                                <form action="#">
-                                    <input type="text" placeholder="Search..." />
-                                    <button><i class="lni lni-search-alt"></i></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-7 col-md-7 col-6">
-                        <div class="header-right">
-                            <!-- profile start -->
-                            <div class="profile-box ml-15">
-                                <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <div class="profile-info">
-                                        <div class="info">
-                                            <h6>{{ Auth::user()->name }}</h6>
-                                            <div class="image">
-                                                <img src="{{ imageUrl(auth()->user()->image, 'user','no_image.jpg','thumbnail') }}"
-                                                    alt="" />
-                                                <span class="status"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <i class="lni lni-chevron-down"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
-                                    <li>
-                                        <a href="{{route('profile')}}"><i class="lni lni-user"></i> Profile</a>
-                                    </li>
-                                    <li>
-                                        <a href="#0"> <i class="lni lni-cog"></i> Settings </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            <i class="lni lni-exit"></i> Sign Out </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                            class="d-none">
-                                            @csrf
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- profile end -->
-                        </div>
-                    </div>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <ul>
+                        <li class="menu-title"><span>Main</span></li>
+                        <li class="{{ (request()->routeIs('home')) ? 'active' : '' }}">
+                            <a href="{{route('home')}}"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+                        </li>
+
+                        <!-- Users -->
+                        <li
+                            class="submenu {{ (request()->routeIs('userList') || request()->routeIs('addUser')) ? 'active' : '' }}">
+                            <a href="{{route('userList')}}"
+                                class="{{ (request()->routeIs('userList') || request()->routeIs('addUser')) ? 'active' : '' }}"><i
+                                    class="fa fa-users"></i><span>Users</span><span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="{{route('addUser')}}"
+                                        class="{{ (request()->routeIs('addUser')) ? 'active' : '' }}">Add Users</a></li>
+                                <li><a href="{{route('userList')}}"
+                                        class="{{ (request()->routeIs('userList')) ? 'active' : '' }}">Users List</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Clients -->
+                        <li
+                            class="submenu {{ (request()->routeIs('clientList') || request()->routeIs('addClient')) ? 'active' : '' }}">
+                            <a href="{{route('clientList')}}"
+                                class="{{ (request()->routeIs('clientList') || request()->routeIs('addClient')) ? 'active' : '' }}"><i
+                                    class="fas fa-user-secret"></i><span>Clients</span><span
+                                    class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="{{route('addClient')}}"
+                                        class="{{ (request()->routeIs('addClient')) ? 'active' : '' }}">Add Client</a>
+                                </li>
+                                <li><a href="{{route('clientList')}}"
+                                        class="{{ (request()->routeIs('clientList')) ? 'active' : '' }}">Client List</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Category -->
+                        <li
+                            class="submenu {{ (request()->routeIs('categoryList') || request()->routeIs('addCategory')) ? 'active' : '' }}">
+                            <a href="{{route('categoryList')}}"
+                                class="{{ (request()->routeIs('categoryList') || request()->routeIs('addCategory')) ? 'active' : '' }}"><i
+                                    class="fas fa-th-list"></i><span>Category</span><span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="{{route('addCategory')}}"
+                                        class="{{ (request()->routeIs('addCategory')) ? 'active' : '' }}">Add
+                                        Category</a></li>
+                                <li><a href="{{route('categoryList')}}"
+                                        class="{{ (request()->routeIs('categoryList')) ? 'active' : '' }}">Category
+                                        List</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Product -->
+                        <li
+                            class="submenu {{ (request()->routeIs('productList') || request()->routeIs('addProduct')) ? 'active' : '' }}">
+                            <a href="{{route('productList')}}"
+                                class="{{ (request()->routeIs('productList') || request()->routeIs('addProduct')) ? 'active' : '' }}"><i
+                                    class="fab fa-product-hunt"></i><span>Product</span><span
+                                    class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="{{route('addProduct')}}"
+                                        class="{{ (request()->routeIs('addProduct')) ? 'active' : '' }}">Add Product</a>
+                                </li>
+                                <li><a href="{{route('productList')}}"
+                                        class="{{ (request()->routeIs('productList')) ? 'active' : '' }}">Product
+                                        List</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Order -->
+                        <li
+                            class="submenu {{ (request()->routeIs('orderList') || request()->routeIs('addOrder')) ? 'active' : '' }}">
+                            <a href="{{route('orderList')}}"
+                                class="{{ (request()->routeIs('orderList') || request()->routeIs('addOrder')) ? 'active' : '' }}"><i
+                                    class="fas fa-box-open"></i><span>Order</span><span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="{{route('addOrder')}}"
+                                        class="{{ (request()->routeIs('addOrder')) ? 'active' : '' }}">Add Orders</a>
+                                </li>
+                                <li><a href="{{route('orderList')}}"
+                                        class="{{ (request()->routeIs('orderList')) ? 'active' : '' }}">Orders List</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Estimates -->
+                        <!-- (request()->routeIs('estimatesList') || request()->routeIs('addEstimates')) ? 'active' : '' -->
+                        <li class="submenu">
+                            <a href="#"><i class="fas fa-boxes"></i><span>Estimates</span><span
+                                    class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="#">Add Estimates</a></li>
+                                <li><a href="#">Estimates List</a></li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </header>
-        <!-- ========== header end ========== -->
+        </div>
+
+        <div class="page-wrapper">

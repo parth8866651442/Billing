@@ -2,103 +2,61 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.svg'); }}" type="image/x-icon" />
-    <title>Sign In</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
+    <title>Forgot Password</title>
 
-    <!-- ========== All CSS files linkup ========= -->
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css'); }}" />
-    <!-- <link rel="stylesheet" href="{{ asset('assets/css/lineicons.css'); }}" /> -->
-    <!-- <link rel="stylesheet" href="{{ asset('assets/css/materialdesignicons.min.css'); }}" /> -->
-    <!-- <link rel="stylesheet" href="{{ asset('assets/css/fullcalendar.css'); }}" /> -->
-    <link rel="stylesheet" href="{{ asset('assets/css/main.css'); }}" />
+    <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome/css/fontawesome.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome/css/all.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
 </head>
 
 <body>
-
-    <!-- ========== signin-section start ========== -->
-    <section class="signin-section m-5">
-        <div class="container-fluid">
-            <div class="row g-0 auth-row">
-                <div class="col-lg-6">
-                    <div class="auth-cover-wrapper bg-primary-100">
-                        <div class="auth-cover">
-                            <div class="title text-center">
-                                <h1 class="text-primary mb-10">Welcome Back</h1>
-                                <p class="text-medium">
-                                    Sign in to your Existing account to continue
-                                </p>
-                            </div>
-                            <div class="cover-image">
-                                <img src="{{ asset('assets/images/auth/signin-image.svg'); }}" alt="" />
-                            </div>
-                            <div class="shape-image">
-                                <img src="{{ asset('assets/images/auth/shape.svg'); }}" alt="" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- end col -->
-                <div class="col-lg-6">
-                    <div class="signin-wrapper">
-                        <div class="form-wrapper">
-                            <h6 class="mb-15">{{ __('Reset Password') }}</h6>
-                            @if (session('status'))
-                                <p class="text-sm mb-25">
-                                    <div class="alert alert-success" role="alert">
-                                        {{ session('status') }}
-                                    </div>
-                                </p>
-                            @endif
-                            
+    <div class="main-wrapper login-body">
+        <div class="login-wrapper">
+            <div class="container">
+                <img class="img-fluid logo-dark mb-2" src="{{ asset('assets/img/logo.png'); }}" alt="Logo" />
+                <div class="loginbox">
+                    <div class="login-right">
+                        <div class="login-right-wrap">
+                            <h1>Forgot Password?</h1>
+                            <p class="account-subtitle">Enter your email to get a password reset link</p>
                             <form method="POST" action="{{ route('password.email') }}">
                                 @csrf
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="input-style-1">
-                                            <label>Email Address</label>
-                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                                        </div>
-                                        @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <!-- end col -->
-                                    <div class="col-xxl-6 col-lg-12 col-md-6"></div>
-                                    <!-- end col -->
-                                    <div class="col-12">
-                                        <div class="button-group d-flex justify-content-center flex-wrap">
-                                            <button type="submit" class="main-btn primary-btn btn-hover w-100 text-center">
-                                                Send Password Reset Link
-                                            </button>
-                                        </div>
-                                    </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Email Address</label>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus />
+                                    @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
-                                <!-- end row -->
+
+                                <button class="btn btn-lg btn-block btn-primary w-100" type="submit">Reset Password</button>
                             </form>
-                            <div class="singin-option pt-40">
-                                <p class="text-sm text-medium text-dark text-center">
-                                Already have an account?
-                                <a href="{{ route('login') }}">Sign in</a>
-                                </p>
-                            </div>
+                            <div class="text-center dont-have">Remember your password? <a href="{{ route('login') }}">Login</a></div>
                         </div>
                     </div>
                 </div>
-                <!-- end col -->
             </div>
-            <!-- end row -->
         </div>
-    </section>
-    <!-- ========== signin-section end ========== -->
-
-
-    <!-- ========= All Javascript files linkup ======== -->
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js'); }}"></script>
+    </div>
+    <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/feather.min.js') }}"></script>
+    
+    @if(Session::has('success'))
+    <script>
+    toastr.success("{{ Session::get('success') }}")
+    </script>
+    @elseif(Session::has('error'))
+    <script>
+    toastr.error("{{ Session::get('error') }}")
+    </script>
+    @endif
 </body>
 
 </html>
