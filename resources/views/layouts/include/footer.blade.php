@@ -12,20 +12,23 @@
 <script src="{{asset('assets/js/bootstrap-datetimepicker.min.js'); }}"></script>
 <script src="{{ asset('assets/js/script.js') }}"></script>
 
-<div class="warning-modal">
-    <div class="modal fade" id="modal-delete" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content card-style warning-card text-center">
-                <div class="modal-body">
-                    <div class="content mb-30">
-                        <h2 class="mb-15"><i class="lni lni-trash-can text-danger"></i> Delete Item!</h2>
-                        <p class="text-sm text-medium">Are you sure to delete this?</p>
-                    </div>
-                    <div class="action d-flex flex-wrap justify-content-center">
-                        <button data-bs-dismiss="modal"
-                            class="main-btn primary-btn rounded-full btn-hover m-1">Close</button>
-                        <button type="button" class="main-btn danger-btn rounded-full btn-hover m-1" id="delete_sure"
-                            data-bs-dismiss="modal">Delete</button>
+<div class="modal custom-modal fade" id="modal-delete" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-header">
+                    <h3>Delete Item!</h3>
+                    <p>Are you sure to delete this?</p>
+                </div>
+                <div class="modal-btn delete-action">
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="javascript:void(0);" class="btn btn-primary paid-continue-btn" id="delete_sure">Delete</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="javascript:void(0);" data-bs-dismiss="modal"
+                                class="btn btn-primary paid-cancel-btn">Cancel</a>
+                        </div>
                     </div>
                 </div>
             </div>

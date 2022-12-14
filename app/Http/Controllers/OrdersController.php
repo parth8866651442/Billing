@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Client;
 use App\Models\Products;
 use App\Models\OrderItems;
+use App\Models\Settings;
 use Carbon\Carbon;
 use Auth;
 
@@ -46,20 +47,22 @@ class OrdersController extends Controller
     {  
         $clients = Client::get();
         $products = Products::get();
-
+        $settings = Settings::first();
+        
         if($itemID){
             $item = Order::with('orderItemsDetail','clientDetail')->findOrFail($itemID);
-            return view('orders.form', compact('item','clients','products'));
+            return view('orders.form', compact('item','clients','products','settings'));
         }
-        return view('orders.form',compact('clients','products'));
+        return view('orders.form',compact('clients','products','settings'));
     }
 
     public function store(Request $request)
     {
         $authUser = auth()->user();
+
         $data = array(
             "client_id" => $request->client_id,
-            "invoice_no" => '1',
+            "invoice_no" => invoiceNumber(),
             "type" => 'orignal',
             "create_by" => $authUser->id,
         );
@@ -89,20 +92,43 @@ class OrdersController extends Controller
         if (!is_null($item_add)) {
             $itemData = $item_add->fresh();
 
-                // items
-                if(!empty($request->items)){
-                    foreach($request->items as $key => $value)
-                    {   
-                        $data = array(
-                            "order_id" => $itemData->id,
-                            "product_id" => $value['product_id'],
-                            "price" => $value['price'],
-                            "qty" => $value['qty'],
-                            "amount" => $value['amount']
-                        );
-                        OrderItems::create($data); 
-                    }
+            // items
+            if(!empty($request->items)){
+                foreach($request->items as $key => $value)
+                {   
+                    $data = array(
+                        "order_id" => $itemData->id,
+                        "product_id" => $value['product_id'],
+                        "price" => $value['price'],
+                        "qty" => $value['qty'],
+                        "amount" => $value['amount']
+                    );
+                    OrderItems::create($data); 
                 }
+            }
+
+            if($request->terms_conditions && $request->notes){
+                $settingData = [];
+                
+                $settings = Settings::first();
+
+                if(isset($request->terms_conditions)){
+                    $settingData['terms_conditions'] = $request->terms_conditions;
+                }
+        
+                if(isset($request->notes)){
+                    $settingData['notes'] = $request->notes;
+                }
+        
+                if(!is_null($settings)){
+                    $settingData['update_by'] = $authUser->id;
+        
+                    Settings::where('id', $settings->id)->update($settingData);
+                }else{
+                    $settingData['create_by'] = $authUser->id;
+                    Settings::create($settingData);
+                }
+            }
             return redirect()->route('orderList')->with('success', 'Order created successfully');
         } else {
             return redirect()->route('orderList')->with('error', 'Order created unsuccessfully');
@@ -139,8 +165,8 @@ class OrdersController extends Controller
         }
 
         if ($items->save()) {
-             // items
-             if(!empty($request->items)){
+            // items
+            if(!empty($request->items)){
                 foreach($request->items as $key => $value)
                 {   
                     $data = array(
@@ -158,6 +184,30 @@ class OrdersController extends Controller
                     }
                 }
             }
+
+            if($request->terms_conditions && $request->notes){
+                $settingData = [];
+                
+                $settings = Settings::first();
+
+                if(isset($request->terms_conditions)){
+                    $settingData['terms_conditions'] = $request->terms_conditions;
+                }
+        
+                if(isset($request->notes)){
+                    $settingData['notes'] = $request->notes;
+                }
+        
+                if(!is_null($settings)){
+                    $settingData['update_by'] = $authUser->id;
+        
+                    Settings::where('id', $settings->id)->update($settingData);
+                }else{
+                    $settingData['create_by'] = $authUser->id;
+                    Settings::create($settingData);
+                }
+            }
+            
             return redirect()->route('orderList')->with('success', 'Order updated successfully');
         } else {
             return redirect()->route('orderList')->with('error', 'Order updated unsuccessfully');

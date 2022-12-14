@@ -70,7 +70,7 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{route('profile')}}"><i data-feather="user" class="me-1"></i>
                             Profile</a>
-                        <!-- <a class="dropdown-item" href="#"><i data-feather="settings" class="me-1"></i> Settings</a> -->
+                        <a class="dropdown-item" href="{{route('settingForm')}}"><i data-feather="settings" class="me-1"></i> Settings</a>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
                                 data-feather="log-out" class="me-1"></i> Logout</a>

@@ -95,4 +95,10 @@ Route::group(['middleware' => ['auth:web']], function () {
         Route::get('/remove_item/{id}', [App\Http\Controllers\OrdersController::class,'removeItem'])->name('orderItemRemove');
         Route::get('/item_price/{id}', [App\Http\Controllers\OrdersController::class,'productPrice'])->name('findItemPrice');
     });
+
+    // -------- settings -------- //
+    Route::group(['prefix' => 'settings'], function () {
+        Route::get('/', [App\Http\Controllers\SettingsController::class,'index'])->name('settingForm');
+        Route::post('/update', [App\Http\Controllers\SettingsController::class,'update'])->name('updateSetting');
+    });
 });

@@ -39,6 +39,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{route('settingForm')}}" class="nav-link {{ request()->routeIs('settingForm') ? 'active' : '' }}">
+                            <i class="far fa-user"></i> <span>Settings</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{route('passwordChange')}}" class="nav-link {{ request()->routeIs('passwordChange') ? 'active' : '' }}">
                             <i class="fas fa-unlock-alt"></i>
                             <span>Change Password</span>
