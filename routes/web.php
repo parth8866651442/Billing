@@ -96,9 +96,27 @@ Route::group(['middleware' => ['auth:web']], function () {
         Route::get('/item_price/{id}', [App\Http\Controllers\OrdersController::class,'productPrice'])->name('findItemPrice');
     });
 
+    // -------- Orders Estimates -------- //
+    Route::group(['prefix' => 'estimates'], function () {
+        Route::get('/', [App\Http\Controllers\EstimatesController::class,'index'])->name('estimateList');
+        Route::get('/add', [App\Http\Controllers\EstimatesController::class,'form'])->name('addEstimate');
+        Route::post('/store', [App\Http\Controllers\EstimatesController::class,'store'])->name('storeEstimate');
+        Route::get('/edit/{id}', [App\Http\Controllers\EstimatesController::class,'form'])->name('editEstimate');
+        Route::post('/update/{id}', [App\Http\Controllers\EstimatesController::class,'update'])->name('updateEstimate');
+        Route::get('/delete/{id}', [App\Http\Controllers\EstimatesController::class,'destroy'])->name('deleteEstimate');
+        Route::get('/remove_item/{id}', [App\Http\Controllers\EstimatesController::class,'removeItem'])->name('estimateItemRemove');
+        Route::get('/item_price/{id}', [App\Http\Controllers\EstimatesController::class,'productPrice'])->name('findItemPriceEstimate');
+        Route::get('/get_invoice_no/{type}', [App\Http\Controllers\EstimatesController::class,'invoiceNo'])->name('invoiceNo');
+    });
+
     // -------- settings -------- //
     Route::group(['prefix' => 'settings'], function () {
         Route::get('/', [App\Http\Controllers\SettingsController::class,'index'])->name('settingForm');
         Route::post('/update', [App\Http\Controllers\SettingsController::class,'update'])->name('updateSetting');
+    });
+
+    // -------- invoices -------- //
+    Route::group(['prefix' => 'invoices'], function () {
+        Route::get('/{id}', [App\Http\Controllers\invoicesController::class,'index'])->name('invoice');
     });
 });

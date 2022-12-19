@@ -10,26 +10,23 @@ use App\Models\Products;
 use App\Models\OrderItems;
 use App\Models\Settings;
 use Carbon\Carbon;
-use Auth,DB;
+use Auth;
 
-class OrdersController extends Controller
+class EstimatesController extends Controller
 {
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $items = Order::with('clientDetail')->where(['is_deleted'=>0,'type'=>'orignal']);
+            $items = Order::with('clientDetail')->where(['is_deleted'=>0,'type'=>'duplicate']);
             
-            if (!empty($search = $request->search)) {
+            if ($search = $request->search) {
                 $items->where(function ($query) use ($search) {
-                    $query->where('fullname', 'like', '%' . $search . '%')
-                    ->orWhere('invoice_no', 'like', '%' . $search . '%');
+                    $query->where('fullname', 'like', '%' . $search . '%');
                 });
             }
 
-            if(!empty($request->from) && !empty($request->to)){
-                $fromDate = Carbon::createFromFormat('d/m/Y', $request->from)->format('Y-m-d');
-                $toDate = Carbon::createFromFormat('d/m/Y', $request->to)->format('Y-m-d');
-                $items->whereBetween('date', [$fromDate,$toDate]);
+            if ($request->status != '') {
+                $items->where('is_active', $request->status);
             }
 
             $sortby = $request->sortby;
@@ -40,9 +37,9 @@ class OrdersController extends Controller
             }
 
             $items = $items->paginate(PAGINATE);
-            return view('orders.datatableList', compact('items'));
+            return view('estimates.datatableList', compact('items'));
         } else {
-            return view('orders.list');
+            return view('estimates.list');
         }
     }
 
@@ -54,9 +51,9 @@ class OrdersController extends Controller
         
         if($itemID){
             $item = Order::with('orderItemsDetail','clientDetail')->findOrFail($itemID);
-            return view('orders.form', compact('item','clients','products','settings'));
+            return view('estimates.form', compact('item','clients','products','settings'));
         }
-        return view('orders.form',compact('clients','products','settings'));
+        return view('estimates.form',compact('clients','products','settings'));
     }
 
     public function store(Request $request)
@@ -65,8 +62,8 @@ class OrdersController extends Controller
 
         $data = array(
             "client_id" => $request->client_id,
-            "invoice_no" => invoiceNumber('orignal'),
-            "type" => 'orignal',
+            "invoice_no" => invoiceNumber($request->type),
+            "type" => $request->type,
             "create_by" => $authUser->id,
         );
 
@@ -128,9 +125,9 @@ class OrdersController extends Controller
                     Settings::create($settingData);
                 }
             }
-            return redirect()->route('orderList')->with('success', 'Order created successfully');
+            return redirect()->route('estimateList')->with('success', 'Estimate Order created successfully');
         } else {
-            return redirect()->route('orderList')->with('error', 'Order created unsuccessfully');
+            return redirect()->route('estimateList')->with('error', 'Estimate Order created unsuccessfully');
         }
     }
 
@@ -140,9 +137,13 @@ class OrdersController extends Controller
         
         $items = Order::findOrFail($itemID);
         $items->client_id = $request->client_id;
-        $items->type = 'orignal';
+        $items->type = $request->type;
         $items->update_by = $authUser->id;
 
+        if($request->type === 'orignal'){
+            $items->invoice_no = invoiceNumber($request->type);
+        }
+        
         if(!empty($request->fullname)){
             $items->fullname = $request->fullname;
         }
@@ -203,9 +204,9 @@ class OrdersController extends Controller
                 }
             }
             
-            return redirect()->route('orderList')->with('success', 'Order updated successfully');
+            return redirect()->route('estimateList')->with('success', 'Estimate Order updated successfully');
         } else {
-            return redirect()->route('orderList')->with('error', 'Order updated unsuccessfully');
+            return redirect()->route('estimateList')->with('error', 'Estimate Order updated unsuccessfully');
         }
     }
 
@@ -216,9 +217,9 @@ class OrdersController extends Controller
         $items->is_deleted = 1;
         $items->update_by = $authUser->id;
         if ($items->save()) {
-            return response()->json(['status' => true, 'message' => 'Order removed successfully'], 200);
+            return response()->json(['status' => true, 'message' => 'Estimate Order removed successfully'], 200);
         } else {
-            return response()->json(['status' => false, 'message' => 'Order removed unsuccessfully'], 200);
+            return response()->json(['status' => false, 'message' => 'Estimate Order removed unsuccessfully'], 200);
         }
     }
 
@@ -228,12 +229,12 @@ class OrdersController extends Controller
         if(!is_null($data)){
             $items = OrderItems::where('id', $itemID)->delete();
             if (!is_null($items)) {
-                return response()->json(['status' => true, 'message' => 'Order item removed successfully'], 200);
+                return response()->json(['status' => true, 'message' => 'Estimate Order item removed successfully'], 200);
             } else {
-                return response()->json(['status' => false, 'message' => 'Order item removed unsuccessfully'], 200);
+                return response()->json(['status' => false, 'message' => 'Estimate Order item removed unsuccessfully'], 200);
             }
         }else{
-            return response()->json(['status' => false, 'message' => 'Order item not available'], 200);
+            return response()->json(['status' => false, 'message' => 'Estimate Order item not available'], 200);
         }
     }
 
@@ -245,5 +246,10 @@ class OrdersController extends Controller
         }else{
             return response()->json(['status' => false, 'price' => 0], 200);
         }
+    }
+
+    public function invoiceNo($type)
+    {
+        return response()->json(['status' => true, 'type' => invoiceNumber($type) ], 200);
     }
 }

@@ -40,6 +40,14 @@ class SettingsController extends Controller
             $data['prefix_name_invoice'] = $request->prefix_name_invoice;
         }
 
+        if(isset($request->phone_no)){
+            $data['phone_no'] = $request->phone_no;
+        }
+
+        if(isset($request->email_id)){
+            $data['email_id'] = $request->email_id;
+        }
+
         if(isset($request->address)){
             $data['address'] = $request->address;
         }

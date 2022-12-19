@@ -20,8 +20,9 @@ return new class extends Migration
             $table->string('bd_ifsc_code')->nullable();
             $table->string('bd_account_no')->nullable();
             $table->longText('address')->nullable();
+            $table->string('phone_no')->nullable();
+            $table->string('email_id')->nullable();
             $table->longText('terms_conditions')->nullable();
-            $table->longText('notes')->nullable();
             $table->string('sign_img')->nullable();
             $table->string('logo_img')->nullable();
             $table->string('favicon_img')->nullable();

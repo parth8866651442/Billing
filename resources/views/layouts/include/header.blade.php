@@ -156,8 +156,7 @@
                         </li>
 
                         <!-- Order -->
-                        <li
-                            class="submenu {{ (request()->routeIs('orderList') || request()->routeIs('addOrder')) ? 'active' : '' }}">
+                        <li class="submenu {{ (request()->routeIs('orderList') || request()->routeIs('addOrder')) ? 'active' : '' }}">
                             <a href="{{route('orderList')}}"
                                 class="{{ (request()->routeIs('orderList') || request()->routeIs('addOrder')) ? 'active' : '' }}"><i
                                     class="fas fa-box-open"></i><span>Order</span><span class="menu-arrow"></span></a>
@@ -173,12 +172,12 @@
 
                         <!-- Estimates -->
                         <!-- (request()->routeIs('estimatesList') || request()->routeIs('addEstimates')) ? 'active' : '' -->
-                        <li class="submenu">
-                            <a href="#"><i class="fas fa-boxes"></i><span>Estimates</span><span
+                        <li class="submenu {{ (request()->routeIs('estimateList') || request()->routeIs('addEstimate')) ? 'active' : '' }}">
+                            <a href="{{route('estimateList')}}" class="{{ (request()->routeIs('estimateList') || request()->routeIs('addEstimate')) ? 'active' : '' }}"><i class="fas fa-boxes"></i><span>Estimates</span><span
                                     class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="#">Add Estimates</a></li>
-                                <li><a href="#">Estimates List</a></li>
+                                <li><a href="{{route('addEstimate')}}" class="{{ (request()->routeIs('addEstimate')) ? 'active' : '' }}">Add Estimates</a></li>
+                                <li><a href="{{route('estimateList')}}" class="{{ (request()->routeIs('estimateList')) ? 'active' : '' }}">Estimates List</a></li>
                             </ul>
                         </li>
                     </ul>

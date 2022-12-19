@@ -20,17 +20,17 @@ if (!function_exists('imageUrl')) {
 }
 
 if (!function_exists('invoiceNumber')) {
-    function invoiceNumber()
+    function invoiceNumber($type)
     {
-        $latest = App\Models\Order::latest()->first();
+        $latest = App\Models\Order::where('type',$type)->latest()->first();
 
         if (! $latest) {
-            return 'BD&H-0001';
+            return 'BD/H-0001';
         }
 
         $string = preg_replace("/[^0-9\.]/", '', $latest->invoice_no);
 
-        return 'BD&H-' . sprintf('%04d', $string+1);
+        return 'BD/H-' . sprintf('%04d', $string+1);
     }
 }
 

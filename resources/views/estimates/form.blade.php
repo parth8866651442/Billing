@@ -17,13 +17,13 @@
                         <a href="#">Dashboard</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="#">Order</a>
+                        <a href="#">Estimates Order</a>
                     </li>
-                    <li class="breadcrumb-item active">Add Order</li>
+                    <li class="breadcrumb-item active">Add Estimat</li>
                 </ul>
 
                 <div class="btn-back">
-                    <a href="{{route('orderList')}}"><button class="btn btn-primary btn-sm" type="button"><i
+                    <a href="{{route('estimateList')}}"><button class="btn btn-primary btn-sm" type="button"><i
                                 class="fas fa-chevron-left"></i> Back</button></a>
                 </div>
             </div>
@@ -35,7 +35,7 @@
             <div class="card invoices-add-card">
                 <div class="card-body">
                     <form method="POST"
-                        action="{{(isset($item)) ? route('updateOrder',['id'=>$item->id]) : route('storeOrder')}}"
+                        action="{{(isset($item)) ? route('updateEstimate',['id'=>$item->id]) : route('storeEstimate')}}"
                         class="invoices-form" id="orderForm">
                         <div class="invoices-main-form">
                             <div class="row">
@@ -78,21 +78,33 @@
                                     <h4 class="invoice-details-title">Invoice details</h4>
                                     <div class="invoice-details-box">
                                         <div class="invoice-inner-head">
-                                            <span>Invoice No.<a href="javascript:void(0);">{{isset($item->invoice_no)? $item->invoice_no : invoiceNumber('orignal') }}</a></span>
+                                            <span>Invoice No.<a href="javascript:void(0);"
+                                                    id="invoiceNo">{{isset($item->invoice_no)? $item->invoice_no : invoiceNumber('duplicate') }}</a></span>
                                         </div>
                                         <div class="invoice-inner-footer">
                                             <div class="row align-items-center">
-                                                <div class="col-lg-6 col-md-6">
+                                                <div class="col-lg-5 col-md-5">
                                                     <div class="invoice-inner-date">
                                                         <span> Date
-                                                            <input class="form-control datetimepicker" name="date" type="text" placeholder="Select" value="{{isset($item->date) ? date('d/m/Y', strtotime($item->date)) :''  }}" />
+                                                            <input class="form-control datetimepicker" name="date"
+                                                                type="text" placeholder="Select"
+                                                                value="{{isset($item->date) ? date('d/m/Y', strtotime($item->date)) :''  }}" />
                                                         </span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6">
-                                                <div class="invoice-inner-head">
-                                                    <span>Invoice Type. <a href="javascript:void(0);">{{ucfirst('orignal')}}</a></span>
-                                                </div>
+                                                    <div class="form-group">
+                                                        <label>Invoice Type</label>
+                                                        <select class="select select2" name="type" id="type"
+                                                            onChange="invoiceTypeConfirmtion()">
+                                                            <option
+                                                                {{isset($item->type) && $item->type === 'duplicate'? 'selected' :''}}
+                                                                value="duplicate">Duplicate</option>
+                                                            <option
+                                                                {{isset($item->type) && $item->type === 'orignal'? 'selected' :''}}
+                                                                value="orignal">Orignal</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -249,8 +261,8 @@
                                                 <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
                                                     aria-labelledby="headingTwo" data-bs-parent="#accordion">
                                                     <div class="panel-body">
-                                                        <textarea
-                                                            class="form-control" name="terms_conditions">{{isset($settings->terms_conditions)? $settings->terms_conditions : '' }}</textarea>
+                                                        <textarea class="form-control"
+                                                            name="terms_conditions">{{isset($settings->terms_conditions)? $settings->terms_conditions : '' }}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -262,7 +274,7 @@
                                 <div class="invoice-total-card">
                                     <h4 class="invoice-total-title">Summary</h4>
                                     <div class="invoice-total-box">
-                                        <div class="invoice-total-inner">
+                                        <!-- <div class="invoice-total-inner">
                                             <div class="links-info-one">
                                                 <div class="links-info">
                                                     <div class="links-cont">
@@ -282,7 +294,7 @@
                                                             class="feather-trash-2"></i> </a>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="invoice-total-footer">
                                             <input type="hidden" name="total" id="total"
                                                 value="{{isset($item->total) ? $item->total :'00.00'}}">
@@ -373,6 +385,28 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade contentmodal" id="invoiceTypeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content doctor-profile">
+            <div class="modal-header pb-0 border-bottom-0 justify-content-end">
+                <button type="button" class="close-btn closeInvoiceType" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="feather-x-circle"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="delete-wrap text-center">
+                    <div class="del-icon"><i class="feather-x-circle"></i></div>
+                    <h2>Sure you want to change type</h2>
+                    <div class="submit-section">
+                        <a href="javascript:void(0);" id="changeType" class="btn btn-success me-2">Yes</a>
+                        <a href="javascript:void(0);" class="btn btn-danger closeInvoiceType" data-bs-dismiss="modal">No</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="{{asset('assets/js/validate/jquery.validate.js'); }}" type="text/javascript"></script>
 <script src="{{asset('assets/js/validate/additional-methods.min.js'); }}" type="text/javascript"></script>
 <script src="{{asset('assets/js/validate/validation.js'); }}" type="text/javascript"></script>
@@ -383,25 +417,25 @@ $.ajaxSetup({
     }
 });
 $(document).ready(function() {
-        var addOrderForm = $("#orderForm");
-        var validator = addOrderForm.validate({
-            rules: {
-                fullname: {
-                    required: true
-                },
-                date: {
-                    required: true
-                }
+    var addOrderForm = $("#orderForm");
+    var validator = addOrderForm.validate({
+        rules: {
+            fullname: {
+                required: true
             },
-            messages: {
-                fullname: {
-                    required: "This field is required"
-                },
-                date: {
-                    required: "This field is required"
-                }
+            date: {
+                required: true
             }
-        });
+        },
+        messages: {
+            fullname: {
+                required: "This field is required"
+            },
+            date: {
+                required: "This field is required"
+            }
+        }
+    });
 });
 
 // Invoices Table Add More
@@ -469,7 +503,7 @@ function calculateTotal() {
 function removeOrderItemid(id) {
     // ajax order item remove call
     $.ajax({
-        url: "{{route('orderItemRemove','')}}" + `/${id}`,
+        url: "{{route('estimateItemRemove','')}}" + `/${id}`,
         type: 'GET',
         dataType: 'Json',
         success: function(res) {
@@ -485,7 +519,7 @@ function removeOrderItemid(id) {
 function selectProduct(id, key) {
     // ajax product price get call
     $.ajax({
-        url: "{{route('findItemPrice','')}}" + `/${id}`,
+        url: "{{route('findItemPriceEstimate','')}}" + `/${id}`,
         type: 'GET',
         dataType: 'Json',
         success: function(res) {
@@ -508,6 +542,41 @@ function customerFindAddress(id) {
         $('#moblie_no').val('');
     }
 }
+
+// invoice type mate confirmtion modal open 
+function invoiceTypeConfirmtion(th) {
+    $('#invoiceTypeModal').modal('show');
+}
+
+$(document.body).on('click', '#changeType', function() {
+    $('#invoiceTypeModal').modal('hide');
+    var type = $('#type').val();
+    $.ajax({
+        url: "{{route('invoiceNo','')}}" + `/${type}`,
+        type: 'GET',
+        dataType: 'Json',
+        success: function(res) {
+            if (res.status) {
+                $('#invoiceNo').text(res.type);
+            }
+        }
+    });
+});
+
+$(document.body).on('click', '.closeInvoiceType', function() {
+    let type = ($('#type').val() == 'orignal')? 'duplicate' : 'orignal';
+    $.ajax({
+        url: "{{route('invoiceNo','')}}" + `/${type}`,
+        type: 'GET',
+        dataType: 'Json',
+        success: function(res) {
+            if (res.status) {
+                $('#invoiceNo').text(res.type);
+                $('#type').val(type).select2();
+            }
+        }
+    });
+});
 
 $('#bankDetailsForm').validate({
     rules: {

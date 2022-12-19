@@ -123,6 +123,18 @@
                             </div>
                         </div>
                         <div class="row form-group">
+                            <label for="phone_no" class="col-sm-3 col-form-label input-label">Phone No</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="phone_no" id="phone_no" placeholder="Phone No" value="{{isset($settings->phone_no) ? $settings->phone_no : ''}}" />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label for="email_id" class="col-sm-3 col-form-label input-label">Email Address</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="email_id" id="email_id" placeholder="Email Address" value="{{isset($settings->email_id) ? $settings->email_id : ''}}" />
+                            </div>
+                        </div>
+                        <div class="row form-group">
                             <label for="address" class="col-sm-3 col-form-label input-label">Address</label>
                             <div class="col-sm-9">
                                 <textarea name="address" id="address" class="form-control" rows="2" placeholder="Address">{{isset($settings->address) ? $settings->address : ''}}</textarea>
@@ -132,12 +144,6 @@
                             <label for="terms_conditions" class="col-sm-3 col-form-label input-label">Terms Conditions</label>
                             <div class="col-sm-9">
                                 <textarea name="terms_conditions" id="terms_conditions" class="form-control" rows="2" placeholder="Terms Conditions">{{isset($settings->terms_conditions) ? $settings->terms_conditions : ''}}</textarea>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <label for="notes" class="col-sm-3 col-form-label input-label">Notes</label>
-                            <div class="col-sm-9">
-                                <textarea name="notes" id="notes" class="form-control" rows="2" placeholder="Notes">{{isset($settings->notes) ? $settings->notes : ''}}</textarea>
                             </div>
                         </div>
                         <div class="row form-group">
@@ -193,15 +199,19 @@ $(document).ready(function() {
             account_no: {
                 required: true
             },
+            email_id: {
+                required: true,
+                email: true
+            },
+            phone_no: {
+                required: true
+            },
             address: {
                 required: true
             },
             terms_conditions: {
                 required: true
-            },
-            notes: {
-                required: true
-            },
+            }
         },
         messages: {
             prefix_name_invoice: {
@@ -219,15 +229,19 @@ $(document).ready(function() {
             account_no: {
                 required: "This field is required"
             },
+            email_id: {
+                required: "This field is required",
+                email:"Please enter valid email address"
+            },
+            phone_no: {
+                required: "This field is required"
+            },
             address: {
                 required: "This field is required"
             },
             terms_conditions: {
                 required: "This field is required"
-            },
-            notes: {
-                required: "This field is required"
-            },
+            }
         }
     });
 });

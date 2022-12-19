@@ -5,17 +5,17 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <h3 class="page-title">Orders</h3>
+                <h3 class="page-title">Estimat Orders</h3>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a href="{{route('home')}}">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item active">Orders List</li>
+                    <li class="breadcrumb-item active">Estimates List</li>
                 </ul>
             </div>
             <div class="col-auto">
-                <a href="{{route('addOrder')}}" class="btn btn-primary me-1" data-container="body" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Order"><i class="fas fa-plus"></i></a>
-                <a class="btn btn-primary filter-btn" href="javascript:void(0);" id="filter_search" data-container="body" data-bs-toggle="tooltip" data-bs-placement="top" title="Filters">
+                <a href="{{route('addEstimate')}}" class="btn btn-primary me-1"><i class="fas fa-plus"></i></a>
+                <a class="btn btn-primary filter-btn" href="javascript:void(0);" id="filter_search">
                     <i class="fas fa-filter"></i>
                 </a>
             </div>
@@ -36,7 +36,7 @@
                 </div>
                 <div class="col-sm-2 col-md-2">
                     <button onclick="getOrders(false,$('#daterangeInput').val())" class="btn btn-primary"><i class="fas fa-search"></i> Filter</button> 
-                    <button onclick="resetFilter()" class="btn btn-primary"><i class="fas fa-redo"></i> Reset</button> 
+                    <button onclick="resetFilter()" class="btn btn-primary"><i class="fas fa-redo"></i> Reset</button>    
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
 <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script>
-// user list default page 1 recode get
+// estimate list default page 1 recode get
 $(function() {
     $('input[name="daterange"]').daterangepicker({
         startDate: moment().startOf('month'),
@@ -67,7 +67,7 @@ $(function() {
             format: 'DD/MM/YYYY'
         }
     });
-    // ajax user list get 
+    // ajax estimate list get 
     getOrders();
     
     // qurey param mathi page no get
@@ -83,7 +83,7 @@ function resetFilter(){
     getOrders();
 }
 
-// user list get 
+// estimate list get 
 function getOrders(page = false,date = '') {
     if (!page) {
         page = 1;
@@ -91,7 +91,7 @@ function getOrders(page = false,date = '') {
 
     // filter value get 
     let searchQuery = $('#searchInput').val();
-    
+
     let params = `page=${page}`;
 
     if(searchQuery != ''){ params = params + `&search=${searchQuery}`; }
@@ -105,9 +105,9 @@ function getOrders(page = false,date = '') {
         params =  params + paramsDate; 
     }
 
-    // ajax user list get call
+    // ajax estimate list get call
     $.ajax({
-        url: "{{route('orderList')}}" + `?${params}`,
+        url: "{{route('estimateList')}}" + `?${params}`,
         success: function(response) {
             // set data
             $('#orderList').html(response);
@@ -127,7 +127,7 @@ $(document.body).on('click', '#delete_sure', function() {
     $('#modal-delete').modal('hide');
     var id = $(this).val();
     $.ajax({
-        url: "{{ route('deleteOrder','') }}/" + id,
+        url: "{{ route('deleteEstimate','') }}/" + id,
         type: 'GET',
         dataType: 'Json',
         success: function(res) {

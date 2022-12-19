@@ -30,7 +30,8 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-3">
-                    <button onclick="getUsers()" class="btn btn-primary btn-sm"><i class="lni lni-search-alt"></i> Filter</button>    
+                    <button onclick="getUsers()" class="btn btn-primary"><i class="fas fa-search"></i> Filter</button>
+                    <button onclick="resetFilter()" class="btn btn-primary"><i class="fas fa-redo"></i> Reset</button>    
                 </div>
             </div>
         </div>
@@ -63,6 +64,10 @@ $(function() {
     });
 });
 
+function resetFilter(){
+    $('#searchInput').val('');
+    getUsers();
+}
 
 // user list get 
 function getUsers(page = false) {
@@ -72,10 +77,11 @@ function getUsers(page = false) {
 
     // filter value get 
     let searchQuery = $('#searchInput').val();
-    // let statuQuery = $('#statusInput').val();  //&status=${statuQuery}
 
-    var params = `page=${page}&search=${searchQuery}`;
+    var params = `page=${page}`;
 
+    if(searchQuery != ''){ params = params + `&search=${searchQuery}`; }
+    
     // loader show 
     $('.preloader').css('height', 1000);
     $('.preloader').css('background-color', '#4646468c');

@@ -28,7 +28,8 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-3">
-                    <button onclick="getProducts()" class="btn btn-primary btn-sm"><i class="lni lni-search-alt"></i> Filter</button>    
+                    <button onclick="getProducts()" class="btn btn-primary"><i class="fas fa-search"></i> Filter</button>
+                    <button onclick="resetFilter()" class="btn btn-primary"><i class="fas fa-redo"></i> Reset</button>     
                 </div>
             </div>
         </div>
@@ -61,6 +62,10 @@ $(function() {
     });
 });
 
+function resetFilter(){
+    $('#searchInput').val('');
+    getProducts();
+}
 
 // user list get 
 function getProducts(page = false) {
