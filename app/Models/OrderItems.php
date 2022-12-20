@@ -21,6 +21,6 @@ class OrderItems extends Model
 
     public function productDetail()
     {
-        return $this->belongsTo('App\Models\Products', 'product_id', 'id');
+        return $this->belongsTo('App\Models\Products', 'product_id', 'id')->select(['id','category_id','name','price','qty','is_deleted']);
     }
 }

@@ -21,6 +21,6 @@ class Products extends Model
 
     public function categoryDetail()
     {
-        return $this->belongsTo('App\Models\Category', 'category_id', 'id');
+        return $this->belongsTo('App\Models\Category', 'category_id', 'id')->select(['id', 'name','is_deleted']);
     }
 }
