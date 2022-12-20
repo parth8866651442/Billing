@@ -535,12 +535,18 @@ function customerFindAddress(id) {
     let clientsList = <?= $clients ?>;
     let client = clientsList.filter(data => data.id == id);
     if (client.length > 0 && (client[0].address || client[0].phone_no)) {
-        $('#clientAddress').text(client[0].address);
+        $('#clientAddress').html(nl2br(client[0].address));
         $('#moblie_no').val(client[0].phone_no);
     } else {
         $('#clientAddress').html('');
         $('#moblie_no').val('');
     }
+}
+
+function nl2br (str, replaceMode, isXhtml) {
+    var breakTag = (isXhtml) ? '<br />' : '<br>';
+    var replaceStr = (replaceMode) ? '$1'+ breakTag : '$1'+ breakTag +'$2';
+    return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, replaceStr);
 }
 
 // invoice type mate confirmtion modal open 

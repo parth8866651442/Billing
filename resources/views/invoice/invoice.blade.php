@@ -268,7 +268,7 @@
               </tr>
                 <tr>
                 <td align="center" style="border-bottom:1px solid #c8c8c8; border-left:1px solid #c8c8c8; border-right:1px solid #c8c8c8; border-top:#c8c8c8 1px solid; font-family:Verdana, Geneva, sans-serif; font-size:13px;">
-                    <strong>Item Description </strong>
+                    <strong>Item Name</strong>
                 </td>
                 <td align="center" style="border-bottom:1px solid #c8c8c8; border-right:1px solid #c8c8c8; border-top:#c8c8c8 1px solid; font-family:Verdana, Geneva, sans-serif; font-size:13px;">
                     <strong>Price</strong>
