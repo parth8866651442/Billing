@@ -21,11 +21,16 @@ class Order extends Model
 
     public function clientDetail()
     {
-        return $this->belongsTo('App\Models\Client', 'client_id', 'id');
+        return $this->belongsTo('App\Models\Client', 'client_id', 'id')->select(['id','name','email','phone_no','address','is_deleted']);
     }
 
     public function orderItemsDetail()
     {
         return $this->hasMany('App\Models\OrderItems', 'order_id', 'id');
+    }
+
+    public function paidAmountSum()
+    {
+        return $this->hasMany('App\Models\Payments', 'order_id', 'id');
     }
 }

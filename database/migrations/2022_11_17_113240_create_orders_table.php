@@ -24,6 +24,7 @@ return new class extends Migration
             $table->date('date')->default(Carbon::now());
             $table->double('total', 8, 2)->default(00.00);
             $table->enum('type', ['duplicate', 'orignal'])->default('duplicate');
+            $table->enum('status', ['draft', 'processing', 'cancelled', 'completed'])->default('draft');
             $table->integer('create_by');
             $table->integer('update_by')->nullable();
             $table->tinyInteger('is_deleted')->default(0);

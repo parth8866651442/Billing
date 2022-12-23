@@ -411,7 +411,7 @@ Version      : 1.0
 	// Invoices Add More
 	
     $(".links-info-one").on('click','.service-trash', function () {
-		$(this).closest('.links-cont').remove();
+		// $(this).closest('.links-cont').remove();
 		return false;
     });
 

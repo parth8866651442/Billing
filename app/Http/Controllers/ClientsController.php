@@ -49,6 +49,11 @@ class ClientsController extends Controller
         return view('clients.form');
     }
 
+    public function view(Request $request, $itemID){
+        $item = Client::findOrFail($itemID);
+        return view('clients.view', compact('item'));
+    }
+
     public function store(Request $request)
     {
         $validator = [

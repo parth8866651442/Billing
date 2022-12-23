@@ -53,7 +53,7 @@ class OrdersController extends Controller
         $settings = Settings::first();
         
         if($itemID){
-            $item = Order::with('orderItemsDetail','clientDetail')->findOrFail($itemID);
+            $item = Order::with('orderItemsDetail','clientDetail','paidAmountSum')->findOrFail($itemID);
             return view('orders.form', compact('item','clients','products','settings'));
         }
         return view('orders.form',compact('clients','products','settings'));
@@ -84,6 +84,10 @@ class OrdersController extends Controller
         
         if(!empty($request->moblie_no)){
             $data['moblie_no'] = $request->moblie_no;
+        }
+
+        if(!empty($request->status)){
+            $data['status'] = $request->status;
         }
 
         if(!empty($request->total)){
@@ -157,6 +161,10 @@ class OrdersController extends Controller
         
         if(!empty($request->moblie_no)){
             $items->moblie_no = $request->moblie_no;
+        }
+
+        if(!empty($request->status)){
+            $items->status = $request->status;
         }
 
         if(!empty($request->total)){

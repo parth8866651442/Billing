@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth:web']], function () {
         Route::get('/', [App\Http\Controllers\ClientsController::class,'index'])->name('clientList');
         Route::get('/add', [App\Http\Controllers\ClientsController::class,'form'])->name('addClient');
         Route::post('/store', [App\Http\Controllers\ClientsController::class,'store'])->name('storeClient');
+        Route::get('/view/{id}', [App\Http\Controllers\ClientsController::class,'view'])->name('viewClient');
         Route::get('/edit/{id}', [App\Http\Controllers\ClientsController::class,'form'])->name('editClient');
         Route::post('/update/{id}', [App\Http\Controllers\ClientsController::class,'update'])->name('updateClient');
         Route::get('/delete/{id}', [App\Http\Controllers\ClientsController::class,'destroy'])->name('deleteClient');
@@ -118,5 +119,11 @@ Route::group(['middleware' => ['auth:web']], function () {
     // -------- invoices -------- //
     Route::group(['prefix' => 'invoices'], function () {
         Route::get('/{id}', [App\Http\Controllers\invoicesController::class,'index'])->name('invoice');
+    });
+
+    // -------- payments -------- //
+    Route::group(['prefix' => 'payments'], function () {
+        Route::get('/receive_payment_detail', [App\Http\Controllers\PaymentsController::class,'receivePaymentDetails'])->name('receivePaymentsDetails');
+        Route::post('/receive_payment', [App\Http\Controllers\PaymentsController::class,'receivePayment'])->name('receivePayments');
     });
 });

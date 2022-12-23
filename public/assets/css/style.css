@@ -7460,8 +7460,9 @@ body[data-layout-mode=dark] .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-o
 	color: #EC1361;
 }
 .invoice-total-footer {
-	border-top: 1px solid #E5E5E5;
+	/* border-top: 1px solid #E5E5E5; */
 	padding: 15px;
+	border-bottom: 1px solid #E5E5E5;
 }
 .invoice-total-footer h4 {
 	font-size: 20px;
