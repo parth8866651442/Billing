@@ -95,6 +95,7 @@ Route::group(['middleware' => ['auth:web']], function () {
         Route::get('/delete/{id}', [App\Http\Controllers\OrdersController::class,'destroy'])->name('deleteOrder');
         Route::get('/remove_item/{id}', [App\Http\Controllers\OrdersController::class,'removeItem'])->name('orderItemRemove');
         Route::get('/item_price/{id}', [App\Http\Controllers\OrdersController::class,'productPrice'])->name('findItemPrice');
+        Route::get('/client_orders/{id}', [App\Http\Controllers\OrdersController::class,'clientOrders'])->name('clientOrders');
     });
 
     // -------- Orders Estimates -------- //
@@ -119,6 +120,7 @@ Route::group(['middleware' => ['auth:web']], function () {
     // -------- invoices -------- //
     Route::group(['prefix' => 'invoices'], function () {
         Route::get('/{id}', [App\Http\Controllers\invoicesController::class,'index'])->name('invoice');
+        Route::get('/invoice_view/{id}', [App\Http\Controllers\invoicesController::class,'view'])->name('invoiceView');
     });
 
     // -------- payments -------- //

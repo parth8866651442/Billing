@@ -230,9 +230,9 @@
                                         @if(isset($settings->bd_bank_name) && isset($settings->bd_holdare_name) &&
                                         isset($settings->bd_ifsc_code) && isset($settings->bd_account_no))
                                         <div class="payment-details">
-                                            <p>{{isset($settings->bd_bank_name)? $settings->bd_bank_name : '' }}({{isset($settings->bd_holdare_name)? $settings->bd_holdare_name : '' }})
-                                                {{isset($settings->bd_ifsc_code)? $settings->bd_ifsc_code : '' }}
-                                                {{isset($settings->bd_account_no)? $settings->bd_account_no : '' }}</p>
+                                            <p>{{isset($settings->bd_bank_name)? $settings->bd_bank_name : '' }}({{isset($settings->bd_holdare_name)? $settings->bd_holdare_name : '' }})<br />
+                                            IFSC Code : {{isset($settings->bd_ifsc_code)? $settings->bd_ifsc_code : '' }} <br /> 
+                                            Account No : {{isset($settings->bd_account_no)? $settings->bd_account_no : '' }}</p>
                                         </div>
                                         @else
                                         <a class="btn btn-primary" href="#" data-bs-toggle="modal"

@@ -17,7 +17,8 @@
                 </ul>
 
                 <div class="btn-back">
-                    <a href="{{route('clientList')}}"><button class="btn btn-primary btn-sm" type="button"><i class="fas fa-chevron-left"></i> Back</button></a>
+                    <a href="{{route('clientList')}}"><button class="btn btn-primary btn-sm" type="button"><i
+                                class="fas fa-chevron-left"></i> Back</button></a>
                 </div>
             </div>
         </div>
@@ -43,50 +44,62 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Phone No<span class="asterisk">*</span></label>
-                                    <input type="text" class="form-control" name="phone_no" id="phone_no" placeholder="Phone No" value="@isset($item->phone_no){{$item->phone_no}}@endisset" />
+                                    <input type="text" class="form-control" name="phone_no" id="phone_no"
+                                        placeholder="Phone No"
+                                        value="@isset($item->phone_no){{$item->phone_no}}@endisset" />
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Email<span class="asterisk">*</span></label>
-                                    <input type="email" name="email" id="email" class="form-control" placeholder="Email" value="@isset($item->email){{$item->email}}@endisset" @if(isset($item)) readonly @endif>
+                                    <input type="email" name="email" id="email" class="form-control" placeholder="Email"
+                                        value="@isset($item->email){{$item->email}}@endisset" @if(isset($item)) readonly
+                                        @endif>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Password @if(!isset($item))<span class="asterisk">*</span>@endif</label>
-                                    <input type="password" name="password" id="password" class="form-control" placeholder="Password" value="" />
+                                    <input type="password" name="password" id="password" class="form-control"
+                                        placeholder="Password" value="" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Confirm Password @if(!isset($item))<span class="asterisk">*</span>@endif</label>
-                                    <input type="password" class="form-control" name="confirmpassword" id="confirmpassword"
-                                        placeholder="Confirm Password" value="" />
+                                    <label>Confirm Password @if(!isset($item))<span
+                                            class="asterisk">*</span>@endif</label>
+                                    <input type="password" class="form-control" name="confirmpassword"
+                                        id="confirmpassword" placeholder="Confirm Password" value="" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>PAN Card No</label>
-                                    <input type="text" class="form-control" name="pan_card_no" id="pan_card_no" placeholder="PAN Card No Ex: ABCDE1234F" onkeyup="checkValidation()" value="@isset($item->pan_card_no){{$item->pan_card_no}}@endisset" />
+                                    <input type="text" class="form-control" name="pan_card_no" id="pan_card_no"
+                                        placeholder="PAN Card No Ex: ABCDE1234F" onkeyup="checkValidation()"
+                                        value="@isset($item->pan_card_no){{$item->pan_card_no}}@endisset" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Aadhaar Card No</label>
-                                    <input type="text" class="form-control" name="aadhaar_card_no" id="aadhaar_card_no" placeholder="Aadhaar Card No Ex: 1234 5678 9012" onkeyup="checkValidation()" value="@isset($item->aadhaar_card_no){{$item->aadhaar_card_no}}@endisset" />
+                                    <input type="text" class="form-control" name="aadhaar_card_no" id="aadhaar_card_no"
+                                        placeholder="Aadhaar Card No Ex: 1234 5678 9012" onkeyup="checkValidation()"
+                                        value="@isset($item->aadhaar_card_no){{$item->aadhaar_card_no}}@endisset" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Address</label>
-                                    <textarea class="form-control" name="address" id="address">@isset($item->address){{$item->address}}@endisset</textarea>
+                                    <textarea class="form-control" name="address"
+                                        id="address">@isset($item->address){{$item->address}}@endisset</textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>City</label>
-                                    <input type="text" class="form-control" name="city" id="city" value="@isset($item->city){{$item->city}}@endisset"/>
+                                    <input type="text" class="form-control" name="city" id="city"
+                                        value="@isset($item->city){{$item->city}}@endisset" />
                                 </div>
                             </div>
                         </div>

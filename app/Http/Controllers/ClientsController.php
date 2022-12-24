@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Client;
+use App\Models\Order;
 use Auth, Hash;
 use Image;
 
@@ -50,7 +51,7 @@ class ClientsController extends Controller
     }
 
     public function view(Request $request, $itemID){
-        $item = Client::findOrFail($itemID);
+        $item = Client::findOrFail($itemID);        
         return view('clients.view', compact('item'));
     }
 

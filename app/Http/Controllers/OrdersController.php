@@ -254,4 +254,27 @@ class OrdersController extends Controller
             return response()->json(['status' => false, 'price' => 0], 200);
         }
     }
+
+    public function clientOrders(Request $request, $itemID='')
+    {
+        $items = Order::with('clientDetail')->where(['client_id'=>$itemID,'is_deleted'=>0,'type'=>'orignal']);
+        
+        if (!empty($search = $request->search)) {
+            $items->where(function ($query) use ($search) {
+                $query->where('fullname', 'like', '%' . $search . '%')
+                ->orWhere('invoice_no', 'like', '%' . $search . '%');
+            });
+        }
+
+        if(!empty($request->from) && !empty($request->to)){
+            $fromDate = Carbon::createFromFormat('d/m/Y', $request->from)->format('Y-m-d');
+            $toDate = Carbon::createFromFormat('d/m/Y', $request->to)->format('Y-m-d');
+            $items->whereBetween('date', [$fromDate,$toDate]);
+        }
+
+        $items->orderBy('created_at', 'DESC');
+        $items = $items->get();
+
+        return response()->json(['status' => true, 'data' => $items], 200);
+    }
 }

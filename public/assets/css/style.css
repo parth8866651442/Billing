@@ -7218,7 +7218,7 @@ body[data-layout-mode=dark] .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-o
 	padding: 30px 0;
 }
 .payment-details {
-	width: 266px;
+	width: 300px;
     border-radius: 4px;
     padding: 15px;
     background: #7638FF;
@@ -7228,7 +7228,7 @@ body[data-layout-mode=dark] .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-o
 }
 .payment-details p {
 	color: #fff;
-    max-width: 140px;
+    max-width: 250px;
     font-weight: 400;
     margin-bottom: 0;
 }
@@ -8509,6 +8509,9 @@ a.comment-btn:hover {
 }
 .accordion-faq {
 	font-size: 18px;
+}
+.accordion-faq .custom-accordion-title .accordion-arrow{
+	float: right;
 }
 .custom-faq .card-header:first-child {
 	border-radius: 20px;

@@ -39,4 +39,10 @@ class invoicesController extends Controller
         }
         
     }
+
+    public function view(Request $request, $itemID=''){
+        $settings = Settings::first();
+        $item = Order::with('orderItemsDetail','clientDetail','paidAmountSum')->where(['id'=>$itemID,'is_deleted'=>0,'type'=>'orignal'])->first();
+        return view('invoice.invoiceView', compact('item','settings'));
+    }
 }
