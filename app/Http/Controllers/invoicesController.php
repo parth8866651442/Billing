@@ -7,7 +7,7 @@ use App\Models\Settings;
 use App\Models\Order;
 use Dompdf\Dompdf;
 
-class invoicesController extends Controller
+class InvoicesController extends Controller
 {
     public function index(Request $request, $itemID='')
     {  
@@ -42,7 +42,7 @@ class invoicesController extends Controller
 
     public function view(Request $request, $itemID=''){
         $settings = Settings::first();
-        $item = Order::with('orderItemsDetail','clientDetail','paidAmountSum')->where(['id'=>$itemID,'is_deleted'=>0,'type'=>'orignal'])->first();
+        $item = Order::with('orderItemsDetail','orderItemsDetail.productDetail','orderItemsDetail.productDetail.categoryDetail','clientDetail','paidAmountSum')->where(['id'=>$itemID,'is_deleted'=>0,'type'=>'orignal'])->first();
         return view('invoice.invoiceView', compact('item','settings'));
     }
 }

@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('settings', function (Blueprint $table) {
+            $table->string('company_name')->nullable();
             $table->string('prefix_name_invoice')->nullable();
             $table->string('bd_holdare_name')->nullable();
             $table->string('bd_bank_name')->nullable();

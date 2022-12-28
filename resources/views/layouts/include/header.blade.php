@@ -25,6 +25,9 @@
     .page-header .btn-back {
         float: right;
     }
+    i.fa.fa-calendar.glyphicon.glyphicon-calendar{
+        display: none;
+    }
     </style>
 </head>
 

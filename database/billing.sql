@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2022 at 02:16 PM
+-- Generation Time: Dec 28, 2022 at 02:46 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.0.19
 
@@ -120,7 +120,46 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (8, '2022_11_17_113240_create_orders_table', 5),
 (9, '2022_12_12_125442_create_order_items_table', 6),
 (10, '2022_12_13_090725_create_settings_table', 7),
-(11, '2022_12_20_102126_create_payments_table', 8);
+(11, '2022_12_20_102126_create_payments_table', 8),
+(12, '2022_12_26_074045_create_panel_masters_table', 9),
+(13, '2022_12_26_100125_create_module_masters_table', 10),
+(14, '2022_12_26_123757_create_permissions_masters_table', 11);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `module_masters`
+--
+
+CREATE TABLE `module_masters` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `panel_id` int(11) NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `url` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `create_by` int(11) NOT NULL,
+  `update_by` int(11) DEFAULT NULL,
+  `is_deleted` tinyint(4) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `module_masters`
+--
+
+INSERT INTO `module_masters` (`id`, `panel_id`, `name`, `url`, `create_by`, `update_by`, `is_deleted`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Add Users', 'add-1', 1, NULL, 0, '2022-12-26 05:52:14', '2022-12-26 05:56:13'),
+(2, 1, 'User List', 'list', 1, NULL, 0, '2022-12-26 05:57:38', '2022-12-26 05:57:38'),
+(3, 2, 'Add Client', 'add', 1, NULL, 0, '2022-12-26 05:52:14', '2022-12-26 05:56:13'),
+(4, 2, 'Client List', 'list', 1, NULL, 0, '2022-12-26 05:57:38', '2022-12-26 05:57:38'),
+(5, 3, 'Add Category', 'add', 1, NULL, 0, '2023-01-02 05:57:38', NULL),
+(6, 3, 'Category List', 'list', 1, NULL, 0, '2022-12-26 05:57:38', NULL),
+(7, 4, 'Add Product', 'add', 1, NULL, 0, '2022-12-26 05:57:38', NULL),
+(8, 4, 'Product List', 'list', 1, NULL, 0, '2022-12-26 05:57:38', NULL),
+(9, 5, 'Add Order', 'add', 1, NULL, 0, '2022-12-26 05:57:38', NULL),
+(10, 5, 'Order List', 'list', 1, NULL, 0, '2022-12-26 05:57:38', NULL),
+(11, 6, 'Add Estimates', 'add', 1, NULL, 0, '2022-12-26 05:57:38', NULL),
+(12, 6, 'Estimates List', 'list', 1, NULL, 0, '2022-12-26 05:57:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -154,7 +193,7 @@ CREATE TABLE `orders` (
 INSERT INTO `orders` (`id`, `client_id`, `invoice_no`, `fullname`, `sip_vehicle_no`, `moblie_no`, `type`, `status`, `date`, `total`, `create_by`, `update_by`, `is_deleted`, `is_active`, `created_at`, `updated_at`) VALUES
 (1, 2, 'BD/H-0001', 'raj sing b', '747125', '9876325410', 'orignal', 'draft', '2022-12-13', 0.00, 1, NULL, 0, '1', '2022-12-08 03:50:13', '2022-12-12 01:43:26'),
 (2, 2, 'BD/H-0002', 'client name 1', NULL, '9876320145', 'orignal', 'processing', '2022-12-13', 10290.00, 1, 1, 0, '1', '2022-12-12 08:04:50', '2022-12-23 06:03:40'),
-(3, 2, 'BD/H-0003', 'asssddas', 'asdas', '9876320145', 'orignal', 'draft', '2022-12-14', 0.00, 1, NULL, 0, '1', '2022-12-13 02:08:42', '2022-12-13 06:55:24'),
+(3, 2, 'BD/H-0003', 'asssddas', 'asdas', '9876320145', 'orignal', 'draft', '2022-12-14', 340.00, 1, 1, 0, '1', '2022-12-13 02:08:42', '2022-12-26 00:33:41'),
 (4, 1, 'BD/H-0001', 'Jay B.K', '13245', '9632587410', 'duplicate', 'draft', '2022-12-20', 7040.00, 1, NULL, 0, '1', '2022-12-20 04:00:27', '2022-12-20 04:00:27');
 
 -- --------------------------------------------------------
@@ -208,7 +247,39 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `price`, `qty`, `amou
 (27, 4, 7, '700', '1', '700', '2022-12-20 04:00:27', '2022-12-20 04:00:27'),
 (28, 4, 8, '800', '1', '800', '2022-12-20 04:00:27', '2022-12-20 04:00:27'),
 (29, 4, 9, '900', '2', '1800', '2022-12-20 04:00:27', '2022-12-20 04:00:27'),
-(30, 4, 10, '1000', '1', '1000', '2022-12-20 04:00:27', '2022-12-20 04:00:27');
+(30, 4, 10, '1000', '1', '1000', '2022-12-20 04:00:27', '2022-12-20 04:00:27'),
+(31, 3, 1, '100', '1', '100', '2022-12-26 00:32:35', '2022-12-26 00:33:41'),
+(32, 3, 2, '120', '2', '240', '2022-12-26 00:33:41', '2022-12-26 00:33:41');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `panel_masters`
+--
+
+CREATE TABLE `panel_masters` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `seq` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `icon` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `create_by` int(11) NOT NULL,
+  `update_by` int(11) DEFAULT NULL,
+  `is_deleted` tinyint(4) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `panel_masters`
+--
+
+INSERT INTO `panel_masters` (`id`, `name`, `seq`, `icon`, `create_by`, `update_by`, `is_deleted`, `created_at`, `updated_at`) VALUES
+(1, 'Users', '1', '<i class=\"fa fa-users\"></i>', 1, NULL, 0, '2022-12-26 04:04:28', '2022-12-26 04:04:28'),
+(2, 'Clients', '2', '<i class=\"fas fa-user-secret\"></i>', 1, NULL, 0, '2022-12-26 04:07:33', '2022-12-26 04:07:33'),
+(3, 'Category', '3', '<i class=\"fas fa-th-list\"></i>', 1, NULL, 0, '2022-12-26 04:07:52', '2022-12-26 04:07:52'),
+(4, 'Product', '4', '<i class=\"fab fa-product-hunt\"></i>', 1, NULL, 0, '2022-12-26 04:08:08', '2022-12-26 04:08:08'),
+(5, 'Order', '5', '<i class=\"fas fa-box-open\"></i>', 1, NULL, 0, '2022-12-26 04:08:30', '2022-12-26 04:08:30'),
+(6, 'Estimates', '6', '<i class=\"fas fa-boxes\"></i>', 1, 1, 0, '2022-12-26 04:08:50', '2022-12-26 04:15:35');
 
 -- --------------------------------------------------------
 
@@ -260,6 +331,57 @@ CREATE TABLE `payments` (
 INSERT INTO `payments` (`id`, `order_id`, `amount`, `due_amount`, `paid_amount`, `payment_type`, `transaction_no`, `cheque_no`, `cheque_date`, `note`, `date`, `create_by`, `update_by`, `created_at`, `updated_at`) VALUES
 (1, 2, 5000.00, 10290.00, 0.00, 'cheque', NULL, '12312312', '23-12-2022', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', '23/12/2022', 1, NULL, '2022-12-23 00:18:10', '2022-12-23 00:18:10'),
 (2, 2, 2000.00, 5290.00, 5000.00, 'cash', NULL, NULL, NULL, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.', '24-12-2022', 1, NULL, '2022-12-23 00:19:46', '2022-12-23 00:19:46');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `permissions_masters`
+--
+
+CREATE TABLE `permissions_masters` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `panel_id` int(11) NOT NULL,
+  `module_id` int(11) NOT NULL,
+  `view` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
+  `edit` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
+  `add` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
+  `delete` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
+  `create_by` int(11) NOT NULL,
+  `update_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `permissions_masters`
+--
+
+INSERT INTO `permissions_masters` (`id`, `user_type`, `panel_id`, `module_id`, `view`, `edit`, `add`, `delete`, `create_by`, `update_by`, `created_at`, `updated_at`) VALUES
+(133, 'admin', 1, 1, '1', '1', '1', '1', 1, 1, '2022-12-28 04:40:50', '2022-12-28 04:40:50'),
+(134, 'admin', 1, 2, '1', '1', '1', '1', 1, 1, '2022-12-28 04:40:50', '2022-12-28 04:40:50'),
+(135, 'admin', 2, 3, '1', '1', '1', '1', 1, 1, '2022-12-28 04:40:50', '2022-12-28 04:40:50'),
+(136, 'admin', 2, 4, '1', '1', '1', '1', 1, 1, '2022-12-28 04:40:50', '2022-12-28 04:40:50'),
+(137, 'admin', 3, 5, '1', '1', '1', '1', 1, 1, '2022-12-28 04:40:50', '2022-12-28 04:40:50'),
+(138, 'admin', 3, 6, '1', '1', '1', '1', 1, 1, '2022-12-28 04:40:50', '2022-12-28 04:40:50'),
+(139, 'admin', 4, 7, '0', '1', '0', '1', 1, 1, '2022-12-28 04:40:50', '2022-12-28 04:40:50'),
+(140, 'admin', 4, 8, '1', '0', '1', '0', 1, 1, '2022-12-28 04:40:50', '2022-12-28 04:40:50'),
+(141, 'admin', 5, 9, '1', '1', '1', '1', 1, 1, '2022-12-28 04:40:50', '2022-12-28 04:40:50'),
+(142, 'admin', 5, 10, '1', '1', '1', '1', 1, 1, '2022-12-28 04:40:50', '2022-12-28 04:40:50'),
+(143, 'admin', 6, 11, '0', '1', '0', '1', 1, 1, '2022-12-28 04:40:50', '2022-12-28 04:40:50'),
+(144, 'admin', 6, 12, '1', '0', '1', '0', 1, 1, '2022-12-28 04:40:50', '2022-12-28 04:40:50'),
+(169, 'employee', 1, 1, '1', '1', '1', '1', 1, 1, '2022-12-28 05:26:12', '2022-12-28 05:26:12'),
+(170, 'employee', 1, 2, '1', '1', '1', '1', 1, 1, '2022-12-28 05:26:12', '2022-12-28 05:26:12'),
+(171, 'employee', 2, 3, '1', '0', '0', '1', 1, 1, '2022-12-28 05:26:12', '2022-12-28 05:26:12'),
+(172, 'employee', 2, 4, '1', '0', '0', '1', 1, 1, '2022-12-28 05:26:12', '2022-12-28 05:26:12'),
+(173, 'employee', 3, 5, '1', '0', '0', '1', 1, 1, '2022-12-28 05:26:12', '2022-12-28 05:26:12'),
+(174, 'employee', 3, 6, '1', '0', '0', '1', 1, 1, '2022-12-28 05:26:12', '2022-12-28 05:26:12'),
+(175, 'employee', 4, 7, '1', '0', '0', '1', 1, 1, '2022-12-28 05:26:12', '2022-12-28 05:26:12'),
+(176, 'employee', 4, 8, '1', '0', '0', '1', 1, 1, '2022-12-28 05:26:12', '2022-12-28 05:26:12'),
+(177, 'employee', 5, 9, '1', '0', '0', '1', 1, 1, '2022-12-28 05:26:12', '2022-12-28 05:26:12'),
+(178, 'employee', 5, 10, '1', '0', '0', '1', 1, 1, '2022-12-28 05:26:12', '2022-12-28 05:26:12'),
+(179, 'employee', 6, 11, '1', '1', '1', '1', 1, 1, '2022-12-28 05:26:12', '2022-12-28 05:26:12'),
+(180, 'employee', 6, 12, '1', '1', '1', '1', 1, 1, '2022-12-28 05:26:12', '2022-12-28 05:26:12');
 
 -- --------------------------------------------------------
 
@@ -388,7 +510,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `company_name`, `prefix_name_invoice`, `bd_holdare_name`, `bd_bank_name`, `bd_ifsc_code`, `bd_account_no`, `address`, `phone_no`, `email_id`, `terms_conditions`, `sign_img`, `logo_img`, `favicon_img`, `create_by`, `update_by`, `created_at`, `updated_at`) VALUES
-(1, 'BHARAT DIESEL\'S & HYDRAULIC', 'BD&H', 'Rajbhai k.b', 'Axis Bank (Veraval)', 'UTIB000541', '916020046492747', 'Om Decora 9 Square\r\n150 Feet Ring Rd, \r\nCircle, Nana Mava, \r\nRajkot, Gujarat 360003', '9228218237', 'info@bharatdiesel.com', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.', '1671884584_my_signature_cocosign.png', '1670938003_logo.png', '1670938003_favicon.png', 1, 1, '2022-12-13 03:54:25', '2022-12-24 06:53:04');
+(1, 'BHARAT DIESEL\'S & HYDRAULIC', 'BD&H', 'Rajbhai k.b', 'Axis Bank (Veraval)', 'UTIB000541', '916020046492747', 'Om Decora 9 Square\r\n150 Feet Ring Rd, \r\nCircle, Nana Mava, \r\nRajkot, Gujarat 360003', '9228218237', 'info@bharatdiesel.com', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.', '1671884584_my_signature_cocosign.png', '1670938003_logo.png', '1670938003_favicon.png', 1, 1, '2022-12-13 03:54:25', '2022-12-26 00:33:41');
 
 -- --------------------------------------------------------
 
@@ -469,6 +591,12 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `module_masters`
+--
+ALTER TABLE `module_masters`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
@@ -481,6 +609,12 @@ ALTER TABLE `order_items`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `panel_masters`
+--
+ALTER TABLE `panel_masters`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
@@ -490,6 +624,12 @@ ALTER TABLE `password_resets`
 -- Indexes for table `payments`
 --
 ALTER TABLE `payments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `permissions_masters`
+--
+ALTER TABLE `permissions_masters`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -546,7 +686,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `module_masters`
+--
+ALTER TABLE `module_masters`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -558,13 +704,25 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT for table `panel_masters`
+--
+ALTER TABLE `panel_masters`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `permissions_masters`
+--
+ALTER TABLE `permissions_masters`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=181;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`

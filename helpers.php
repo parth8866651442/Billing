@@ -100,3 +100,29 @@ if (!function_exists('numberToWord')) {
         return '';
     }
 }
+
+if (!function_exists('my_array_search')) {
+    function my_array_search($array, $key, $value) {
+
+        $results = array();
+        if (is_array($array)) {
+            if (isset($array[$key]) && $array[$key] == $value) {
+                $results = $array;
+            }
+            
+            foreach ($array as $i => $subarray) {
+                if(my_array_search($subarray, $key, $value,$i) !== null){
+                    $results = array_merge($results, my_array_search($subarray, $key, $value));
+                }
+            }
+        }
+
+        return $results;
+    }
+}
+
+if(!function_exists('checkOrNo')){
+    function checkOrNo($value,$type){
+        return (isset($value) && isset($value[$type]) && $value[$type]) ? 'checked=""' : '';
+    }
+}

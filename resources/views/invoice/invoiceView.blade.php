@@ -9,7 +9,7 @@
             <div class="invoice-info">
                 <div class="invoice-head">
                     <h2 class="text-primary">Invoice</h2>
-                    <p>Invoice Number : {{$item->invoice_no}}</p>
+                    <p>Invoice No : {{$item->invoice_no}}</p>
                 </div>
             </div>
         </div>
@@ -21,7 +21,10 @@
         <div class="col-lg-4 col-md-12">
             <div class="invoice-info">
                 <strong class="customer-text-one">Billed to</strong>
-                <h6 class="invoice-name">{{$item->clientDetail->name}}</h6>
+                <h6 class="invoice-name">{{$item->fullname.' ('.$item->clientDetail->name.')'}}</h6>
+                <p class="invoice-details invoice-details-two">
+                    <span>Moblie No : {{$item->moblie_no}}</span>
+                </p>
                 <p class="invoice-details invoice-details-two">
                 {!! isset($item->clientDetail)? nl2br($item->clientDetail->address) :'' !!}
                 </p>
@@ -62,10 +65,10 @@
                     <tbody>
                         @foreach($item->orderItemsDetail as $key => $orderitem)
                         <tr>
-                            <td>{{$orderitem->product_id}}</td>
-                            <td>{{$orderitem->price}}</td>
+                            <td>{{$orderitem->productDetail->name.' ('.$orderitem->productDetail->categoryDetail->name.')'}}</td>
+                            <td>{{number_format($orderitem->price,2)}}</td>
                             <td>{{$orderitem->qty}}</td>
-                            <th>{{$orderitem->amount}}</th>
+                            <th>{{number_format($orderitem->amount,2)}}</th>
                         </tr>
                         @endforeach
                     </tbody>

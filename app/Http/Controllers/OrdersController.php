@@ -132,7 +132,7 @@ class OrdersController extends Controller
                     Settings::create($settingData);
                 }
             }
-            return redirect()->route('orderList')->with('success', 'Order created successfully');
+            return redirect()->route('viewClient',["id" => $request->client_id])->with('success', 'Order created successfully');
         } else {
             return redirect()->route('orderList')->with('error', 'Order created unsuccessfully');
         }
@@ -211,7 +211,7 @@ class OrdersController extends Controller
                 }
             }
             
-            return redirect()->route('orderList')->with('success', 'Order updated successfully');
+            return redirect()->route('viewClient',["id" => $request->client_id])->with('success', 'Order updated successfully');
         } else {
             return redirect()->route('orderList')->with('error', 'Order updated unsuccessfully');
         }

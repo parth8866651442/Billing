@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/* Route::get('/', function () {
-    return view('welcome');
-}); */
-
 Route::get('/', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
 
 Auth::routes([
@@ -119,8 +115,8 @@ Route::group(['middleware' => ['auth:web']], function () {
 
     // -------- invoices -------- //
     Route::group(['prefix' => 'invoices'], function () {
-        Route::get('/{id}', [App\Http\Controllers\invoicesController::class,'index'])->name('invoice');
-        Route::get('/invoice_view/{id}', [App\Http\Controllers\invoicesController::class,'view'])->name('invoiceView');
+        Route::get('/{id}', [App\Http\Controllers\InvoicesController::class,'index'])->name('invoice');
+        Route::get('/invoice_view/{id}', [App\Http\Controllers\InvoicesController::class,'view'])->name('invoiceView');
     });
 
     // -------- payments -------- //
@@ -128,4 +124,33 @@ Route::group(['middleware' => ['auth:web']], function () {
         Route::get('/receive_payment_detail', [App\Http\Controllers\PaymentsController::class,'receivePaymentDetails'])->name('receivePaymentsDetails');
         Route::post('/receive_payment', [App\Http\Controllers\PaymentsController::class,'receivePayment'])->name('receivePayments');
     });
+
+    // -------- Panel Masters -------- //
+    Route::group(['prefix' => 'panel_masters'], function () {
+        Route::get('/', [App\Http\Controllers\PanelMastersController::class,'index'])->name('panelMasterList');
+        Route::get('/add', [App\Http\Controllers\PanelMastersController::class,'form'])->name('addPanelMaster');
+        Route::post('/store', [App\Http\Controllers\PanelMastersController::class,'store'])->name('storePanelMaster');
+        Route::get('/edit/{id}', [App\Http\Controllers\PanelMastersController::class,'form'])->name('editPanelMaster');
+        Route::post('/update/{id}', [App\Http\Controllers\PanelMastersController::class,'update'])->name('updatePanelMaster');
+        Route::get('/delete/{id}', [App\Http\Controllers\PanelMastersController::class,'destroy'])->name('deletePanelMaster');
+        Route::post('/check_menu_name', [App\Http\Controllers\PanelMastersController::class,'checkMenuNameRepeat'])->name('checkMenuNameRepeat');
+    });
+
+    // -------- Module Masters -------- //
+    Route::group(['prefix' => 'module_masters'], function () {
+        Route::get('/', [App\Http\Controllers\ModuleMastersController::class,'index'])->name('moduleMasterList');
+        Route::get('/add', [App\Http\Controllers\ModuleMastersController::class,'form'])->name('addModuleMaster');
+        Route::post('/store', [App\Http\Controllers\ModuleMastersController::class,'store'])->name('storeModuleMaster');
+        Route::get('/edit/{id}', [App\Http\Controllers\ModuleMastersController::class,'form'])->name('editModuleMaster');
+        Route::post('/update/{id}', [App\Http\Controllers\ModuleMastersController::class,'update'])->name('updateModuleMaster');
+        Route::get('/delete/{id}', [App\Http\Controllers\ModuleMastersController::class,'destroy'])->name('deleteModuleMaster');
+        Route::post('/check_submenu_name', [App\Http\Controllers\ModuleMastersController::class,'checkSubMenuNameRepeat'])->name('checkSubMenuNameRepeat');
+    });
+
+    // -------- Module Masters -------- //
+    Route::group(['prefix' => 'permission_masters'], function () {
+        Route::get('/assign_module', [App\Http\Controllers\PermissionMastersController::class,'assignModule'])->name('assignModuleForm');
+        Route::post('/save_assign_module', [App\Http\Controllers\PermissionMastersController::class,'saveAssignModule'])->name('saveAssignModule');
+    });
+
 });

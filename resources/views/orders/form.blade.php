@@ -55,7 +55,9 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Full Name</label>
-                                        <input type="text" name="fullname" id="fullname" class="form-control" placeholder="Full Name" value="{{isset($item->fullname) ? $item->fullname :''  }}">
+                                        <input type="text" name="fullname" id="fullname" class="form-control"
+                                            placeholder="Full Name"
+                                            value="{{isset($item->fullname) ? $item->fullname :''  }}">
                                     </div>
                                 </div>
                                 <div class="col-xl-3 col-md-12 col-sm-12 col-12">
@@ -63,7 +65,7 @@
                                         <label>Moblie No</label>
                                         <input type="text" name="moblie_no" id="moblie_no" class="form-control"
                                             placeholder="Moblie No"
-                                            value="{{isset($item->clientDetail->phone_no) ? $item->clientDetail->phone_no :$item->moblie_no  }}">
+                                            value="{{ isset($item->moblie_no) ? $item->moblie_no :'' }}">
                                     </div>
                                     <div class="form-group">
                                         <label>Sip Vehicle No</label>
@@ -78,12 +80,15 @@
                                         <div class="invoice-inner-head">
                                             <div class="row align-items-center">
                                                 <div class="col-lg-6 col-md-6">
-                                                    <span>Invoice No.<a href="javascript:void(0);">{{isset($item->invoice_no)? $item->invoice_no : invoiceNumber('orignal') }}</a></span>
+                                                    <span>Invoice No.<a
+                                                            href="javascript:void(0);">{{isset($item->invoice_no)? $item->invoice_no : invoiceNumber('orignal') }}</a></span>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6">
                                                     <select class="select select2" name="status" id="status">
                                                         @foreach (config('constants.order_status') as $i => $Ostatus)
-                                                            <option value="{{$Ostatus['value']}}" {{isset($item->status) &&  $item->status === $Ostatus['value']? 'selected' :''}}>{{$Ostatus['title']}}</option>
+                                                        <option value="{{$Ostatus['value']}}"
+                                                            {{isset($item->status) &&  $item->status === $Ostatus['value']? 'selected' :''}}>
+                                                            {{$Ostatus['title']}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -99,9 +104,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6">
-                                                <div class="invoice-inner-head">
-                                                    <span>Invoice Type. <a href="javascript:void(0);">{{ucfirst('orignal')}}</a></span>
-                                                </div>
+                                                    <div class="invoice-inner-head">
+                                                        <span>Invoice Type. <a href="javascript:void(0);">{{ucfirst('orignal')}}</a></span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -231,8 +236,10 @@
                                         isset($settings->bd_ifsc_code) && isset($settings->bd_account_no))
                                         <div class="payment-details">
                                             <p>{{isset($settings->bd_bank_name)? $settings->bd_bank_name : '' }}({{isset($settings->bd_holdare_name)? $settings->bd_holdare_name : '' }})<br />
-                                            IFSC Code : {{isset($settings->bd_ifsc_code)? $settings->bd_ifsc_code : '' }} <br /> 
-                                            Account No : {{isset($settings->bd_account_no)? $settings->bd_account_no : '' }}</p>
+                                                IFSC Code :
+                                                {{isset($settings->bd_ifsc_code)? $settings->bd_ifsc_code : '' }} <br />
+                                                Account No :
+                                                {{isset($settings->bd_account_no)? $settings->bd_account_no : '' }}</p>
                                         </div>
                                         @else
                                         <a class="btn btn-primary" href="#" data-bs-toggle="modal"
@@ -258,8 +265,8 @@
                                                 <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
                                                     aria-labelledby="headingTwo" data-bs-parent="#accordion">
                                                     <div class="panel-body">
-                                                        <textarea
-                                                            class="form-control" name="terms_conditions">{{isset($settings->terms_conditions)? $settings->terms_conditions : '' }}</textarea>
+                                                        <textarea class="form-control"
+                                                            name="terms_conditions">{{isset($settings->terms_conditions)? $settings->terms_conditions : '' }}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -274,24 +281,34 @@
                                         <div class="invoice-total-footer">
                                             <input type="hidden" name="total" id="total"
                                                 value="{{isset($item->total) ? $item->total :'00'}}">
-                                            <h4>Total Amount <span id="amountDue">{{isset($item->total) ? number_format($item->total,2) :'00.00'}} Rs.</span></h4>
+                                            <h4>Total Amount <span
+                                                    id="amountDue">{{isset($item->total) ? number_format($item->total,2) :'00.00'}}
+                                                    Rs.</span></h4>
                                         </div>
                                         <div class="invoice-total-inner">
                                             <div class="links-info-one">
                                                 <div class="links-cont">
                                                     <div class="service-amount">
-                                                        <a href="javascript:void(0);" class="service-trash">Pay Amount</a>
-                                                        <span><input type="text" class="form-control" name="pay_amount" id="pay_amount" placeholder="00.00" value="" style="height: 30px;" {{(isset($item->paidAmountSum) && !($item->total - $item->paidAmountSum->sum('amount'))) ? 'disabled' : ''}}></span>
+                                                        <a href="javascript:void(0);" class="service-trash">Pay
+                                                            Amount</a>
+                                                        <span><input type="text" class="form-control" name="pay_amount"
+                                                                id="pay_amount" placeholder="00.00" value=""
+                                                                style="height: 30px;"
+                                                                {{(isset($item->paidAmountSum) && !($item->total - $item->paidAmountSum->sum('amount'))) ? 'disabled' : ''}}></span>
                                                     </div>
                                                 </div>
                                                 <div class="links-cont">
                                                     <div class="service-amount">
-                                                        <a href="javascript:void(0);" class="service-trash">Total Due</a> <span>{{isset($item->paidAmountSum) ? number_format($item->total - $item->paidAmountSum->sum('amount'),2) : '00.00'}}</span>
+                                                        <a href="javascript:void(0);" class="service-trash">Total
+                                                            Due</a>
+                                                        <span>{{isset($item->paidAmountSum) ? number_format($item->total - $item->paidAmountSum->sum('amount'),2) : '00.00'}}</span>
                                                     </div>
                                                 </div>
                                                 <div class="links-cont">
                                                     <div class="service-amount">
-                                                        <a href="javascript:void(0);" class="service-trash">Total Paid</a> <span>{{isset($item->paidAmountSum) ? number_format($item->paidAmountSum->sum('amount'),2) : '00.00'}}</span>
+                                                        <a href="javascript:void(0);" class="service-trash">Total
+                                                            Paid</a>
+                                                        <span>{{isset($item->paidAmountSum) ? number_format($item->paidAmountSum->sum('amount'),2) : '00.00'}}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -382,25 +399,25 @@ $.ajaxSetup({
     }
 });
 $(document).ready(function() {
-        var addOrderForm = $("#orderForm");
-        var validator = addOrderForm.validate({
-            rules: {
-                fullname: {
-                    required: true
-                },
-                date: {
-                    required: true
-                }
+    var addOrderForm = $("#orderForm");
+    var validator = addOrderForm.validate({
+        rules: {
+            fullname: {
+                required: true
             },
-            messages: {
-                fullname: {
-                    required: "This field is required"
-                },
-                date: {
-                    required: "This field is required"
-                }
+            date: {
+                required: true
             }
-        });
+        },
+        messages: {
+            fullname: {
+                required: "This field is required"
+            },
+            date: {
+                required: "This field is required"
+            }
+        }
+    });
 });
 
 // Invoices Table Add More

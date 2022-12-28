@@ -6,4 +6,8 @@ return  [
         ['value' => 'cancelled', 'title' => 'Cancelled'],
         // ['value' => 'completed', 'title' => 'Completed']
     ],
+    'userType' => [
+        ['value' => 'admin', 'label' => 'Admin'],
+        ['value' => 'employee', 'label' => 'Employee']
+    ],
 ];
