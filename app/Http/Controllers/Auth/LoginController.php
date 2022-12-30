@@ -77,14 +77,12 @@ class LoginController extends Controller
     {    // check user role  
         $user = User::where(['email' => $request->email, 'is_active' => 1, 'is_deleted' => 0])->where(function($query) {
             $query->where('role','superadmin')
-            ->orwhere(['role'=>'admin','role'=>'employee']);
+            ->orwhere(['role'=>'admin'])
+            ->orwhere(['role'=>'employee']);
         })->first();
         if(!empty($user)){
             if(Hash::check($request->password, $user->password)){
-                return $this->guard()->attempt(
-                        ['email' => $request->email, 'password' => $request->password],
-                        $request->filled('remember')
-                    );
+                return $this->guard()->attempt(['email' => $request->email, 'password' => $request->password], $request->filled('remember'));
             }
         }
         return false;

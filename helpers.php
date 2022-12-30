@@ -2,6 +2,14 @@
 
 define('PAGINATE', 10);
 
+//model id
+define('USER_MODULE', 1);
+define('CLIENTS_MODULE', 2);
+define('CATEGORY_MODULE', 3);
+define('PRODUCT_MODULE', 4);
+define('ORDER_MODULE', 5);
+define('ESTIMATES_MODULE', 6);
+
 if (!function_exists('imageUrl')) {
     function imageUrl($img, $path, $default = 'default.png', $size = 'thumbnail')
     {

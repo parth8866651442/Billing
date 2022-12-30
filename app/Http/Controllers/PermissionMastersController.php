@@ -19,9 +19,6 @@ class PermissionMastersController extends Controller
                 $pan->sup_page = ModuleMasters::where(['is_deleted'=>0,'panel_id'=>$pan->id])->get();
             }
         }
-        // Cookie::queue('owt-cookie', 'Setting Cookie from Online Web Tutor', 120);
-        // print_r(Cookie::get('owt-cookie'));
-        // exit;
         $permissionsData = PermissionsMasters::get()->groupBy('user_type');
         return view('permission.index', compact('panelData','permissionsData'));
     }

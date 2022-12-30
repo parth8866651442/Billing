@@ -103,6 +103,11 @@
                 </div>
             </div>
         </div>
+        <div>
+            <pre>
+                {{Helper::check_user_assess('view',USER_MODULE)}}
+            </pre>
+        </div>
     </div>
 </div>
 @endsection

@@ -183,6 +183,31 @@
                                 <li><a href="{{route('estimateList')}}" class="{{ (request()->routeIs('estimateList')) ? 'active' : '' }}">Estimates List</a></li>
                             </ul>
                         </li>
+
+                        <li class="submenu {{ (request()->routeIs('panelMasterList') || request()->routeIs('addPanelMaster')) ? 'active' : '' }}">
+                            <a href="{{route('panelMasterList')}}" class="{{ (request()->routeIs('panelMasterList') || request()->routeIs('addPanelMaster')) ? 'active' : '' }}"><i class="fas fa-boxes"></i><span>Panel Master</span><span
+                                    class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="{{route('addPanelMaster')}}" class="{{ (request()->routeIs('addPanelMaster')) ? 'active' : '' }}">Add Panel Master</a></li>
+                                <li><a href="{{route('panelMasterList')}}" class="{{ (request()->routeIs('panelMasterList')) ? 'active' : '' }}">Panel Master List</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="submenu {{ (request()->routeIs('moduleMasterList') || request()->routeIs('addModuleMaster')) ? 'active' : '' }}">
+                            <a href="{{route('moduleMasterList')}}" class="{{ (request()->routeIs('moduleMasterList') || request()->routeIs('addModuleMaster')) ? 'active' : '' }}"><i class="fas fa-boxes"></i><span>Panel Master</span><span
+                                    class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="{{route('addModuleMaster')}}" class="{{ (request()->routeIs('addModuleMaster')) ? 'active' : '' }}">Add Module Master</a></li>
+                                <li><a href="{{route('moduleMasterList')}}" class="{{ (request()->routeIs('moduleMasterList')) ? 'active' : '' }}">Module Master List</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu {{ request()->routeIs('assignModuleForm') ? 'active' : '' }}">
+                            <a href="{{route('assignModuleForm')}}" class="{{ request()->routeIs('assignModuleForm') ? 'active' : '' }}"><i class="fas fa-boxes"></i><span>Permissions</span><span
+                                    class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="{{route('assignModuleForm')}}" class="{{ request()->routeIs('assignModuleForm') ? 'active' : '' }}">Permissions Setting</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
