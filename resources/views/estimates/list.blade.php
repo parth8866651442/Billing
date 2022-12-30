@@ -14,7 +14,9 @@
                 </ul>
             </div>
             <div class="col-auto">
+                @if(Helper::check_user_assess('add',ESTIMATES_MODULE))
                 <a href="{{route('addEstimate')}}" class="btn btn-primary me-1"><i class="fas fa-plus"></i></a>
+                @endif
                 <a class="btn btn-primary filter-btn" href="javascript:void(0);" id="filter_search">
                     <i class="fas fa-filter"></i>
                 </a>

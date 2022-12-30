@@ -94,120 +94,106 @@
                         </li>
 
                         <!-- Users -->
-                        <li
-                            class="submenu {{ (request()->routeIs('userList') || request()->routeIs('addUser')) ? 'active' : '' }}">
+                        @if(Helper::check_user_assess('view',USER_MODULE))
+                        <li class="submenu {{ (request()->routeIs('userList') || request()->routeIs('addUser')) ? 'active' : '' }}">
                             <a href="{{route('userList')}}"
                                 class="{{ (request()->routeIs('userList') || request()->routeIs('addUser')) ? 'active' : '' }}"><i
                                     class="fa fa-users"></i><span>Users</span><span class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="{{route('addUser')}}"
-                                        class="{{ (request()->routeIs('addUser')) ? 'active' : '' }}">Add Users</a></li>
-                                <li><a href="{{route('userList')}}"
-                                        class="{{ (request()->routeIs('userList')) ? 'active' : '' }}">Users List</a>
+                                @if(Helper::check_user_assess('add',USER_MODULE))
+                                <li><a href="{{route('addUser')}}" class="{{ (request()->routeIs('addUser')) ? 'active' : '' }}">Add Users</a></li>
+                                @endif
+                                <li><a href="{{route('userList')}}" class="{{ (request()->routeIs('userList')) ? 'active' : '' }}">Users List</a>
                                 </li>
                             </ul>
                         </li>
+                        @endif
 
                         <!-- Clients -->
-                        <li
-                            class="submenu {{ (request()->routeIs('clientList') || request()->routeIs('addClient')) ? 'active' : '' }}">
+                        @if(Helper::check_user_assess('view',CLIENTS_MODULE))
+                        <li class="submenu {{ (request()->routeIs('clientList') || request()->routeIs('addClient')) ? 'active' : '' }}">
                             <a href="{{route('clientList')}}"
-                                class="{{ (request()->routeIs('clientList') || request()->routeIs('addClient')) ? 'active' : '' }}"><i
-                                    class="fas fa-user-secret"></i><span>Clients</span><span
-                                    class="menu-arrow"></span></a>
+                                class="{{ (request()->routeIs('clientList') || request()->routeIs('addClient')) ? 'active' : '' }}"><i class="fas fa-user-secret"></i><span>Clients</span><span class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="{{route('addClient')}}"
-                                        class="{{ (request()->routeIs('addClient')) ? 'active' : '' }}">Add Client</a>
+                                @if(Helper::check_user_assess('add',CLIENTS_MODULE))
+                                <li><a href="{{route('addClient')}}" class="{{ (request()->routeIs('addClient')) ? 'active' : '' }}">Add Client</a>
                                 </li>
-                                <li><a href="{{route('clientList')}}"
-                                        class="{{ (request()->routeIs('clientList')) ? 'active' : '' }}">Client List</a>
+                                @endif
+                                <li><a href="{{route('clientList')}}" class="{{ (request()->routeIs('clientList')) ? 'active' : '' }}">Client List</a>
                                 </li>
                             </ul>
                         </li>
+                        @endif
 
                         <!-- Category -->
-                        <li
-                            class="submenu {{ (request()->routeIs('categoryList') || request()->routeIs('addCategory')) ? 'active' : '' }}">
-                            <a href="{{route('categoryList')}}"
-                                class="{{ (request()->routeIs('categoryList') || request()->routeIs('addCategory')) ? 'active' : '' }}"><i
-                                    class="fas fa-th-list"></i><span>Category</span><span class="menu-arrow"></span></a>
+                        @if(Helper::check_user_assess('view',CATEGORY_MODULE))
+                        <li class="submenu {{ (request()->routeIs('categoryList') || request()->routeIs('addCategory')) ? 'active' : '' }}">
+                            <a href="{{route('categoryList')}}" class="{{ (request()->routeIs('categoryList') || request()->routeIs('addCategory')) ? 'active' : '' }} "><i class="fas fa-th-list"></i><span>Category</span><span class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="{{route('addCategory')}}"
-                                        class="{{ (request()->routeIs('addCategory')) ? 'active' : '' }}">Add
-                                        Category</a></li>
-                                <li><a href="{{route('categoryList')}}"
-                                        class="{{ (request()->routeIs('categoryList')) ? 'active' : '' }}">Category
-                                        List</a></li>
+                                @if(Helper::check_user_assess('add',CATEGORY_MODULE))
+                                <li><a href="{{route('addCategory')}}" class="{{ (request()->routeIs('addCategory')) ? 'active' : '' }}">Add Category</a></li>
+                                @endif
+                                <li><a href="{{route('categoryList')}}" class="{{ (request()->routeIs('categoryList')) ? 'active' : '' }}">Category List</a></li>
                             </ul>
                         </li>
+                        @endif
 
                         <!-- Product -->
-                        <li
-                            class="submenu {{ (request()->routeIs('productList') || request()->routeIs('addProduct')) ? 'active' : '' }}">
-                            <a href="{{route('productList')}}"
-                                class="{{ (request()->routeIs('productList') || request()->routeIs('addProduct')) ? 'active' : '' }}"><i
-                                    class="fab fa-product-hunt"></i><span>Product</span><span
-                                    class="menu-arrow"></span></a>
+                        @if(Helper::check_user_assess('view',PRODUCT_MODULE))
+                        <li class="submenu {{ (request()->routeIs('productList') || request()->routeIs('addProduct')) ? 'active' : '' }}">
+                            <a href="{{route('productList')}}" class="{{ (request()->routeIs('productList') || request()->routeIs('addProduct')) ? 'active' : '' }}"><i class="fab fa-product-hunt"></i><span>Product</span><span class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="{{route('addProduct')}}"
-                                        class="{{ (request()->routeIs('addProduct')) ? 'active' : '' }}">Add Product</a>
+                                @if(Helper::check_user_assess('add',PRODUCT_MODULE))
+                                <li><a href="{{route('addProduct')}}" class="{{ (request()->routeIs('addProduct')) ? 'active' : '' }}">Add Product</a>
                                 </li>
-                                <li><a href="{{route('productList')}}"
-                                        class="{{ (request()->routeIs('productList')) ? 'active' : '' }}">Product
-                                        List</a></li>
+                                @endif
+                                <li><a href="{{route('productList')}}" class="{{ (request()->routeIs('productList')) ? 'active' : '' }}">Product List</a></li>
                             </ul>
                         </li>
+                        @endif
 
                         <!-- Order -->
+                        @if(Helper::check_user_assess('view',ORDER_MODULE))
                         <li class="submenu {{ (request()->routeIs('orderList') || request()->routeIs('addOrder')) ? 'active' : '' }}">
-                            <a href="{{route('orderList')}}"
-                                class="{{ (request()->routeIs('orderList') || request()->routeIs('addOrder')) ? 'active' : '' }}"><i
-                                    class="fas fa-box-open"></i><span>Order</span><span class="menu-arrow"></span></a>
+                            <a href="{{route('orderList')}}" class="{{ (request()->routeIs('orderList') || request()->routeIs('addOrder')) ? 'active' : '' }}"><i class="fas fa-box-open"></i><span>Order</span><span class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="{{route('addOrder')}}"
-                                        class="{{ (request()->routeIs('addOrder')) ? 'active' : '' }}">Add Orders</a>
+                                @if(Helper::check_user_assess('add',ORDER_MODULE))    
+                                <li><a href="{{route('addOrder')}}" class="{{ (request()->routeIs('addOrder')) ? 'active' : '' }}">Add Orders</a>
                                 </li>
-                                <li><a href="{{route('orderList')}}"
-                                        class="{{ (request()->routeIs('orderList')) ? 'active' : '' }}">Orders List</a>
+                                @endif
+                                <li><a href="{{route('orderList')}}" class="{{ (request()->routeIs('orderList')) ? 'active' : '' }}">Orders List</a>
                                 </li>
                             </ul>
                         </li>
+                        @endif
 
                         <!-- Estimates -->
-                        <!-- (request()->routeIs('estimatesList') || request()->routeIs('addEstimates')) ? 'active' : '' -->
+                        @if(Helper::check_user_assess('view',ESTIMATES_MODULE))
                         <li class="submenu {{ (request()->routeIs('estimateList') || request()->routeIs('addEstimate')) ? 'active' : '' }}">
-                            <a href="{{route('estimateList')}}" class="{{ (request()->routeIs('estimateList') || request()->routeIs('addEstimate')) ? 'active' : '' }}"><i class="fas fa-boxes"></i><span>Estimates</span><span
-                                    class="menu-arrow"></span></a>
+                            <a href="{{route('estimateList')}}" class="{{ (request()->routeIs('estimateList') || request()->routeIs('addEstimate')) ? 'active' : '' }}"><i class="fas fa-boxes"></i><span>Estimates</span><span class="menu-arrow"></span></a>
                             <ul>
+                                @if(Helper::check_user_assess('add',ORDER_MODULE))  
                                 <li><a href="{{route('addEstimate')}}" class="{{ (request()->routeIs('addEstimate')) ? 'active' : '' }}">Add Estimates</a></li>
+                                @endif
                                 <li><a href="{{route('estimateList')}}" class="{{ (request()->routeIs('estimateList')) ? 'active' : '' }}">Estimates List</a></li>
                             </ul>
                         </li>
+                        @endif
 
-                        <li class="submenu {{ (request()->routeIs('panelMasterList') || request()->routeIs('addPanelMaster')) ? 'active' : '' }}">
-                            <a href="{{route('panelMasterList')}}" class="{{ (request()->routeIs('panelMasterList') || request()->routeIs('addPanelMaster')) ? 'active' : '' }}"><i class="fas fa-boxes"></i><span>Panel Master</span><span
-                                    class="menu-arrow"></span></a>
-                            <ul>
-                                <li><a href="{{route('addPanelMaster')}}" class="{{ (request()->routeIs('addPanelMaster')) ? 'active' : '' }}">Add Panel Master</a></li>
-                                <li><a href="{{route('panelMasterList')}}" class="{{ (request()->routeIs('panelMasterList')) ? 'active' : '' }}">Panel Master List</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="submenu {{ (request()->routeIs('moduleMasterList') || request()->routeIs('addModuleMaster')) ? 'active' : '' }}">
-                            <a href="{{route('moduleMasterList')}}" class="{{ (request()->routeIs('moduleMasterList') || request()->routeIs('addModuleMaster')) ? 'active' : '' }}"><i class="fas fa-boxes"></i><span>Panel Master</span><span
-                                    class="menu-arrow"></span></a>
-                            <ul>
-                                <li><a href="{{route('addModuleMaster')}}" class="{{ (request()->routeIs('addModuleMaster')) ? 'active' : '' }}">Add Module Master</a></li>
-                                <li><a href="{{route('moduleMasterList')}}" class="{{ (request()->routeIs('moduleMasterList')) ? 'active' : '' }}">Module Master List</a></li>
-                            </ul>
-                        </li>
-                        <li class="submenu {{ request()->routeIs('assignModuleForm') ? 'active' : '' }}">
-                            <a href="{{route('assignModuleForm')}}" class="{{ request()->routeIs('assignModuleForm') ? 'active' : '' }}"><i class="fas fa-boxes"></i><span>Permissions</span><span
-                                    class="menu-arrow"></span></a>
+                        @if(Helper::check_user_assess('view',PERMISSIONS_MODULE))
+                        <li class="submenu {{ (request()->routeIs('assignModuleForm') || request()->routeIs('moduleMasterList') || request()->routeIs('panelMasterList')) ? 'active' : '' }}">
+                            <a href="{{route('assignModuleForm')}}" class="{{ (request()->routeIs('assignModuleForm') || request()->routeIs('moduleMasterList') || request()->routeIs('panelMasterList')) ? 'active' : '' }}"><i class="fas fa-cogs"></i><span>Permissions</span><span class="menu-arrow"></span></a>
                             <ul>
                                 <li><a href="{{route('assignModuleForm')}}" class="{{ request()->routeIs('assignModuleForm') ? 'active' : '' }}">Permissions Setting</a></li>
+                                
+                                @if(auth()->user()->role == 'superadmin')
+                                <li><a href="{{route('panelMasterList')}}" class="{{ (request()->routeIs('panelMasterList')) ? 'active' : '' }}">Main Menus List</a></li>
+
+                                <li><a href="{{route('moduleMasterList')}}" class="{{ (request()->routeIs('moduleMasterList')) ? 'active' : '' }}">Sub Menu List</a></li>
+                                @endif
                             </ul>
                         </li>
+                        @endif
                     </ul>
                 </div>
             </div>

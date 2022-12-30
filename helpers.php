@@ -9,6 +9,7 @@ define('CATEGORY_MODULE', 3);
 define('PRODUCT_MODULE', 4);
 define('ORDER_MODULE', 5);
 define('ESTIMATES_MODULE', 6);
+define('PERMISSIONS_MODULE', 7);
 
 if (!function_exists('imageUrl')) {
     function imageUrl($img, $path, $default = 'default.png', $size = 'thumbnail')

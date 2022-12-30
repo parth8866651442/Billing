@@ -15,8 +15,13 @@
         <tr>
             <td><p>{{ucfirst($item->name)}}</p></td>
             <td>
+                @if(Helper::check_user_assess('edit',CATEGORY_MODULE))
                 <a href="{{route('editCategory',['id'=>$item->id])}}" class="btn btn-sm btn-white text-success me-2"><i class="far fa-edit me-1"></i> Edit</a>
+                @endif
+                
+                @if(Helper::check_user_assess('delete',CATEGORY_MODULE))
                 <a href="javascript:void(0);" class="btn btn-sm btn-white text-danger me-2" onclick="remove_row(this)" data-id="{{ $item->id }}"><i class="far fa-trash-alt me-1"></i>Delete</a>
+                @endif
             </td>
         </tr>
         @empty

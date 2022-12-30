@@ -26,7 +26,9 @@
                 </ul>
             </div>
             <div class="col-auto">
+                @if(Helper::check_user_assess('add',ORDER_MODULE))
                 <a href="{{route('addOrder')}}" class="btn btn-primary me-1" data-container="body" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Order"><i class="fas fa-plus"></i></a>
+                @endif
                 <a class="btn btn-primary filter-btn" href="javascript:void(0);" id="filter_search" data-container="body" data-bs-toggle="tooltip" data-bs-placement="top" title="Filters">
                     <i class="fas fa-filter"></i>
                 </a>
