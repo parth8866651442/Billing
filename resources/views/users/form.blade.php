@@ -136,8 +136,7 @@ $(document).ready(function() {
             phone_no: {
                 required: true,
                 phoneUS: true,
-                number: true,
-                minlength: 10
+                maxlength: 10
             },
             email: {
                 required: true,
@@ -171,8 +170,8 @@ $(document).ready(function() {
             },
             phone_no: {
                 required: "This field is required",
-                number: "Please enter numbers only",
-                minlength: "Please enter min 10 digit number"
+                phoneUS: "Please enter numbers only",
+                maxlength: "Please enter max 10 digit number"
             },
             email: {
                 required: "This field is required",

@@ -57,7 +57,7 @@
                                         @endif>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Password @if(!isset($item))<span class="asterisk">*</span>@endif</label>
                                     <input type="password" name="password" id="password" class="form-control"
@@ -71,7 +71,7 @@
                                     <input type="password" class="form-control" name="confirmpassword"
                                         id="confirmpassword" placeholder="Confirm Password" value="" />
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>PAN Card No</label>
@@ -147,7 +147,7 @@ $(document).ready(function() {
                     }
                 }
             },
-            password: {
+            /* password: {
                 required: <?php isset($item) ? print('false') : print('true')  ?>,
                 minlength: 6,
                 pwcheck: <?php isset($item) ? print('false') : print('true')  ?>
@@ -155,7 +155,7 @@ $(document).ready(function() {
             confirmpassword: {
                 required: <?php isset($item) ? print('false') : print('true')  ?>,
                 equalTo: "#password"
-            }
+            } */
         },
         messages: {
             name: {
@@ -171,7 +171,7 @@ $(document).ready(function() {
                 email: "Please enter valid email address",
                 remote: "Email already taken"
             },
-            password: {
+            /* password: {
                 required: "This field is required",
                 minlength: "Please enter min 6 digit Password",
                 pwcheck: "Invalid Password,Min 1 uppercase and lowercase letter. Min 1 special character. Min 1 number."
@@ -179,12 +179,12 @@ $(document).ready(function() {
             confirmpassword: {
                 required: "This field is required",
                 equalTo: "Confirm password doesn't match New password"
-            }
+            } */
         }
     });
-    $.validator.addMethod("pwcheck", function(value) {
+    /* $.validator.addMethod("pwcheck", function(value) {
         return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{6,30}$/.test(value)
-    });
+    }); */
     $.validator.addMethod("pndcheck", function(value) {
         return /([A-Z]){5}([0-9]){4}([A-Z]){1}$/.test(value)
     });

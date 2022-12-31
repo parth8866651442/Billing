@@ -78,7 +78,7 @@ class ClientsController extends Controller
                 "city" => $request->city,
                 "pan_card_no" => $request->pan_card_no,
                 "aadhaar_card_no" => $request->aadhaar_card_no,
-                "password" => Hash::make($request->password),
+                /* "password" => Hash::make($request->password), */
                 "create_by" => $authUser->id,
             );
             
@@ -119,7 +119,7 @@ class ClientsController extends Controller
             $items->update_by = $authUser->id;
 
             if(!empty($request->password)){
-                $items->password = Hash::make($request->password);
+                // $items->password = Hash::make($request->password);
             }
 
             if ($items->save()) {

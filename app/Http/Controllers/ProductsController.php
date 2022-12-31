@@ -41,10 +41,10 @@ class ProductsController extends Controller
 
     public function form(Request $request, $itemID='')
     {  
-        $categories = Category::get();
-
+        $categories = Category::where(['is_deleted' => 0])->get();
+        
         if($itemID){
-            $item = Products::with('categoryDetail')->findOrFail($itemID);
+            $item = Products::with(['categoryDetail'])->findOrFail($itemID);
             return view('products.form', compact('item','categories'));
         }
         return view('products.form',compact('categories'));

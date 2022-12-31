@@ -36,11 +36,18 @@
                                 <div class="form-group">
                                     <label>Category<span class="asterisk">*</span></label>
                                     <select class="select select2" name="category_id" id="category_id">
+                                        @if(isset($item->categoryDetail) && ($item->categoryDetail->is_deleted === 1))
+                                        <option value="{{$item->categoryDetail->category_id}}" selected>{{$item->categoryDetail->name}}</option>
+                                        @else
                                         <option value="">Select Category</option>
-                                        @foreach($categories as $category)
-                                            <option value="{{$category->id}}" {{isset($item->category_id) &&  $item->category_id === $category->id? 'selected' :'' }}> {{ $category->name }}</option>
-                                        @endforeach
+                                            @foreach($categories as $category)
+                                                <option value="{{$category->id}}" {{isset($item->category_id) &&  $item->category_id === $category->id? 'selected' :'' }}> {{ $category->name }}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
+                                    @if(isset($item->categoryDetail) && ($item->categoryDetail->is_deleted === 1))
+                                        <span>This category is deleted</span>
+                                    @endif
                                 </div>
                                 <div class="form-group">
                                     <label>Name<span class="asterisk">*</span></label>

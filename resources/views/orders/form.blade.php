@@ -43,14 +43,15 @@
                                     @csrf
                                     <div class="form-group">
                                         <label>Customer Name</label>
-                                        <select class="select select2" name="client_id" id="client_id"
-                                            onChange="customerFindAddress(this.value)">
-                                            <option value="">Select Customer</option>
-                                            @foreach($clients as $client)
-                                            <option
-                                                {{isset($item->client_id) &&  $item->client_id === $client->id? 'selected' :''}}
-                                                value='{{$client->id}}'> {{ $client->name }}</option>
-                                            @endforeach
+                                        <select class="select select2" name="client_id" id="client_id" onChange="customerFindAddress(this.value)" {{(isset($item->client_id) && ($item->clientDetail->is_deleted == '1')) ? 'disabled' : ''}}>
+                                            @if(isset($item->client_id) && ($item->clientDetail->is_deleted == '1'))
+                                                <option value="{{$item->clientDetail->id}}">{{$item->clientDetail->name}}</option>
+                                            @else
+                                                <option value="">Select Customer</option>
+                                                @foreach($clients as $client)
+                                                <option {{isset($item->client_id) &&  $item->client_id === $client->id? 'selected' :''}} value='{{$client->id}}'>{{ $client->name }}</option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                     <div class="form-group">
