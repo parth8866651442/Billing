@@ -57,7 +57,7 @@
                             </div>
                         </div>
                         <div class="text-end mt-4">
-                            <button type="submit" class="btn btn-primary">Add Module Master</button>
+                            <button type="submit" class="btn btn-primary">{{isset($item) ? 'Update' : 'Add'}} Module Master</button>
                         </div>
                     </form>
                 </div>

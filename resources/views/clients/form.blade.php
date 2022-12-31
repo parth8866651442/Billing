@@ -105,7 +105,7 @@
                         </div>
                         <div class="text-end mt-4">
                             <button type="submit" class="btn btn-primary">
-                                Add Client
+                            {{isset($item) ? 'Update' : 'Add'}} Client
                             </button>
                         </div>
                     </form>

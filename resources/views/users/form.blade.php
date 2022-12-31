@@ -90,7 +90,7 @@
                         </div>
                         <div class="text-end mt-4">
                             <button type="submit" class="btn btn-primary">
-                                Add Customer
+                            {{isset($item) ? 'Update' : 'Add'}} Customer
                             </button>
                         </div>
                     </form>

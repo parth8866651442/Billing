@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <div class="text-end mt-4">
-                            <button type="submit" class="btn btn-primary"> Add Panel Master </button>
+                            <button type="submit" class="btn btn-primary"> {{isset($item) ? 'Update' : 'Add'}} Panel Master </button>
                         </div>
                     </form>
                 </div>

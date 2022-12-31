@@ -40,7 +40,7 @@
                             </div>
                         </div>
                         <div class="text-end mt-4">
-                            <button type="submit" class="btn btn-primary"> Add Category </button>
+                            <button type="submit" class="btn btn-primary"> {{isset($item) ? 'Update' : 'Add'}} Category </button>
                         </div>
                     </form>
                 </div>

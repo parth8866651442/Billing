@@ -64,7 +64,7 @@
                             </div>
                         </div>
                         <div class="text-end mt-4">
-                            <button type="submit" class="btn btn-primary"> Add Product </button>
+                            <button type="submit" class="btn btn-primary"> {{isset($item) ? 'Update' : 'Add'}} Product </button>
                         </div>
                     </form>
                 </div>
