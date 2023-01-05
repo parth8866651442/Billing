@@ -92,6 +92,7 @@ Route::group(['middleware' => ['auth:web']], function () {
         Route::get('/remove_item/{id}', [App\Http\Controllers\OrdersController::class,'removeItem'])->name('orderItemRemove');
         Route::get('/item_price/{id}', [App\Http\Controllers\OrdersController::class,'productPrice'])->name('findItemPrice');
         Route::get('/client_orders/{id}', [App\Http\Controllers\OrdersController::class,'clientOrders'])->name('clientOrders');
+        Route::get('/search_orders', [App\Http\Controllers\OrdersController::class,'getOrders'])->name('searchOrders');
     });
 
     // -------- Orders Estimates -------- //

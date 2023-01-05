@@ -2,11 +2,6 @@
 
 @section('content')
 
-@push('style')
-<link rel="stylesheet" href="{{ asset('assets/plugins/icons/feather/feather.css') }}" />
-<link rel="stylesheet" href="{{asset('assets/css/bootstrap-datetimepicker.min.css'); }}" />
-@endpush
-
 <div class="content container-fluid">
     <div class="page-header">
         <div class="row">
@@ -305,12 +300,8 @@
                                     </div>
                                 </div>
                                 <div class="upload-sign">
-                                    <div class="form-group service-upload">
-                                        <span>Upload Sign</span>
-                                        <input type="file" multiple />
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Name of the Signatuaory" />
+                                    <div class="form-group service-upload p-0">
+                                        <img src="{{ imageUrl(auth()->user()->sign_img, 'setting','','thumbnail') }}" alt="sign" width="60" height="60" />
                                     </div>
                                     <div class="form-group float-end mb-0">
                                         <button class="btn btn-primary" type="submit">Save Invoice</button>
@@ -407,15 +398,8 @@
         </div>
     </div>
 </div>
-<script src="{{asset('assets/js/validate/jquery.validate.js'); }}" type="text/javascript"></script>
-<script src="{{asset('assets/js/validate/additional-methods.min.js'); }}" type="text/javascript"></script>
-<script src="{{asset('assets/js/validate/validation.js'); }}" type="text/javascript"></script>
+
 <script>
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
 $(document).ready(function() {
     var addOrderForm = $("#orderForm");
     var validator = addOrderForm.validate({

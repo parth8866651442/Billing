@@ -49,11 +49,34 @@ class ProfileController extends Controller
                 $request->file('image')->move(public_path('uploads/user/'), $imageName);
             }
 
+            $signImageName = '';
+
+            if (!empty($request->file('sign_img'))) {
+                $originalImageSign = $request->file('sign_img');
+                $signImageName =  time() . '_' . str_replace(' ', '-', $originalImageSign->getClientOriginalName());
+    
+                $thumbnailImage = Image::make($originalImageSign);
+                $thumbnailPath = public_path('uploads/setting/thumbnail');
+                $thumbnailImage->resize(150, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+    
+                $thumbnailImage->save($thumbnailPath . '/' . $signImageName);
+    
+                $request->file('sign_img')->move(public_path('uploads/setting/'), $signImageName);
+
+            }
+
             $user->name = $request->name;
             $user->email = $request->email;
             $user->phone_no = $request->phone_no;
             if ($imageName != '') {
                 $user->image = $imageName;
+            }
+
+            if ($signImageName != '') {
+                $user->sign_img = $signImageName;
             }
 
             if ($user->save()) {

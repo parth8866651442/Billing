@@ -116,7 +116,7 @@
         </div>
         <div class="col-lg-4 col-md-4">
             <div class="invoice-sign text-end">
-                <img class="img-fluid d-inline-block" src="{{ imageUrl(isset($settings->sign_img) ? $settings->sign_img : '', 'setting','no_image.jpg','thumbnail') }}" alt="sign" />
+                <img class="img-fluid d-inline-block" src="{{ imageUrl(auth()->user()->sign_img, 'setting','','thumbnail') }}" alt="sign" />
                 <span class="d-block">Harristemp</span>
             </div>
         </div>

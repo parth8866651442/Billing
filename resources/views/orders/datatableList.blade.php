@@ -8,10 +8,16 @@
                 <h6>Full Name</h6>
             </th>
             <th>
-                <h6>Invoice Type</h6>
+                <h6>Amount</h6>
             </th>
             <th>
                 <h6>Order Date</h6>
+            </th>
+            <!-- <th>
+                <h6>Invoice Type</h6>
+            </th> -->
+            <th>
+                <h6>Status</h6>
             </th>
             <th>
                 <h6>Action</h6>
@@ -22,10 +28,15 @@
     <tbody>
         @forelse($items as $item)
         <tr>
-            <td><p>{{$item->invoice_no}}</p></td>
-            <td><p>{{ucfirst($item->fullname)}}</p></td>
-            <td><p>{{ucfirst($item->type)}}</p></td>
+            <td><a class="invoice-link">#{{$item->invoice_no}}</a></td>
+            <td><p>{{ucfirst($item->fullname).'('.ucfirst($item->clientDetail->name).')'}}</p></td>
+            <td><p class="text-primary">&#8377; {{number_format($item->total,2)}}</p></td>
             <td><p>{{date('d/m/Y', strtotime($item->date))}}</p></td>
+            <!-- <td><p>{{ucfirst($item->type)}}</p></td> -->
+            <td>
+                <!-- primary,warning,danger,success -->
+                <span class="badge @if($item->status == 'completed') bg-success-light @elseif($item->status == 'draft') bg-warning-light @elseif($item->status == 'processing') bg-primary-light @elseif($item->status == 'cancelled') bg-danger-light @endif">{{ucfirst($item->status)}}</span>
+            </td>
             <td>
                 <a href="javascript:void(0);" class="btn btn-sm btn-white text-info me-2" data-bs-toggle="modal" data-bs-target="#receive-payment-modal" onclick="receivePaymentModalRow({{$item->id}})"><i class="fas fa-credit-card me-1"></i>Receive Payment</a>
                 <a href="{{route('invoice',['id'=>$item->id])}}" class="btn btn-sm btn-white text-primary me-2"><i class="fas fa-print me-1"></i> Print</a>

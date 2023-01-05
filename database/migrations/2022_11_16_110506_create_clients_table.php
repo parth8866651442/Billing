@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('city', 100)->nullable();
             $table->string('pan_card_no', 15)->nullable();
             $table->string('aadhaar_card_no', 20)->nullable();
-            $table->string('password');
             $table->integer('create_by');
             $table->integer('update_by')->nullable();
             $table->tinyInteger('is_deleted')->default(0);

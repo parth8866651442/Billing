@@ -283,18 +283,18 @@
             </tbody>
             @foreach($orderitems as $key => $orderItem)
                 <tr>
-                <td style="border-bottom:1px solid #c8c8c8; border-left:1px solid #c8c8c8; border-right:1px solid #c8c8c8;" align="center">
-                  {{$orderItem['product_detail']['name'].'('.$orderItem['product_detail']['category_detail']['name'].')'}}
-                </td>
-                <td style="border-bottom:1px solid #c8c8c8;border-right:1px solid #c8c8c8;" align="center">
-                    {{$orderItem['price']}}
-                </td>
-                <td style="border-bottom:1px solid #c8c8c8;border-right:1px solid #c8c8c8;" align="center">
-                    {{$orderItem['qty']}}
-                </td>
-                <td style="border-bottom:1px solid #c8c8c8;border-right:1px solid #c8c8c8;" align="center">
-                    {{$orderItem['amount']}}
-                </td>
+                  <td style="border-bottom:1px solid #c8c8c8; border-left:1px solid #c8c8c8; border-right:1px solid #c8c8c8;" align="center">
+                    {{$orderItem['product_detail']['name'].'('.$orderItem['product_detail']['category_detail']['name'].')'}}
+                  </td>
+                  <td style="border-bottom:1px solid #c8c8c8;border-right:1px solid #c8c8c8;" align="center">
+                      {{$orderItem['price']}}
+                  </td>
+                  <td style="border-bottom:1px solid #c8c8c8;border-right:1px solid #c8c8c8;" align="center">
+                      {{$orderItem['qty']}}
+                  </td>
+                  <td style="border-bottom:1px solid #c8c8c8;border-right:1px solid #c8c8c8;" align="center">
+                      {{$orderItem['amount']}}
+                  </td>
                 </tr>
             @endforeach
             <tr>
@@ -341,9 +341,7 @@
       <tr>
         <td height="28" colspan="2" style="padding:10px; font-family:Verdana, Geneva, sans-serif; font-size:13px;border-top: 1px solid #c8c8c8;">
           <strong>Add Terms & Conditions</strong>
-          <div>
-            {{isset($settings->terms_conditions) ? $settings->terms_conditions : ''}}
-          </div>
+          <div>{{isset($settings->terms_conditions) ? $settings->terms_conditions : ''}}</div>
         </td>
       </tr>
     </table>

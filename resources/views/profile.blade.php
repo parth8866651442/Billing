@@ -98,6 +98,22 @@
                                     placeholder="xxxxxxxxxx" value="{{auth()->user()->phone_no}}" />
                             </div>
                         </div>
+                        <div class="row form-group">
+                            <label for="sign_img" class="col-sm-3 col-form-label input-label">Sign</label>
+                            <div class="col-sm-9">
+                                <div class="d-flex align-items-center">
+                                    <label class="avatar avatar-xxl profile-cover-avatar m-0" for="sign_preview">
+                                        <img id="signPreview" class="avatar-img"
+                                            src="{{ imageUrl(auth()->user()->sign_img, 'setting','no_image.jpg','thumbnail') }}"
+                                            alt="Profile Image" />
+                                        <input type="file" accept="image/*" name="sign_img" id="sign_preview" />
+                                        <span class="avatar-edit">
+                                            <i data-feather="edit-2" class="avatar-uploader-icon shadow-soft"></i>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="text-end">
                             <button type="submit" class="btn btn-primary">Save Changes</button>
                         </div>
@@ -110,9 +126,9 @@
 @endsection
 
 @push('scripts')
-<script src="{{asset('assets/js/validate/jquery.validate.js'); }}" type="text/javascript"></script>
+<!-- <script src="{{asset('assets/js/validate/jquery.validate.js'); }}" type="text/javascript"></script>
 <script src="{{asset('assets/js/validate/additional-methods.min.js'); }}" type="text/javascript"></script>
-<script src="{{asset('assets/js/validate/validation.js'); }}" type="text/javascript"></script>
+<script src="{{asset('assets/js/validate/validation.js'); }}" type="text/javascript"></script> -->
 <script>
 $(document).ready(function() {
     var userForm = $("#userProfileForm");
@@ -169,6 +185,36 @@ $(document).ready(() => {
             reader.onload = function(event) {
                 $('#imgPreview').attr('src', event.target.result);
                 $('#file_name').text(file.name);
+            }
+            let fileExtension = file.name.split('.').pop() || '';
+
+            if (!validExtension.includes(fileExtension)) {
+                // reset input
+                event.target.value = '';
+
+                toastr.error("jpg, jpeg, png allow only");
+                return;
+            } else if (file.size > uploadMaxSize) {
+                // reset input
+                event.target.value = '';
+
+                toastr.error("Maximum allowable size is 5 mb per upload");
+                return;
+            } else {
+                reader.readAsDataURL(file);
+            }
+        }
+    });
+
+    $('#sign_preview').change(function() {
+        const file = this.files[0];
+        const uploadMaxSize = 5 * 1024 * 1024;
+        const validExtension = ['jpg', 'jpeg', 'png'];
+
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = function(event) {
+                $('#signPreview').attr('src', event.target.result);
             }
             let fileExtension = file.name.split('.').pop() || '';
 

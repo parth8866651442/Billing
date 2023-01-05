@@ -135,3 +135,9 @@ if(!function_exists('checkOrNo')){
         return (isset($value) && isset($value[$type]) && $value[$type]) ? 'checked=""' : '';
     }
 }
+
+if(!function_exists('orderStatus')){
+    function orderStatus($value){
+        return ($value === 'completed') ? true : false ;
+    }
+}

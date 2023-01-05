@@ -48,13 +48,17 @@ class OrdersController extends Controller
 
     public function form(Request $request, $itemID='')
     {  
-        $clients = Client::get();
-        $products = Products::get();
+        $clients = Client::where('is_deleted', 0)->get();
+        $products = Products::where('is_deleted', 0)->get();
         $settings = Settings::first();
         
         if($itemID){
-            $item = Order::with('orderItemsDetail','clientDetail','paidAmountSum')->findOrFail($itemID);
-            return view('orders.form', compact('item','clients','products','settings'));
+            $item = Order::with('orderItemsDetail','orderItemsDetail.productDetail','clientDetail','paidAmountSum')->findOrFail($itemID);
+            if($item->status === 'completed'){
+                return view('orders.view', compact('item','clients','products','settings'));
+            }else{
+                return view('orders.form', compact('item','clients','products','settings'));
+            }
         }
         return view('orders.form',compact('clients','products','settings'));
     }
@@ -276,5 +280,25 @@ class OrdersController extends Controller
         $items = $items->get();
 
         return response()->json(['status' => true, 'data' => $items], 200);
+    }
+
+    public function getOrders(Request $request){
+        $items = Order::with('clientDetail')->where(['is_deleted'=>0,'type'=>'orignal']);
+        
+        if (!empty($search = $request->search)) {
+            $items->where(function ($query) use ($search) {
+                $query->where('invoice_no', 'like', '%' . $search . '%');
+            });
+        }
+
+        $items = $items->orderBy('created_at', 'DESC')->limit(5)->get();
+        $response = array();
+        foreach($items as $item){
+            $response[] = array(
+                "id"=>$item->id,
+                "text"=>$item->invoice_no.' ('.$item->clientDetail->name.')'
+            );
+        }
+        return response()->json($response); 
     }
 }

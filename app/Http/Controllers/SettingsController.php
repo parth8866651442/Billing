@@ -96,24 +96,6 @@ class SettingsController extends Controller
             $data['favicon_img'] = $imageName;
         }
 
-        if (!empty($request->file('sign_img'))) {
-            $originalImage = $request->file('sign_img');
-            $imageName =  time() . '_' . str_replace(' ', '-', $originalImage->getClientOriginalName());
-
-            $thumbnailImage = Image::make($originalImage);
-            $thumbnailPath = public_path('uploads/setting/thumbnail');
-            $thumbnailImage->resize(150, null, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-
-            $thumbnailImage->save($thumbnailPath . '/' . $imageName);
-
-            $request->file('sign_img')->move(public_path('uploads/setting/'), $imageName);
-
-            $data['sign_img'] = $imageName;
-        }
-
         if(!is_null($settings)){
             $data['update_by'] = $authUser->id;
 

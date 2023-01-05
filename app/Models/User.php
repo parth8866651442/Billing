@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'phone_no',
         'image',
+        'logo_img',
         'create_by',
         'update_by',
         'is_deleted',

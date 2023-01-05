@@ -2,11 +2,6 @@
 
 @section('content')
 
-@push('style')
-<link rel="stylesheet" href="{{ asset('assets/plugins/icons/feather/feather.css') }}" />
-<link rel="stylesheet" href="{{asset('assets/css/bootstrap-datetimepicker.min.css'); }}" />
-@endpush
-
 <div class="content container-fluid">
     <div class="page-header">
         <div class="row">
@@ -14,17 +9,16 @@
                 <!-- <h3 class="page-title">Users</h3> -->
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="#">Dashboard</a>
+                        <a href="{{route('home')}}">Dashboard</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="#">Order</a>
+                        <a href="{{route('orderList')}}">Order</a>
                     </li>
-                    <li class="breadcrumb-item active">Add Order</li>
+                    <li class="breadcrumb-item active">{{isset($item) ? 'Edit' : 'Add'}} Order</li>
                 </ul>
 
                 <div class="btn-back">
-                    <a href="{{route('orderList')}}"><button class="btn btn-primary btn-sm" type="button"><i
-                                class="fas fa-chevron-left"></i> Back</button></a>
+                    <a href="{{route('orderList')}}"><button class="btn btn-primary btn-sm" type="button"><i class="fas fa-chevron-left"></i> Back</button></a>
                 </div>
             </div>
         </div>
@@ -43,7 +37,7 @@
                                     @csrf
                                     <div class="form-group">
                                         <label>Customer Name</label>
-                                        <select class="select select2" name="client_id" id="client_id" onChange="customerFindAddress(this.value)" {{(isset($item->client_id) && ($item->clientDetail->is_deleted == '1')) ? 'disabled' : ''}}>
+                                        <select class="select select2" name="client_id" id="client_id" onChange="customerFindAddress(this.value)" {{(isset($item->client_id) && ($item->clientDetail->is_deleted == '1') || orderStatus(isset($item->status)? $item->status : '')) ? 'disabled' : ''}}>
                                             @if(isset($item->client_id) && ($item->clientDetail->is_deleted == '1'))
                                                 <option value="{{$item->clientDetail->id}}">{{$item->clientDetail->name}}</option>
                                             @else
@@ -85,6 +79,9 @@
                                                             href="javascript:void(0);">{{isset($item->invoice_no)? $item->invoice_no : invoiceNumber('orignal') }}</a></span>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6">
+                                                @if(orderStatus(isset($item->status)? $item->status : '')) 
+                                                <span>{{ucfirst($item->status)}}</span>
+                                                @else
                                                     <select class="select select2" name="status" id="status">
                                                         @foreach (config('constants.order_status') as $i => $Ostatus)
                                                         <option value="{{$Ostatus['value']}}"
@@ -92,6 +89,7 @@
                                                             {{$Ostatus['title']}}</option>
                                                         @endforeach
                                                     </select>
+                                                @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -145,7 +143,9 @@
                                             <th>Price</th>
                                             <th>Quantity</th>
                                             <th>Amount</th>
+                                            @if(!orderStatus(isset($item->status)? $item->status : ''))
                                             <th>Actions</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -187,15 +187,17 @@
                                             <td>
                                                 <input type="hidden" name="items[{{$key}}][item_id]"
                                                     value="{{$orderitem->id}}">
-                                                <select class="select select2" name="items[{{$key}}][product_id]"
-                                                    id="product_id-{{$key}}"
-                                                    onChange="selectProduct(this.value,{{$key}})">
+                                                <select class="select select2" name="items[{{$key}}][product_id]" id="product_id-{{$key}}" onChange="selectProduct(this.value,{{$key}})">
+                                                @if(isset($orderitem->productDetail) && ($orderitem->productDetail->is_deleted === 1))
+                                                <option value="{{$orderitem->productDetail->id}}" selected>{{$orderitem->productDetail->name}}</option>
+                                                @else
                                                     <option value="">Select Product</option>
                                                     @foreach($products as $product)
                                                     <option value="{{$product->id}}"
                                                         {{isset($orderitem->product_id) &&  $orderitem->product_id === $product->id ? 'selected' :'' }}>
                                                         {{ $product->name }}</option>
                                                     @endforeach
+                                                    @endif
                                                 </select>
                                             </td>
                                             <td>
@@ -210,16 +212,15 @@
                                                 <input type="text" class="form-control" name="items[{{$key}}][amount]"
                                                     id="amount-{{$key}}" value="{{$orderitem->amount}}" />
                                             </td>
+                                            @if(!orderStatus(isset($item->status)? $item->status : ''))
                                             <td class="add-remove text-center">
                                                 @if($key === 0)
-                                                <a href="javascript:void(0);" class="add-btn me-2"><i
-                                                        class="fas fa-plus-circle"></i></a>
+                                                    <a href="javascript:void(0);" class="add-btn me-2"><i class="fas fa-plus-circle"></i></a>
                                                 @else
-                                                <a href="javascript:void(0);" class="remove-btn"
-                                                    onclick="removeOrderItemid({{$orderitem->id}})"><i
-                                                        class="fe fe-trash-2"></i></a>
+                                                    <a href="javascript:void(0);" class="remove-btn" onclick="removeOrderItemid({{$orderitem->id}})"><i class="fe fe-trash-2"></i></a>
                                                 @endif
                                             </td>
+                                            @endif
                                         </tr>
                                         @endforeach
                                         @endisset
@@ -317,8 +318,11 @@
                                     </div>
                                 </div>
                                 <div class="upload-sign">
+                                    <div class="form-group service-upload p-0">
+                                        <img src="{{ imageUrl(auth()->user()->sign_img, 'setting','','thumbnail') }}" alt="sign" width="60" height="60" />
+                                    </div>
                                     <div class="form-group float-end mb-0">
-                                        <button class="btn btn-primary" type="submit">Save Invoice</button>
+                                        <button class="btn btn-primary" type="submit" @if(orderStatus(isset($item->status)? $item->status : '')) disabled @endif>Save Invoice</button>
                                     </div>
                                 </div>
                             </div>
@@ -390,15 +394,8 @@
         </div>
     </div>
 </div>
-<script src="{{asset('assets/js/validate/jquery.validate.js'); }}" type="text/javascript"></script>
-<script src="{{asset('assets/js/validate/additional-methods.min.js'); }}" type="text/javascript"></script>
-<script src="{{asset('assets/js/validate/validation.js'); }}" type="text/javascript"></script>
+
 <script>
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
 $(document).ready(function() {
     var addOrderForm = $("#orderForm");
     var validator = addOrderForm.validate({

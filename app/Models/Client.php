@@ -16,6 +16,6 @@ class Client extends Model
      */
 
     protected $fillable = [
-        'name', 'email','phone_no','address','city','pan_card_no','aadhaar_card','password','create_by','update_by','is_deleted','is_active'
+        'name', 'email','phone_no','address','city','pan_card_no','aadhaar_card','create_by','update_by','is_deleted','is_active'
     ];
 }

@@ -57,6 +57,12 @@ class PaymentsController extends Controller
 
             $items = Payments::create($data);
             if(!is_null($items)){
+                if($request->amount >= $request->due_amount){
+                    $items = Order::where(['type'=>'orignal','id'=>$request->order_id])->first();
+                    $items->status = 'completed';
+                    $items->save();
+                }
+                
                 return response()->json(['status' => true, 'msg' => 'Payment received successfully' ], 200);
             }else{
                 return response()->json(['status' => false, 'msg' => 'Payment failed, Please try again.'], 200);

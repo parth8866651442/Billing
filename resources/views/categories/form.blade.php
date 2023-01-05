@@ -51,9 +51,9 @@
 @endsection
 
 @push('scripts')
-<script src="{{asset('assets/js/validate/jquery.validate.js'); }}" type="text/javascript"></script>
+<!-- <script src="{{asset('assets/js/validate/jquery.validate.js'); }}" type="text/javascript"></script>
 <script src="{{asset('assets/js/validate/additional-methods.min.js'); }}" type="text/javascript"></script>
-<script src="{{asset('assets/js/validate/validation.js'); }}" type="text/javascript"></script>
+<script src="{{asset('assets/js/validate/validation.js'); }}" type="text/javascript"></script> -->
 <script>
 $(document).ready(function() {
     var addCategoryForm = $("#categoryForm");

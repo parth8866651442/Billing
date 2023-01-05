@@ -10,11 +10,12 @@
 
     <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
-    <!-- <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome/css/fontawesome.min.css') }}" /> -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome/css/all.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toatr.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
+    <!-- <link rel="stylesheet" href="{{ asset('assets/plugins/icons/feather/feather.css') }}" /> -->
+    <link rel="stylesheet" href="{{asset('assets/css/bootstrap-datetimepicker.min.css'); }}" />
     @stack('style')
 
     <style>
@@ -27,6 +28,13 @@
     }
     i.fa.fa-calendar.glyphicon.glyphicon-calendar{
         display: none;
+    }
+    .form-group .error{
+        color: red;
+        margin-top: 5px;
+    }
+    .form-group .asterisk{
+        color: red;
     }
     </style>
 </head>
@@ -60,7 +68,9 @@
             </a>
 
             <ul class="nav nav-tabs user-menu">
-
+                <li class="nav-item">
+                    <button type="button" class="btn btn-white text-info mt-2" onClick="ReceivePayment();"><i class="fas fa-credit-card me-1"></i>Receive Payment</button>
+                </li>
                 <li class="nav-item dropdown has-arrow main-drop">
                     <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                         <span class="user-img">

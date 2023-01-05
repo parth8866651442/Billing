@@ -3,9 +3,6 @@
 @section('content')
 
 @push('style')
-<link rel="stylesheet" href="{{ asset('assets/plugins/icons/feather/feather.css') }}" />
-<link rel="stylesheet" href="{{asset('assets/css/bootstrap-datetimepicker.min.css'); }}" />
-
 <style>
     .select2-container{
         z-index: 1111;
@@ -69,10 +66,6 @@
 @endsection
 
 @push('scripts')
-<script src="{{asset('assets/js/validate/jquery.validate.js'); }}" type="text/javascript"></script>
-<script src="{{asset('assets/js/validate/additional-methods.min.js'); }}" type="text/javascript"></script>
-<script src="{{asset('assets/js/validate/validation.js'); }}" type="text/javascript"></script>
-
 <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
@@ -179,12 +172,6 @@
 <script>
 // user list default page 1 recode get
 $(function() {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
     $('.datetimepicker').datetimepicker({
         format: 'DD-MM-YYYY',
     });
