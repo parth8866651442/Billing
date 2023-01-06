@@ -75,7 +75,7 @@ $(document).ready(function() {
         messages: {
             name: {
                 required: "This field is required",
-                remote: "Name already taken"
+                remote: "Category Name already taken"
             }
         }
     });
