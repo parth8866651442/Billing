@@ -204,6 +204,10 @@
                             </ul>
                         </li>
                         @endif
+
+                        <li class="{{ (request()->routeIs('paymentsList')) ? 'active' : '' }}">
+                            <a href="{{route('paymentsList')}}"><i class="fas fa-file-invoice-dollar"></i> <span>Payments History</span></a>
+                        </li>
                     </ul>
                 </div>
             </div>

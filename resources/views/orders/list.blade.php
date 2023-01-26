@@ -76,30 +76,31 @@
             <h4 class="modal-title"> Add Payment</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form action="{{route('receivePayments')}}" method="post" id="payDetailsForm">
+        <form action="{{route('receivePayments')}}" method="post" id="orderPayDetailsForm">
+            @csrf
             <div class="modal-body p-4">
                 <div class="row">
                    <div class="col-md-4">
                       <div class="mb-3">
-                        <label for="invoice_no" class="form-label">Invoice</label>
-                        <input type="text" class="form-control" id="invoice_no" name="invoice_no" placeholder="Invoice" value="" require readonly/>
-                        <input type="hidden" class="form-control" id="order_id" name="order_id" value=""/>
+                        <label for="or_invoice_no" class="form-label">Invoice</label>
+                        <input type="text" class="form-control" id="or_invoice_no" name="invoice_no" placeholder="Invoice" value="" require readonly/>
+                        <input type="hidden" class="form-control" id="or_order_id" name="order_id" value=""/>
                       </div>
                    </div>
                    <div class="col-md-4">
                       <div class="mb-3">
-                         <label for="due_amount" class="form-label">Due Amount</label>
+                         <label for="or_due_amount" class="form-label">Due Amount</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" name="due_amount" id="due_amount" require placeholder="00.00" readonly/>
+                                <input type="text" class="form-control" name="due_amount" id="or_due_amount" value="" require placeholder="00.00" readonly/>
                                 <span class="input-group-text"><i class="fa fa-rupee-sign"></i></span>
                             </div>
                       </div>
                    </div>
                    <div class="col-md-4">
                       <div class="mb-3">
-                        <label for="paid_amount" class="form-label">Paid Amount</label>
+                        <label for="or_paid_amount" class="form-label">Paid Amount</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="paid_amount" id="paid_amount" placeholder="00.00" readonly/>
+                            <input type="text" class="form-control" name="paid_amount" id="or_paid_amount" value="" placeholder="00.00" readonly/>
                             <span class="input-group-text"><i class="fa fa-rupee-sign"></i></span>
                         </div>
                       </div>
@@ -108,15 +109,15 @@
                 <div class="row">
                    <div class="col-md-4">
                       <div class="mb-3">
-                         <label for="date" class="form-label">Payment Date</label>
-                         <input type="text" class="form-control datetimepicker" require name="date" id="date" value=""/>
+                         <label for="or_date" class="form-label">Payment Date</label>
+                         <input type="text" class="form-control datetimepicker" require name="date" id="or_date" value=""/>
                       </div>
                    </div>
                    <div class="col-md-4">
                       <div class="mb-3">
-                        <label for="amount" class="form-label">Amount</label>
+                        <label for="or_amount" class="form-label">Amount</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="amount" id="amount" require placeholder="00.00" aria-label="amount" aria-describedby="amount"/>
+                            <input type="text" class="form-control" name="amount" id="or_amount" require placeholder="00.00" aria-label="amount" aria-describedby="amount"/>
                             <span class="input-group-text"><i class="fa fa-rupee-sign"></i></span>
                         </div>
                       </div>
@@ -131,19 +132,19 @@
                             </select>
                       </div>
                    </div>
-                   <div class="col-md-6" id="chequeNoTag" style="display:none">
+                   <div class="col-md-6" id="or_chequeNoTag" style="display:none">
                       <div class="mb-3">
                          <label for="cheque_no" class="form-label">Cheque No</label>
                          <input type="text" name="cheque_no" id="cheque_no" class="form-control" placeholder="0" value="">
                       </div>
                    </div>
-                   <div class="col-md-6" id="chequeDateTag" style="display:none">
+                   <div class="col-md-6" id="or_chequeDateTag" style="display:none">
                       <div class="mb-3">
                          <label for="cheque_date" class="form-label">Cheque Date</label>
                          <input type="text" name="cheque_date" id="cheque_date" class="form-control datetimepicker" placeholder="0" value="">
                       </div>
                    </div>
-                   <div class="col-md-6" id="transactionNoTag" style="display:none">
+                   <div class="col-md-6" id="or_transactionNoTag" style="display:none">
                       <div class="mb-3">
                          <label for="transaction_no" class="form-label">Transaction No</label>
                          <input type="text" name="transaction_no" id="transaction_no" class="form-control" placeholder="0" value="">
@@ -172,6 +173,11 @@
 <script>
 // user list default page 1 recode get
 $(function() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     $('.datetimepicker').datetimepicker({
         format: 'DD-MM-YYYY',
     });
@@ -192,91 +198,23 @@ $(function() {
         var page = $(this).attr('href').split('page=')[1];
         getOrders(page);
     });
-
-    $('#payDetailsForm').validate({
-        highlight: function (element, errorClass, validClass) {
-            $(element).parents('.form-control').removeClass('has-success').addClass('has-error');     
-        },
-        errorPlacement: function (error, element) {
-            if(element.hasClass('select2') && element.next('.select2-container').length) {
-                error.insertAfter(element.next('.select2-container'));
-            } else {
-                error.insertAfter(element.parent());
-            }
-        },
-        rules: {
-            invoice_no: {
-                required: true
-            },
-            due_amount: {
-                required: true
-            },
-            date: {
-                required: true
-            },
-            amount: {
-                required: true,
-                number: true
-            },
-            note: {
-                required: true
-            }
-        },
-        messages: {
-            invoice_no: {
-                required: "This field is required."
-            },
-            due_amount: {
-                required: "This field is required."
-            },
-            date: {
-                required: "This field is required."
-            },
-            amount: {
-                required: "This field is required.",
-                number: "Please enter a valid amount."
-            },
-            note: {
-                required: "This field is required."
-            }
-        },
-        submitHandler: function(form) {
-            $.ajax({
-                url: form.action,
-                type: form.method,
-                data: $(form).serialize(),
-                success: function(response) {
-                    if(response.status){
-                        $('#receive-payment-modal').modal('toggle');
-                        toastr.success(response.msg);
-                        
-                        $('#payDetailsForm').each(function(){
-                            this.reset();
-                        });
-                    }else{
-                        toastr.error(response.msg);
-                    }
-                },
-            });
-        }
-    });
 });
 
 function receivePaymentModalRow(itemID) {
     $(".select").select2();
     checkType();
-
     $.ajax({
         url: "{{route('receivePaymentsDetails')}}" + `?id=${itemID}`,
         success: function(response) {
             if(response.status){
+                let data = response.data;
                 let d = new Date();
                 let strDate = d.getDate() + "/" + (d.getMonth()+1) + "/"+ d.getFullYear() 
-                $('#date').val(strDate);
-                $('#order_id').val(response.data.order_id);
-                $('#invoice_no').val(response.data.invoice_no);
-                $('#due_amount').val(response.data.due_amount);
-                $('#paid_amount').val(response.data.paid_amount);
+                $('#or_date').val(strDate);
+                $('#or_order_id').val(data.order_id);
+                $('#or_invoice_no').val(data.invoice_no);
+                $('#or_due_amount').val(`${data.due_amount}`);
+                $('#or_paid_amount').val(data.paid_amount);
             }
         }
     });
@@ -286,33 +224,33 @@ checkType("<?php if(isset($item->payment_type) && ($item->payment_type === 'cheq
 function checkType(getVal = '') {
     if(getVal){
         if (getVal === 'cheque') {
-            $("#chequeNoTag").css("display", "block");
+            $("#or_chequeNoTag").css("display", "block");
             $("#cheque_no").rules("add", { required: true});
             
-            $("#chequeDateTag").css("display", "block"); 
+            $("#or_chequeDateTag").css("display", "block"); 
             $("#cheque_date").rules("add", { required: true});
             
-            $("#transactionNoTag").css("display", "none");
+            $("#or_transactionNoTag").css("display", "none");
             $("#transaction_no").rules("remove");
 
         }else if(getVal === 'online'){
-            $("#transactionNoTag").css("display", "block");
+            $("#or_transactionNoTag").css("display", "block");
             
             $("#transaction_no").rules("add", { required: true});
 
-            $("#chequeNoTag").css("display", "none");
+            $("#or_chequeNoTag").css("display", "none");
             $("#cheque_no").rules("remove");
             
-            $("#chequeDateTag").css("display", "none");
+            $("#or_chequeDateTag").css("display", "none");
             $("#cheque_date").rules("remove");
         }else {
-            $("#chequeNoTag").css("display", "none");
+            $("#or_chequeNoTag").css("display", "none");
             $("#cheque_no").rules("remove");
             
-            $("#chequeDateTag").css("display", "none");
+            $("#or_chequeDateTag").css("display", "none");
             $("#cheque_date").rules("remove");
             
-            $("#transactionNoTag").css("display", "none");
+            $("#or_transactionNoTag").css("display", "none");
             $("#transaction_no").rules("remove");
         }
     }
@@ -380,5 +318,74 @@ $(document.body).on('click', '#delete_sure', function() {
         }
     });
 });
+
+$('#orderPayDetailsForm').validate({
+        highlight: function (element, errorClass, validClass) {
+            $(element).parents('.form-control').removeClass('has-success').addClass('has-error');     
+        },
+        errorPlacement: function (error, element) {
+            if(element.hasClass('select2') && element.next('.select2-container').length) {
+                error.insertAfter(element.next('.select2-container'));
+            } else {
+                error.insertAfter(element.parent());
+            }
+        },
+        rules: {
+            invoice_no: {
+                required: true
+            },
+            due_amount: {
+                required: true
+            },
+            date: {
+                required: true
+            },
+            amount: {
+                required: true,
+                number: true
+            },
+            note: {
+                required: true
+            }
+        },
+        messages: {
+            invoice_no: {
+                required: "This field is required."
+            },
+            due_amount: {
+                required: "This field is required."
+            },
+            date: {
+                required: "This field is required."
+            },
+            amount: {
+                required: "This field is required.",
+                number: "Please enter a valid amount."
+            },
+            note: {
+                required: "This field is required."
+            }
+        },
+        submitHandler: function(form) {
+            $.ajax({
+                url: form.action,
+                type: form.method,
+                data: $(form).serialize(),
+                success: function(response) {
+                    if(response.status){
+                        $('#receive-payment-modal').modal('toggle');
+                        toastr.success(response.msg);
+                        
+                        $('#payDetailsForm').each(function(){
+                            this.reset();
+                        });
+                        getOrders();
+                    }else{
+                        toastr.error(response.msg);
+                    }
+                },
+            });
+        }
+    });
 </script>
 @endpush

@@ -160,6 +160,12 @@ $(document).ready(function() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    
+    $('.select2').select2({});
+    $(document).on('select2:open', () => {
+        document.querySelector('.select2-search__field').focus();
+    });
+
     $('.datetimepicker').datetimepicker({
         format: 'DD-MM-YYYY'
     });

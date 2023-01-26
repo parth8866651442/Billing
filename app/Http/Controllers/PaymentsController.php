@@ -6,9 +6,37 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Payments;
 use App\Models\Order;
+use App\Models\Client;
 
 class PaymentsController extends Controller
 {
+    public function index(Request $request){
+        if ($request->ajax()) {
+            $items = Payments::with('orderDetail')->whereHas('orderDetail', function($q) {
+                $q->where('is_deleted', 0);
+            });
+            
+            if (!empty($orderID = $request->order_id)) {
+                $items->where('order_id',$orderID);
+            }
+
+            if (!empty($clientID = $request->client_id)) {
+                $items->whereHas('orderDetail', function($q) use($clientID) {
+                    $q->where('client_id', $clientID);
+                });
+            }
+
+            $items->orderBy('created_at', 'DESC');
+
+            $items = $items->paginate(PAGINATE);
+            return view('payments.datatableList', compact('items'));
+        } else {
+            $orders = Order::where(['is_deleted'=>0,'type'=>'orignal'])->get();
+            $clients = Client::where(['is_deleted'=>0])->get();
+            return view('payments.list', compact('orders','clients'));
+        }
+    }
+
     public function receivePaymentDetails(Request $request){
         
         $items = Order::with('paidAmountSum')->where(['is_deleted'=>0,'type'=>'orignal','id'=>$request->id])->first();

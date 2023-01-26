@@ -122,6 +122,7 @@ Route::group(['middleware' => ['auth:web']], function () {
 
     // -------- payments -------- //
     Route::group(['prefix' => 'payments'], function () {
+        Route::get('/', [App\Http\Controllers\PaymentsController::class,'index'])->name('paymentsList');
         Route::get('/receive_payment_detail', [App\Http\Controllers\PaymentsController::class,'receivePaymentDetails'])->name('receivePaymentsDetails');
         Route::post('/receive_payment', [App\Http\Controllers\PaymentsController::class,'receivePayment'])->name('receivePayments');
     });
