@@ -117,7 +117,7 @@ $(document).ready(function() {
             password_confirmation: {
                 required: true,
                 equalTo: "#password"
-            },
+            }
         },
         messages: {
             current_password: {
@@ -131,7 +131,7 @@ $(document).ready(function() {
             password_confirmation: {
                 required: "This field is required",
                 equalTo: "Confirm password doesn't match New password"
-            },
+            }
         }
     });
 });
